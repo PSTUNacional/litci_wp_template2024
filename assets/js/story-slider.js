@@ -1,4 +1,10 @@
-url = 'http://localhost:8080/?rest_route=/wp/v2/posts'
+env = 'prod'
+if (env === 'dev') {
+    url = 'http://localhost:8080/?rest_route=/wp/v2/posts'
+} else {
+    url = '/wp-json/wp/v2/posts'
+}
+
 fetch(url)
     .then(resp => resp.json())
     .then(posts => {
@@ -88,7 +94,7 @@ document.querySelectorAll('.party-item').forEach(story => {
     })
 })
 
-document.querySelector('section.story-container .backdrop').addEventListener('click',()=>{
+document.querySelector('section.story-container .backdrop').addEventListener('click', () => {
     document.querySelector('section.story-container').classList.toggle('active')
 })
 

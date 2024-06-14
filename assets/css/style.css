@@ -847,3 +847,65 @@ section.story-container .backdrop{
         transform: initial;
     }
 }
+
+/*========================================
+
+    Ads
+
+*========================================*/
+
+.ads{
+    padding: var(--gap-large) ;
+    background-color: var(--gray-100);
+    border-radius: var(--gap);
+    text-align: center;
+    overflow: hidden;
+}
+
+/*========================================
+
+    FOOTER
+
+*========================================*/
+
+footer {
+    background-color: var(--gray-100);
+    color: #fff;
+    padding-top: 48px;
+    margin-top: calc(2*var(--gap));
+}
+
+footer .bottom-line {
+    background-color: var(--gray-200);
+    color: var(--gray-600);
+    padding: 16px;
+    font-size: 10px;
+    text-align: center;
+    margin-top: 48px;
+}
+
+footer i {
+    font-size: 24px;
+    padding: 4px;
+}
+
+footer .col:last-child{
+    text-align: right;
+    align-items: end;
+}
+
+footer .logo{
+    margin-left:auto;
+    width:120px;
+}
+
+@media screen and (max-width:560px) {
+    footer .col,
+    footer .col:last-child{
+        text-align: center;
+        align-items: center;
+    }
+    footer .logo{
+        margin:auto;
+    }
+}
