@@ -52,6 +52,16 @@ section {
 .container {
     max-width: var(--max-witdh);
     margin: auto;
+    display: flex;
+    flex-direction: row;
+    padding-left: var(--gap);
+    padding-right: var(--gap);
+}
+
+@media only screen and (max-width: 960px) {
+    .container {
+        flex-direction: column;
+    }
 }
 
 .column {
@@ -679,6 +689,12 @@ article .author-line {
     position: absolute;
     right: 8px;
     bottom: 8px;
+}
+
+@media only screen and (max-width: 960px) {
+    .party-grid {
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    }
 }
 
 /*========================================
