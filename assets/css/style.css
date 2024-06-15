@@ -58,12 +58,6 @@ section {
     padding-right: var(--gap);
 }
 
-@media only screen and (max-width: 960px) {
-    .container {
-        flex-direction: column;
-    }
-}
-
 .column {
     width: 100%;
     display: flex;
@@ -86,6 +80,17 @@ section {
 .column.va-center {
     justify-content: center;
 }
+
+@media only screen and (max-width: 960px) {
+    .section{
+        padding: var(--gap) 0;
+    }
+    .container {
+        flex-direction: column;
+    }
+    
+}
+
 
 /*========================================
 

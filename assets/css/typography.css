@@ -20,6 +20,7 @@ h6{
     color:var(--black-pure);
 }
 
+/* Major Third Scale */
 h1 {
     font-size: 3.815rem;
     line-height: 1.15;
@@ -48,4 +49,31 @@ h6 {
 
 small {
     font-size: 0.8rem;
+}
+
+@media only screen and (max-width: 960px){
+    body,
+    p{
+        font-size: 14px;
+    }
+
+    /* Major Second Scale */
+    h1{
+        font-size: 2..027rem;
+    }
+    h2{
+        font-size: 1.802rem;
+    }
+    h3{
+        font-size: 1.602rem;
+    }
+    h4{
+        font-size: 1.424rem;
+    }
+    h5{
+        font-size: 1.266rem;
+    }
+    h6{
+        font: 1.125rem;
+    }
 }

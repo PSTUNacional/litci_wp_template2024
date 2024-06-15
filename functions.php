@@ -19,7 +19,7 @@ function load_scripts()
 
 add_action('wp_enqueue_scripts', 'load_scripts');
 
-function ostheme_config()
+function litci_config()
 {
 
     /***
@@ -44,9 +44,9 @@ function ostheme_config()
     add_theme_support('post-thumbnails');
 }
 
-add_action('after_setup_theme', 'ostheme_config', 0);
+add_action('after_setup_theme', 'litci_config', 0);
 
-//include get_template_directory() . '/utils/ostheme-panel/functions.php';
+//include get_template_directory() . '/utils/litci-panel/functions.php';
 
 
 add_action('init', 'edition_rewrite_rule');
@@ -86,125 +86,11 @@ add_action('init', 'custom_author_base');
 
 /*==============================
 
-    API Modifyers
+    API Modifiers
 
 ==============================*/
 
-/****
- * 
- * Featured image url
- * 
- */
-
-
-add_action('rest_api_init', 'register_rest_images');
-
-function register_rest_images()
-{
-    register_rest_field(
-        array('post', 'search-result'),
-        'fimg_url',
-        array(
-            'get_callback'    => 'get_rest_featured_image',
-            'update_callback' => null,
-            'schema'          => null,
-        )
-    );
-}
-
-function get_rest_featured_image($object, $field_name, $request)
-{
-
-    if ($object['featured_media']) {
-        $img = wp_get_attachment_image_src($object['featured_media'], 'app-thumb');
-        return $img[0];
-    } else {
-        $img = get_the_post_thumbnail_url($object['id']);
-        return $img;
-    }
-    return false;
-}
-
-/***
- * 
- * Categories names
- * 
- */
-
-add_action('rest_api_init', 'register_categories_names');
-
-function register_categories_names()
-{
-    register_rest_field(
-        array('post', 'search-result'),
-        'categories_names',
-        array(
-            'get_callback'    => 'get_categories_names',
-            'update_callback' => null,
-            'schema'          => null,
-        )
-    );
-}
-
-function get_categories_names($object, $field_name, $request)
-{
-    $names = [];
-    $cats = wp_get_post_categories($object['id']);
-    foreach ($cats as $cat) {
-        $name = get_cat_name($cat);
-        array_push($names, $name);
-    }
-    return $names;
-}
-
-/***
- * 
- * Author name and profile pic
- * 
- */
-
-add_action('rest_api_init', 'register_author_info');
-
-function register_author_info()
-{
-    register_rest_field(
-        array('post', 'search-result'),
-        'author_info',
-        array(
-            'get_callback'    => 'get_author_info',
-            'update_callback' => null,
-            'schema'          => null,
-        )
-    );
-}
-
-function get_author_info($object, $field_name, $request)
-{
-
-    $name = get_author_name();
-    $profile = get_avatar_url($object['author']);
-
-    $arr = [
-        'name' => $name,
-        'pic'   => $profile,
-    ];
-    return $arr;
-}
-
-add_theme_support('custom-logo');
-function litci_custom_logo_setup()
-{
-    $defaults = [
-        'height'               => 100,
-        'width'                => 400,
-        'flex-height'          => true,
-        'flex-width'           => true,
-        'header-text'          => ['site-title', 'site-description'],
-        'unlink-homepage-logo' => true,
-    ];
-    add_theme_support('custom-logo', $defaults);
-}
-add_action('after_setup_theme', 'litci_custom_logo_setup');
+include __DIR__ . '/includes/api_modifiers.php';
 
 /*==============================
 
@@ -212,89 +98,15 @@ add_action('after_setup_theme', 'litci_custom_logo_setup');
 
 ==============================*/
 
-function litci_theme_customizer($wp_customize)
-{
+include __DIR__ . '/includes/theme_customizer.php';
 
-    $wp_customize->add_section('logo_section', array(
-        'title' => __('Logos', 'litci_theme'),
-        'priority' => 30,
-    ));
+/*==============================
 
-    $wp_customize->add_setting('footer_logo');
-    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'footer_logo', array(
-        'label' => __('Upload da logo do rodapé'),
-        'section' => 'logo_section',
-        'settings' => 'footer_logo',
-    )));
+    SECURITY
 
-    /***
-     * 
-     * Ads sections
-     * 
-     */
+==============================*/
 
-    $wp_customize->add_panel('ads_panel', [
-        'title' => __('Banners', 'litci_theme'),
-        'description'   => __('Configurações dos banners e anúncios.'),
-        'priority' => 30,
-    ]);
-
-    $bannersPlace = [
-        [
-            "slug" => "header",
-            "name"  => __("Banner no cabeçalho"),
-            "description"  => __("Banner exibido acima das notícias principais.")
-        ],
-        [
-            "slug" => "middle",
-            "name"  => __("Banner ao meio"),
-            "description"  => __("Banner exibido logo após das notícias principais.")
-        ],
-        [
-            "slug" => "bottom",
-            "name"  => __("Banner no fim"),
-            "description"  => __("Banner exibido logo antes do rodapé.")
-        ],
-    ];
-    foreach($bannersPlace as $b)
-    {
-        $wp_customize->add_section('ad_'.$b['slug'],[
-            'title' => __($b['name']),
-            'panel' => 'ads_panel',
-            'priority'  => 10,
-        ]);
-        $wp_customize->add_setting('banner_ad_'.$b['slug'].'_status',[
-            'default' => false,
-            'sanitize_callback' => 'wp_validate_boolean',
-        ]);
-        $wp_customize->add_control(new WP_Customize_Control(
-            $wp_customize,
-            'banner_ad_'.$b['slug'].'_status',
-            [
-                'label'     => __('Mostrar banner no cabeçalho'),
-                'section'   => 'ad_'.$b['slug'],
-                'settings'  => 'banner_ad_'.$b['slug'].'_status',
-                'type'     => 'checkbox',
-            ]
-        ));
-        $wp_customize->add_setting('banner_ad_'.$b['slug'].'_source',[
-            'default'   => '',
-            'sanitize_callback' => 'esc_url_raw',
-        ]);
-        $wp_customize->add_control(new WP_Customize_Image_Control(
-            $wp_customize,
-            'banner_ad_'.$b['slug'].'_source',
-            [
-                'label' => __('Upload da imagem do banner'),
-                'section' => 'ad_'.$b['slug'],
-                'settings' => 'banner_ad_'.$b['slug'].'_source',
-            ]
-        ));
-    }
-
-}
-
-add_action('customize_register', 'litci_theme_customizer');
+include __DIR__ . '/includes/security.php';
 
 /*==============================
 
@@ -376,13 +188,13 @@ function escape_categories($cats)
 
 function render_section($section_id, $posts = 5)
 {
-    $layout = get_option('ostheme_section' . $section_id . '_layout');
+    $layout = get_option('litci_section' . $section_id . '_layout');
     $block_path = __DIR__ . '/components/' . $layout . '.php';
 
     if ($layout == 'opinion_block_01') {
         $cat = '3793';
     } else {
-        $cat = get_option('ostheme_section' . $section_id . '_category');
+        $cat = get_option('litci_section' . $section_id . '_category');
     }
 
     $args = array(
