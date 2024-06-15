@@ -1,0 +1,9 @@
+.column-menu_order{
+    max-width: 128px;
+    width: fit-content
+}
+.menu-order-input {
+    width: 100%;
+    max-width: 64px;
+    text-align: center;
+}

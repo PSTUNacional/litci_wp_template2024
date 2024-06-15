@@ -1,0 +1,238 @@
+/*========================================
+
+    POST
+
+*========================================*/
+
+article.post {
+    width: 100%;
+    margin-top: var(--gap-large);
+}
+
+article.post p,
+article.post a {
+    font-family: 'Merriweather', serif;
+}
+
+article.post .container {
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+    flex-direction: column;
+    width: 100%;
+}
+
+article.post p,
+article.post h6,
+article.post h5,
+article.post h4,
+article.post h3 {
+    margin-bottom: var(--gap);
+}
+
+
+article .post-categories {
+    color: var(--primary);
+    font-weight: 500;
+}
+
+article.post blockquote {
+    padding-left: var(--gap);
+    border-left: 4px solid var(--primary);
+}
+
+article.post blockquote p {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+article.post img,
+article.post .thumbnail-container {
+    margin: var(--gap-large) auto var(--gap-small) auto;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    border-radius: var(--gap);
+}
+
+article.post .thumbnail-container img {
+    margin: 0;
+}
+
+article.post iframe[title="YouTube video player"] {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/9;
+}
+
+article.post .wp-caption img {
+    margin-bottom: 0px;
+}
+
+.wp-caption .wp-caption-text {
+    color: var(--gray-500);
+    font-size: 0.8rem;
+    font-style: italic;
+}
+
+article.post p {
+    line-height: 1.8em;
+    font-size: 18px;
+    width: 100%;
+}
+
+article.post a,
+article.post p a {
+    text-decoration: underline;
+}
+
+article.post h6 {
+    color: var(--primary);
+    font-size: 1em;
+    margin-bottom: 0;
+    display: block;
+    width: 100%;
+}
+
+article.post .author-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: var(--gap) 0;
+    margin-right: auto;
+}
+
+article.post .author-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 28px;
+    background-color: var(--gray-300);
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray-100);
+    font-size: 24px;
+}
+
+article.post .info {
+    padding: 8px 24px;
+}
+
+article.post .tagline {
+    font-weight: 200;
+    font-size: 1.5em;
+    line-height: 1.5;
+}
+
+article.post .author-line {
+    color: var(--black);
+    font-size: 1em;
+    text-transform: none;
+}
+
+article.post .author-line {
+    margin-bottom: 8px
+}
+
+article .metainfo,
+article .metainfo.container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--gray-200);
+    border-bottom: 1px solid var(--gray-200);
+    margin-bottom: var(--gap);
+}
+
+.socialmedia {
+    display: flex;
+    gap: 4px;
+}
+
+.socialmedia .share {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    aspect-ratio: 1;
+    width: 100%;
+    min-width: 32px;
+    height: 100%;
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.socialmedia .share.wa {
+    background-color: #090;
+    display: none;
+}
+
+.socialmedia .share.fb {
+    background-color: #339;
+}
+
+.socialmedia .share.tw {
+    background-color: #39f;
+}
+
+.related-posts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 423px));
+    gap: var(--gap);
+    width: 100%;
+    justify-content: center;
+}
+
+.related-posts .related-post h3 {
+    font-size: 1.25em;
+}
+
+@media screen and (max-width:560px) {
+
+    .related-posts {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important;
+    }
+
+    article.post .container {
+        padding: 0;
+    }
+
+    article.post h1 {
+        font-size: 2em;
+    }
+
+    article.post .tagline {
+        font-size: 1.25em;
+    }
+
+    .metainfo {
+        flex-wrap: wrap;
+    }
+
+    article.post .author-box {
+        width: 100%;
+    }
+
+    article.post .socialmedia {
+        order: 3;
+    }
+
+    .socialmedia .share.wa {
+        display: flex;
+    }
+
+    article.post blockquote {
+        padding-left: var(--gap);
+        border-left: 4px solid var(--primary);
+    }
+
+    article.post blockquote p {
+        font-size: 1.15rem;
+        font-weight: bold;
+    }
+}
