@@ -19,10 +19,12 @@ function load_scripts()
 
 add_action('wp_enqueue_scripts', 'load_scripts');
 
-function load_admin_scripts($hook) {
-    if ($hook === 'edit.php') {
+function load_admin_scripts($hook)
+{
+    if ($hook === 'edit.php' || $hook === 'customize.php') {
         wp_enqueue_script('custom-admin-js', get_template_directory_uri() . '/assets/js/custom-admin.js', array('jquery'), null, true);
-        wp_enqueue_style('style', get_template_directory_uri() . '/assets/css/admin.css', [], '1.0', 'all');
+        wp_enqueue_style('custom-admin-css', get_template_directory_uri() . '/assets/css/admin.css', array(), '1.0', 'all');
+
         wp_localize_script('custom-admin-js', 'customAdminAjax', array(
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('custom_admin_nonce')
@@ -30,6 +32,13 @@ function load_admin_scripts($hook) {
     }
 }
 add_action('admin_enqueue_scripts', 'load_admin_scripts');
+
+function load_customize_scripts($hook)
+{
+    wp_enqueue_style('custom-admin-css', get_template_directory_uri() . '/assets/css/admin.css', array(), '1.0', 'all');
+}
+add_action('customize_controls_enqueue_scripts', 'load_customize_scripts');
+
 
 function litci_config()
 {
@@ -162,12 +171,14 @@ function tagline_metabox_saver($postId)
 add_action('save_post', 'tagline_metabox_saver');
 
 // Edit menu_order capability
-function add_custom_post_type_support() {
+function add_custom_post_type_support()
+{
     add_post_type_support('post', 'page-attributes');
 }
 add_action('init', 'add_custom_post_type_support');
 
-function add_menu_order_meta_box() {
+function add_menu_order_meta_box()
+{
     add_meta_box(
         'menu_order_meta_box',   // ID da meta box
         'Prioridade do post',         // Título da meta box
@@ -179,15 +190,17 @@ function add_menu_order_meta_box() {
 }
 add_action('add_meta_boxes', 'add_menu_order_meta_box');
 
-function display_menu_order_meta_box($post) {
+function display_menu_order_meta_box($post)
+{
     $menu_order = $post->menu_order;
-    ?>
+?>
     <label for="menu_order_field">Ordem do Menu</label>
     <input type="text" name="menu_order_field" value="<?php echo $menu_order; ?>" />
-    <?php
+<?php
 }
 
-function save_menu_order_meta_box_data($post_id) {
+function save_menu_order_meta_box_data($post_id)
+{
     if (array_key_exists('menu_order_field', $_POST)) {
         $menu_order = intval($_POST['menu_order_field']);
         wp_update_post(array(
@@ -199,14 +212,16 @@ function save_menu_order_meta_box_data($post_id) {
 add_action('save_post', 'save_menu_order_meta_box_data');
 
 // Adicionar nova coluna na tabela de posts
-function add_menu_order_column($columns) {
+function add_menu_order_column($columns)
+{
     $columns['menu_order'] = 'Prioridade do post';
     return $columns;
 }
 add_filter('manage_posts_columns', 'add_menu_order_column');
 
 // Preencher a nova coluna com o valor de menu_order
-function show_menu_order_column($column, $post_id) {
+function show_menu_order_column($column, $post_id)
+{
     if ($column === 'menu_order') {
         $menu_order = get_post_field('menu_order', $post_id);
         echo '<input type="text" class="menu-order-input" value="' . esc_attr($menu_order) . '" data-post-id="' . esc_attr($post_id) . '">';
@@ -215,28 +230,30 @@ function show_menu_order_column($column, $post_id) {
 add_action('manage_posts_custom_column', 'show_menu_order_column', 10, 2);
 
 // Tornar a coluna 'menu_order' ordenável
-function set_menu_order_column_sortable($columns) {
+function set_menu_order_column_sortable($columns)
+{
     $columns['menu_order'] = 'menu_order';
     return $columns;
 }
 add_filter('manage_edit-post_sortable_columns', 'set_menu_order_column_sortable');
 
 // Ajustar a consulta principal para ordenar pelo 'menu_order'
-function sort_posts_by_menu_order($query) {
+function sort_posts_by_menu_order($query)
+{
     // Verificar se estamos na administração, na tela de edição de posts e se a coluna correta foi selecionada para ordenar
     if (!is_admin() || !$query->is_main_query()) {
         return;
     }
 
     if ($query->query['orderby'] == 'menu_order') {
-        $query->set('meta_key', 'menu_order');
-        $query->set('orderby', 'meta_value');
+        $query->set('orderby', 'menu_order');
     }
 }
 add_action('pre_get_posts', 'sort_posts_by_menu_order');
 
 // Função PHP para atualizar o menu_order via AJAX
-function update_menu_order() {
+function update_menu_order()
+{
     check_ajax_referer('custom_admin_nonce', 'nonce');
 
     if (isset($_POST['post_id']) && isset($_POST['menu_order'])) {
@@ -290,26 +307,27 @@ function escape_categories($cats)
     return $cat;
 }
 
-function render_section($section_id, $posts = 5)
+function render_section($block)
 {
-    $layout = get_option('litci_section' . $section_id . '_layout');
-    $block_path = __DIR__ . '/components/' . $layout . '.php';
+    if (get_theme_mod('content_' . $block . '_status') == true) {
+        $layout = get_theme_mod('content_' . $block . '_layout');
+        $block_path = __DIR__ . '/components/blocks/' . $layout . '.php';
+        $block_title = get_theme_mod('content_' . $block . '_title');
 
-    if ($layout == 'opinion_block_01') {
-        $cat = '3793';
-    } else {
-        $cat = get_option('litci_section' . $section_id . '_category');
+        $args = [
+            'posts_per_page' => 5,
+            'orderby' => '',
+            'order' => 'DESC'
+        ];
+
+        $categories = get_theme_mod('content_' . $block . '_category');
+        if (isset($categories[0]) && $categories[0] !== 0) {
+            $args['category__in'] = $categories;
+        }
+
+        $posts = get_posts($args);
+        include($block_path);
     }
-
-    $args = array(
-        'numberposts' => $posts,
-        'category' => array($cat),
-        'offset' => 0,
-        'tag__not_in' => array(4)
-    );
-
-    $posts = get_posts($args);
-    include($block_path);
 }
 
 function lit_render_thumbnail($post, $size = "medium")
@@ -329,4 +347,50 @@ function lit_render_thumbnail($post, $size = "medium")
     }
 
     return $tb;
+}
+
+
+
+
+function registrar_meu_bloco() {
+    wp_register_script(
+        'meu-bloco-script',
+        get_template_directory_uri() . '/components/blocks/block01.js',
+        array('wp-blocks', 'wp-editor'),
+        null,
+        true
+    );
+
+    register_block_type('litci/block01', array(
+        'editor_script' => 'meu-bloco-script',
+    ));
+
+    wp_register_script(
+        'litci-block-02',
+        get_template_directory_uri() . '/components/blocks/block02.js',
+        array('wp-blocks', 'wp-editor'),
+        null,
+        true
+    );
+
+    register_block_type('litci/block02', array(
+        'editor_script' => 'litci-block-02',
+        'render_callback' => 'render_litci_block02'
+    ));
+}
+add_action('init', 'registrar_meu_bloco');
+
+function render_litci_block02($attributes) {
+    $args = array(
+        'post_type' => 'post',
+        'posts_per_page' => 5, // Número de posts a serem exibidos
+    );
+
+    $posts = get_posts($args);
+
+    $block_title = "Últimas notícias";
+    include get_template_directory() . '/components/blocks/block-02.php';
+
+    wp_reset_postdata();
+
 }

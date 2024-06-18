@@ -1,0 +1,360 @@
+/*========================================
+
+    HEADER
+
+*========================================*/
+
+header {
+    width: 100%;
+}
+
+.top-bar {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid var(--gray-300);
+    padding: 0;
+    align-items: center;
+    margin: 0px;
+    position: relative;
+}
+
+.top-bar .hamb {
+    display: none;
+}
+
+.top-bar a {
+    margin: 24px auto;
+}
+
+.top-bar a svg {
+    max-width: 180px;
+    display: block;
+    width: 100%;
+    aspect-ratio: 4;
+}
+
+.top-bar svg image {
+    width: 100%;
+}
+
+section.menu-area {
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid var(--gray-700);
+    background-color: #fff;
+    width: 100%;
+    z-index: 100;
+    transition: all .3s ease-in-out;
+}
+
+section.menu-area.active {
+    position: fixed;
+    border: 0;
+    box-shadow: 0 2px 10px 0 #0006;
+    height: 80px;
+    transition: all .3s ease-in-out;
+    top: 0;
+}
+
+section.menu-area .custom-logo {
+    max-height: 100px;
+    width: auto;
+    transition: all .3s ease-in-out;
+}
+
+section.menu-area.active .custom-logo {
+    max-height: 72px;
+    width: auto;
+    transition: all .3s ease-in-out;
+}
+
+.menu-area .container {
+    display: flex;
+    align-items: stretch;
+    gap: var(--gap);
+}
+
+.main-menu {
+    max-width: var(--max-width);
+    padding: 0px var(--gap);
+    z-index: 99;
+    position: relative;
+}
+
+.main-menu div{
+    height: 100%;
+}
+
+.main-menu ul {
+    display: flex;
+    justify-content: center;
+    gap: var(--gap);
+    height: 100%;
+}
+
+.main-menu ul li {
+    list-style-type: none;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.main-menu ul li a {
+    display: block;
+    padding: var(--gap) 0;
+}
+
+.main-menu ul li a i {
+    margin-left: 8px;
+    transform: rotate(90deg);
+}
+
+.main-menu a:hover{
+    color: var(--primary);
+} 
+
+.main-menu a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+@media screen and (max-width:560px) {
+
+    main {
+        margin-top: 73px;
+    }
+
+    .top-bar {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--gray-300);
+        position: fixed;
+        top: 0;
+        background: #fff;
+        margin: 0;
+        z-index: 99;
+    }
+
+    .top-bar .container {
+        align-items: center;
+        padding: 12px 24px;
+        flex-direction: row;
+    }
+
+    .top-bar .hamb {
+        display: block;
+        cursor: pointer;
+    }
+
+    .top-bar svg {
+        max-width: 180px;
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+nav .sub-menu {
+    display: none;
+    flex-direction: column;
+    gap: 0;
+    position: absolute;
+    bottom: 0;
+    transform: translateY(100%);
+    min-width: 240px;
+    height: fit-content;
+    background-color: #fff;
+    border: 1px solid var(--black-pure);
+    z-index: -1;
+}
+
+nav .menu-item:hover>.sub-menu {
+    display: flex;
+}
+
+nav .sub-menu>li a {
+    padding: 0;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    height: fit-content;
+    color:var(--black) !important;
+}
+
+nav .sub-menu li a i {
+    transform: rotate(0deg);
+}
+
+nav .sub-menu>li {
+    padding: 12px 24px;
+    border-left: 8px solid #fff;
+    color: var(--black);
+}
+
+nav .sub-menu>li:hover {
+    color: var(--primary);
+    border-left: 8px solid var(--primary);
+    background-color: var(--primary-05);
+}
+
+nav .sub-menu .sub-menu {
+    bottom: unset;
+    top: 0;
+    transform: translate(230px, 0);
+    left: 0;
+    right: unset;
+    margin: 0;
+}
+
+nav hr {
+    margin: 12px 0;
+    border: none;
+    border-bottom: 1px solid var(--gray-500);
+}
+
+.main-menu .mobile {
+    display: none;
+}
+
+#socialmediatop {
+    display: flex;
+    gap: 8px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+}
+
+#socialmediatop i {
+    font-size: 18px;
+    color: var(--gray-500);
+}
+
+.main-menu .mobile .social-media {
+    display: flex;
+    gap: 8px;
+}
+
+.main-menu .mobile .social-media a {
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    width: 32px;
+    aspect-ratio: 1;
+    border: 1px solid var(--gray-500);
+}
+
+@media screen and (max-width:560px) {
+    #socialmediatop {
+        display: none;
+    }
+
+    .main-menu {
+        position: fixed;
+        background: #fff;
+        width: 80%;
+        box-shadow: 10px 0 100px 0 #000900;
+        padding: var(--gap) 0;
+        left: -120%;
+        height: 100%;
+        top: 0;
+        z-index: 99;
+        transition: all .6s ease-in-out;
+    }
+
+    .backdrop.active {
+        display: inherit;
+        position: fixed;
+        opacity: 1;
+        z-index: 98;
+        backdrop-filter: blur(5px);
+    }
+
+    .main-menu.active {
+        left: 0%;
+        transition: all .6s ease-in-out;
+        overflow: scroll;
+    }
+
+    .main-menu ul {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .main-menu ul li a {
+        display: block;
+    }
+
+    nav .sub-menu {
+        display: flex;
+        box-shadow: none;
+        position: inherit;
+        transform: translateY(0);
+        z-index: 0;
+    }
+
+    nav .sub-menu>li {
+        border: none;
+    }
+
+    nav .sub-menu>li:hover {
+        border: none;
+        background-color: none;
+    }
+
+    nav.main-menu .mobile {
+        display: block;
+    }
+
+    nav .sub-menu .sub-menu {
+        position: inherit;
+        display: block;
+        transform: none;
+        background-color: var(--gray-100);
+    }
+
+    nav .sub-menu>li:hover {
+        background: inherit;
+        color: inherit;
+    }
+
+    nav .main-menu li:hover a {
+        color: var(--primary)
+    }
+
+    /***
+    *
+    *   Mobile menu identation
+    *
+    ***/
+
+    .main-menu li {
+        padding: 0 !important;
+    }
+
+    .main-menu ul li a {
+        padding: 8px 24px;
+    }
+
+    .main-menu .sub-menu a {
+        padding: 8px 48px;
+    }
+
+    .main-menu .sub-menu .sub-menu a {
+        padding: 8px 72px;
+    }
+
+}
+
+.lang-menu{
+    background-color: var(--gray-100);
+    padding: 8px;
+}

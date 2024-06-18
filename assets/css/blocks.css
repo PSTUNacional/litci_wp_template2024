@@ -2,6 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 .block-header h3{
     font-family: 'Inter', sans-serif;
@@ -55,4 +56,16 @@
 
 .block-04 .featured{
     aspect-ratio: 21/9;
+}
+
+.video-block-01 .container{
+    gap: var(--gap);
+}
+
+.video-block-01 .container .column:first-of-type{
+    flex-basis: 68%;
+}
+
+.video-block-01 .container .column:last-of-type{
+    flex-basis: 33%;
 }

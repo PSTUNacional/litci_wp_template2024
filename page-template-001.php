@@ -11,57 +11,36 @@ get_header(); ?>
         // ========== Ad Header ========== //
         if(get_theme_mod('banner_ad_header_status'))
         {
+            $ad = 'banner_ad_header_';
             include(__DIR__ . '/components/ads/ads_banner.php');
         }
 
         // ========== Header Block ========== //
-        $args = array(
-            'posts_per_page' => 1,
-            'orderby' => '',
-            'order' => 'DESC'
-        );
-        $posts = get_posts($args);
-        include(__DIR__ . '/components/blocks/block-01.php');
+        render_section('block01');
 
         // ========== Ad Middle ========== //
 
         if(get_theme_mod('banner_ad_middle_status'))
         {
+            $ad = 'banner_ad_middle_';
             include(__DIR__ . '/components/ads/ads_banner.php');
         }
         // ====
 
-        $args = array(
-            'posts_per_page' => 4,
-            'offset' => 1,
-            'orderby' => '',
-            'order' => 'DESC'
-        );
-        $posts = get_posts($args);
-        include(__DIR__ . '/components/blocks/block-02.php');
 
+        render_section('block02');
 
-        include(__DIR__ . '/components/blocks/stories.php');
+        render_section('block03');
 
-        $args = array(
-            'posts_per_page' => 4,
-            'offset' => 5,
-            'orderby' => '',
-            'order' => 'DESC'
-        );
-        $posts = get_posts($args);
-        include(__DIR__ . '/components/blocks/block-03.php');
+        render_section('block04');
 
-        $args = array(
-            'posts_per_page' => 5,
-            'offset' => 9,
-            'orderby' => '',
-            'order' => 'DESC'
-        );
-        $posts = get_posts($args);
-        include(__DIR__ . '/components/blocks/block-04.php');
+        render_section('block05');
+
+        render_section('block06');
 
         ?>
+
+
 
     </main>
     <script src="wp-content/themes/litci/assets/js/story-slider.js"></script>

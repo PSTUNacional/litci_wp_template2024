@@ -1,15 +1,12 @@
-<?php
-setup_postdata($post);
-?>
 <article class="unit-02">
     <div class='column'>
         <?= lit_render_thumbnail($post, "large"); ?>
     </div>
     <div class="column">
-        <a href="<?= the_permalink(); ?>" title="<?= the_title(); ?>" arial-label="<?= the_title(); ?>">
-            <h3><?= the_title(); ?></h3>
+        <a href="<?= get_the_permalink($post); ?>" title="<?= get_the_title($post); ?>" arial-label="<?= the_title(); ?>">
+            <h3><?= get_the_title($post); ?></h3>
         </a>
-        <div class="excerpt"><?= the_excerpt(); ?></div>
+        <div class="excerpt"><?= get_the_excerpt($post); ?></div>
         <div class="meta">
             <span class="sup-category"><?= escape_categories(wp_get_post_categories($post->ID)); ?>
             </span>

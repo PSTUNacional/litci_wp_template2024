@@ -23,6 +23,15 @@
 			</div>
 		</section>
 	</section> -->
+	<section class="lang-menu">
+		<div class="container">
+		<?php wp_nav_menu(
+					array(
+						'theme_location' => 'top-menu'
+					)
+				); ?>
+		</div>
+	</section>
 
 	<section class="menu-area">
 		<div class="container">
