@@ -8,17 +8,11 @@ Template Name: Category Page
 $current_category = get_queried_object();
 $category_id = $current_category->term_id;
 
-// Obtém as categorias filhas
-$child_categories = get_term_children($category_id, 'category');
-
-// Verifica se existem categorias filhas e as adiciona à consulta
-if (!empty($child_categories)) {
-    $category_id = array_merge(array($category_id), $child_categories);
-}
+$category = prepare_children_categories($category_id);
 
 // Define os argumentos para a nova consulta
 $args = array(
-    'category__in' => $category_id,
+    'category__in' => $category,
     'post_type' => 'post',
     'posts_per_page' => 20,
 );
@@ -35,6 +29,7 @@ get_header(); ?>
             </div>
         </div>
         <?php
+
 
         // ========== Header Block ========== //
 

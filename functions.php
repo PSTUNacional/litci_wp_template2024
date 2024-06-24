@@ -386,9 +386,25 @@ function render_litci_block_02($attributes) {
         'posts_per_page' => 4, // Número de posts a serem exibidos
     );
 
-    isset($attributes['blockCategories'])
-        ? $args['category__in'] = $attributes['blockCategories']
-        : '';
+    if(isset($attributes['blockCategories']))
+    {
+        $cats = [];
+        foreach($attributes['blockCategories'] as $category)
+        {
+            $childrens = prepare_children_categories($category);
+            if(is_array($childrens))
+            {
+                foreach($childrens as $children)
+                {
+                    array_push($cats, $children);
+                }   
+            } else {
+                array_push($cats, $childrens);
+            }
+
+        }
+        $args['category__in'] = $cats;
+    }
 
     isset($attributes['blockTitle'])
         ? $block_title = $attributes['blockTitle']
@@ -408,9 +424,25 @@ function render_litci_block_03($attributes) {
         'posts_per_page' => 4, // Número de posts a serem exibidos
     );
 
-    isset($attributes['blockCategories'])
-        ? $args['category__in'] = $attributes['blockCategories']
-        : '';
+    if(isset($attributes['blockCategories']))
+    {
+        $cats = [];
+        foreach($attributes['blockCategories'] as $category)
+        {
+            $childrens = prepare_children_categories($category);
+            if(is_array($childrens))
+            {
+                foreach($childrens as $children)
+                {
+                    array_push($cats, $children);
+                }   
+            } else {
+                array_push($cats, $childrens);
+            }
+
+        }
+        $args['category__in'] = $cats;
+    }
 
     isset($attributes['blockTitle'])
         ? $block_title = $attributes['blockTitle']
@@ -430,9 +462,25 @@ function render_litci_block_04($attributes) {
         'posts_per_page' => 5, // Número de posts a serem exibidos
     );
 
-    isset($attributes['blockCategories'])
-        ? $args['category__in'] = $attributes['blockCategories']
-        : '';
+     if(isset($attributes['blockCategories']))
+    {
+        $cats = [];
+        foreach($attributes['blockCategories'] as $category)
+        {
+            $childrens = prepare_children_categories($category);
+            if(is_array($childrens))
+            {
+                foreach($childrens as $children)
+                {
+                    array_push($cats, $children);
+                }   
+            } else {
+                array_push($cats, $childrens);
+            }
+
+        }
+        $args['category__in'] = $cats;
+    }
 
     isset($attributes['blockTitle'])
         ? $block_title = $attributes['blockTitle']
@@ -451,9 +499,26 @@ function render_litci_block_05($attributes) {
         'posts_per_page' => 5, // Número de posts a serem exibidos
     );
 
-    isset($attributes['blockCategories'])
-        ? $args['category__in'] = $attributes['blockCategories']
-        : '';
+     if(isset($attributes['blockCategories']))
+    {
+        $cats = [];
+        foreach($attributes['blockCategories'] as $category)
+        {
+            $childrens = prepare_children_categories($category);
+            if(is_array($childrens))
+            {
+                foreach($childrens as $children)
+                {
+                    array_push($cats, $children);
+                }   
+            } else {
+                array_push($cats, $childrens);
+            }
+
+        }
+        $args['category__in'] = $cats;
+    }
+    
     isset($attributes['blockTitle'])
         ? $block_title = $attributes['blockTitle']
         : '';
@@ -549,17 +614,15 @@ function custom_breadcrumbs() {
     echo '</ul>';
 }
 
-function include_child_categories_in_category_query($query) {
-    if ($query->is_category() && $query->is_main_query()) {
-        $category = get_queried_object();
-        $category_id = $category->term_id;
-        $child_categories = get_term_children($category_id, 'category');
+function prepare_children_categories($category)
+{
+    // Obtém as categorias filhas
+    $child_categories = get_term_children($category, 'category');
 
-        if (!empty($child_categories)) {
-            $category_id = array_merge(array($category_id), $child_categories);
-        }
-
-        $query->set('category__in', $category_id);
+    // Verifica se existem categorias filhas e as adiciona à consulta
+    if (!empty($child_categories)) {
+        $category = array_merge(array($category), $child_categories);
     }
+
+    return $category;
 }
-add_action('pre_get_posts', 'include_child_categories_in_category_query');
