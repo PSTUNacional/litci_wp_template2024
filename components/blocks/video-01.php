@@ -8,7 +8,7 @@ $videos = $videos['data'];
     <div class="container">
     <div class="block-header">
             <h3>Vídeos</h3>
-            <a class="see-more">Veja mais</a>
+            <a class="see-more" href="/videos">Veja mais</a>
         </div>
     </div>
     <div class="container">

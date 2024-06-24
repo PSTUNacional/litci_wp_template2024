@@ -493,13 +493,24 @@ function custom_breadcrumbs() {
     if ( is_single() ) {
         $category = get_the_category();
         if (!empty($category)) {
+            $cat = $category[0];
+            $parents = array();
+            while ($cat->parent) {
+                $cat = get_category($cat->parent);
+                array_unshift($parents, $cat);
+            }
+            foreach ($parents as $parent) {
+                $parent_link = get_category_link($parent->term_id);
+                echo '<li><a href="' . $parent_link . '">' . $parent->name . '</a></li>';
+                echo '<li>' . $separator . '</li>';
+            }
             $category_link = get_category_link($category[0]->term_id);
             echo '<li><a href="' . $category_link . '">' . $category[0]->name . '</a></li>';
             echo '<li>' . $separator . '</li>';
         }
         echo '<li>' . get_the_title() . '</li>';
     } elseif ( is_page() ) {
-        if ($post->post_parent) {
+        if (isset($post) && $post->post_parent) {
             $parent_id  = $post->post_parent;
             $breadcrumbs = array();
             while ($parent_id) {
@@ -514,6 +525,20 @@ function custom_breadcrumbs() {
         }
         echo '<li>' . get_the_title() . '</li>';
     } elseif ( is_category() ) {
+        $category = get_queried_object();
+        if ($category->parent != 0) {
+            $parents = array();
+            $cat = $category;
+            while ($cat->parent) {
+                $cat = get_category($cat->parent);
+                array_unshift($parents, $cat);
+            }
+            foreach ($parents as $parent) {
+                $parent_link = get_category_link($parent->term_id);
+                echo '<li><a href="' . $parent_link . '">' . $parent->name . '</a></li>';
+                echo '<li>' . $separator . '</li>';
+            }
+        }
         echo '<li>' . single_cat_title('', false) . '</li>';
     } elseif ( is_search() ) {
         echo '<li>Search results for: ' . get_search_query() . '</li>';

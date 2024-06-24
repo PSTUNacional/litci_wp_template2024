@@ -4,8 +4,26 @@
 Template Name: Category Page
 */
 
-$cat = get_queried_object();
-$cat = $cat->term_id;
+// Obtém a categoria atual
+$current_category = get_queried_object();
+$category_id = $current_category->term_id;
+
+// Obtém as categorias filhas
+$child_categories = get_term_children($category_id, 'category');
+
+// Verifica se existem categorias filhas e as adiciona à consulta
+if (!empty($child_categories)) {
+    $category_id = array_merge(array($category_id), $child_categories);
+}
+
+// Define os argumentos para a nova consulta
+$args = array(
+    'category__in' => $category_id,
+    'post_type' => 'post',
+    'posts_per_page' => 20,
+);
+$posts = new WP_Query($args);
+$posts = $posts->posts;
 
 get_header(); ?>
 <div class="content-area">
@@ -17,14 +35,6 @@ get_header(); ?>
             </div>
         </div>
         <?php
-
-
-        $args = array(
-            'cat' => $cat,
-            'posts_per_page' => 20,
-        );
-        $posts = new WP_Query($args);
-        $posts = $posts->posts;
 
         // ========== Header Block ========== //
 

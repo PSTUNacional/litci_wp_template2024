@@ -35,6 +35,7 @@ foreach ($channels as $channel) {
     <main>
         <div class="container">
             <div class="category-title">
+                <?php custom_breadcrumbs()?>
                 <h1>Videos</h1>
             </div>
         </div>
