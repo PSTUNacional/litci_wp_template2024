@@ -9,13 +9,14 @@ header {
 }
 
 .top-bar {
-    display: flex;
+    display: none;
     flex-direction: column;
     border-bottom: 1px solid var(--gray-300);
     padding: 0;
     align-items: center;
     margin: 0px;
     position: relative;
+    width: 100%;
 }
 
 .top-bar .hamb {
@@ -34,6 +35,12 @@ header {
 }
 
 .top-bar svg image {
+    width: 100%;
+}
+
+.top-bar .container {
+    flex-direction: row;
+    justify-content: space-between;
     width: 100%;
 }
 
@@ -125,6 +132,12 @@ section.menu-area.active .custom-logo {
     color: inherit;
 }
 
+.menu-area .social-media {
+    margin-left: auto;
+    display: flex;
+    gap: 12px;
+}
+
 
 @media screen and (max-width:560px) {
 
@@ -143,6 +156,7 @@ section.menu-area.active .custom-logo {
         background: #fff;
         margin: 0;
         z-index: 99;
+        height: 72px;
     }
 
     .top-bar .container {
@@ -156,13 +170,36 @@ section.menu-area.active .custom-logo {
         cursor: pointer;
     }
 
-    .top-bar svg {
-        max-width: 180px;
-        margin: 0;
+    .top-bar .custom-logo {
         position: absolute;
-        top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        max-height: 100px;
+        width: auto;
+        transition: all .3s ease-in-out;
+        top: 50%;
+        max-height: 72px;
+
+    }
+
+    .lang-menu {
+        display: none;
+    }
+
+    section.menu-area.active {
+        position: inherit;
+    }
+
+    .menu-area .socialmedia,
+    .menu-area .custom-logo {
+        display: none;
+    }
+
+    .menu-area .main-menu {
+        max-width: 80%;
+        position: absolute;
+        display: flex;
+        flex-direction: column;
     }
 }
 
@@ -283,16 +320,23 @@ nav hr {
         opacity: 1;
         z-index: 98;
         backdrop-filter: blur(5px);
+        width: 100%;
+        height: 100%;
     }
 
     .main-menu.active {
         left: 0%;
         transition: all .6s ease-in-out;
         overflow: scroll;
+        top: 0;
+        position: fixed;
     }
 
-    .main-menu ul {
+    .main-menu ul,
+    .main-menu ul li {
         flex-direction: column;
+        align-items: baseline;
+        width: 100%;
         gap: 0;
     }
 
@@ -306,6 +350,7 @@ nav hr {
         position: inherit;
         transform: translateY(0);
         z-index: 0;
+        border: none;
     }
 
     nav .sub-menu>li {

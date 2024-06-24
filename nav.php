@@ -1,28 +1,17 @@
 <header>
-	<!--<section class="top-bar">
+	<section class="top-bar">
 		<div class="container">
-			<div id="socialmediatop" style="padding-left:24px;">
-				<a href="https://www.facebook.com/opiniaosocialista" target="_blank" title="Facebook" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-				<a href="https://www.instagram.com/opiniaosocialista/" target="_blank" title="Instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-				<a href="https://twitter.com/opsocialista" target="_blank" title="X / Twitter" aria-label="X/Twitter"><i class="fab fa-twitter"></i></a>
-				<a target="_blank" href="https://t.me/JornalOpiniaoSocialistaPSTU"><i class="fab fa-telegram"></i></a>
+		<i class="hamb fa fa-bars" onclick="openMobileMenu()"></i>
+		<div class="custom-logo">
+				<?php
+				if (function_exists('the_custom_logo')) {
+					the_custom_logo();
+				}
+				?>
 			</div>
-			<i class="hamb fa fa-bars" onclick="openMobileMenu()"></i>-->
-			<!--<div class="search">
-				<button onclick="handleSearchBar()" aria-label="Buscar"><i class="fa fa-search"></i></button>
-</div>
 		</div>
-		<section id="search-bar">
-			<div class="container">
-				<div id="fast-results-header">
-					<h5>Resultados rápidos</h5>
-					<hr />
-				</div>
-				<div class="fast-results"></div>
-			</div>
-			</div>
-		</section>
-	</section> -->
+	</section>
+
 	<section class="lang-menu">
 		<div class="container">
 		<?php wp_nav_menu(
@@ -43,10 +32,6 @@
 				?>
 			</div>
 			<nav class="main-menu">
-				<div class="mobile">
-					<h4 style="color:var(--primary); text-transform:uppercase; padding-left:24px;">Opinião Socialista</h4>
-					<hr />
-				</div>
 				<?php wp_nav_menu(
 					array(
 						'theme_location' => 'main_menu'
@@ -60,7 +45,7 @@
 						<li><a href="https://facaparte.pstu.org.br" targe="_blank">Venha para o PSTU</a></li>
 					</ul>
 					<hr />
-					<p style="padding-left:24px;">Siga o <b>Opinião</b></p><br />
+					<p style="padding-left:24px;">Siga a <b>LIT-QI</b></p><br />
 					<div class="social-media" style="padding-left:24px;">
 						<a href="https://www.facebook.com/opiniaosocialista" target="_blank" title="Facebook" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
 						<a href="https://www.instagram.com/opiniaosocialista/" target="_blank" title="Instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
@@ -69,7 +54,7 @@
 					</div>
 				</div>
 			</nav>
-			<div style="margin-left:auto; display:flex; gap:12px;">
+			<div class="socialmedia">
 				<a href="https://www.facebook.com/opiniaosocialista" target="_blank" title="Facebook" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
 				<a href="https://www.instagram.com/opiniaosocialista/" target="_blank" title="Instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
 				<a href="https://twitter.com/opsocialista" target="_blank" title="X / Twitter" aria-label="X/Twitter"><i class="fab fa-twitter"></i></a>

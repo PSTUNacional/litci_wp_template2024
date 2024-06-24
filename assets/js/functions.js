@@ -4,6 +4,12 @@
 
 ========================================*/
 
+function openMobileMenu() {
+    document.querySelector('.main-menu').classList.toggle('active');
+    document.querySelector('.backdrop').classList.toggle('active');
+}
+
+
 window.addEventListener('scroll', ()=>{
    var scroll = window.pageYOffset;
    const nav = document.querySelector('section.menu-area')
