@@ -1,12 +1,15 @@
 <section>
     <div class="container">
         <div class="column">
-        <?php if (isset($block_title)) { ?>
-                <div class="block-header">
+        <div class="block-header">
+                <?php if (isset($block_title)) { ?>
                     <h3><?= $block_title ?></h3>
-                    <a class="see-more" href="<?=get_category_link($attributes['blockCategories'][0])?>">Veja mais</a>
-                </div>
-            <?php } ?>
+                <?php } 
+                    if(isset($attributes['blockCategories'][0])) {
+                ?>
+                <a class="see-more" href="<?=get_category_link($attributes['blockCategories'][0])?>">Veja mais</a>
+                <?php } ?>
+            </div>
             <div class="block-04">
                 <div class="featured">
                     <?php
@@ -18,8 +21,7 @@
                     <?php
                     $i = 1;
                     for ($i = 1; $i < 5; $i++) {
-                        if(isset($posts[$i]))
-                        {
+                        if (isset($posts[$i])) {
                             $post = $posts[$i];
                             include __DIR__ . '/../units/unit-04.php';
                         }
