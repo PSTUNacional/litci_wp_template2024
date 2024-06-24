@@ -548,3 +548,18 @@ function custom_breadcrumbs() {
 
     echo '</ul>';
 }
+
+function include_child_categories_in_category_query($query) {
+    if ($query->is_category() && $query->is_main_query()) {
+        $category = get_queried_object();
+        $category_id = $category->term_id;
+        $child_categories = get_term_children($category_id, 'category');
+
+        if (!empty($child_categories)) {
+            $category_id = array_merge(array($category_id), $child_categories);
+        }
+
+        $query->set('category__in', $category_id);
+    }
+}
+add_action('pre_get_posts', 'include_child_categories_in_category_query');
