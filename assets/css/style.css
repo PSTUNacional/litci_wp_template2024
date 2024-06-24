@@ -94,6 +94,16 @@ section {
 
 }
 
+.category-title{
+    margin-top: 48px;
+}
+
+ul.breadcrumbs{
+    list-style: none;
+    display: inline-flex;
+    align-items: center;
+    gap:8px;
+}
 /*========================================
 
     SEARCH BAR
@@ -595,8 +605,14 @@ section.story-container .backdrop {
 }
 
 .video-info .date {
-    color: var(--grey-600);
+    color: var(--gray-600);
     font-size: 0.7em;
+    display: flex;
+    gap:4px
+}
+.video-info .date:before {
+    content: '\e935';
+    font-family: Material Icons;
 }
 
 .video-thumb {

@@ -25,8 +25,6 @@ get_header(); ?>
             $ad = 'banner_ad_middle_';
             include(__DIR__ . '/components/ads/ads_banner.php');
         }
-        // ====
-
 
         render_section('block02');
 
@@ -37,11 +35,7 @@ get_header(); ?>
         render_section('block05');
 
         render_section('block06');
-
         ?>
-
-
-
     </main>
     <script src="wp-content/themes/litci/assets/js/story-slider.js"></script>
 </div>

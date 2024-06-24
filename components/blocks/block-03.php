@@ -1,10 +1,12 @@
 <section>
     <div class="container">
         <div class="column">
-            <div class="block-header">
-                <h3>Últimas notícias</h3>
-                <a class="see-more">Veja mais</a>
-            </div>
+            <?php if (isset($block_title)) { ?>
+                <div class="block-header">
+                    <h3><?= $block_title ?></h3>
+                    <a class="see-more" href="<?=get_category_link($attributes['blockCategories'][0])?>">Veja mais</a>
+                </div>
+            <?php } ?>
             <div class="block-03">
                 <div class="column quarter">
                     <?php

@@ -74,6 +74,11 @@ section.menu-area.active .custom-logo {
     gap: var(--gap);
 }
 
+.menu-area a {
+    display: flex;
+    align-items: center;
+}
+
 .main-menu {
     max-width: var(--max-width);
     padding: 0px var(--gap);
@@ -81,18 +86,20 @@ section.menu-area.active .custom-logo {
     position: relative;
 }
 
-.main-menu div{
+.main-menu div {
     height: 100%;
 }
 
-.main-menu ul {
+.main-menu ul,
+.lang-menu ul {
     display: flex;
     justify-content: center;
     gap: var(--gap);
     height: 100%;
 }
 
-.main-menu ul li {
+.main-menu ul li,
+.lang-menu ul li {
     list-style-type: none;
     position: relative;
     display: flex;
@@ -109,9 +116,9 @@ section.menu-area.active .custom-logo {
     transform: rotate(90deg);
 }
 
-.main-menu a:hover{
+.main-menu a:hover {
     color: var(--primary);
-} 
+}
 
 .main-menu a {
     text-decoration: none;
@@ -184,7 +191,7 @@ nav .sub-menu>li a {
     justify-content: space-between;
     align-items: center;
     height: fit-content;
-    color:var(--black) !important;
+    color: var(--black) !important;
 }
 
 nav .sub-menu li a i {
@@ -354,7 +361,7 @@ nav hr {
 
 }
 
-.lang-menu{
+.lang-menu {
     background-color: var(--gray-100);
     padding: 8px;
 }

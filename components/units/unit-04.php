@@ -6,7 +6,7 @@ setup_postdata($post);
         <?= lit_render_thumbnail($post, "large"); ?>
     </div>
     <div class="column">
-        <a href="<?= the_permalink(); ?>" title="<?= get_the_title($post); ?>" arial-label="<?= get_the_title($post); ?>">
+        <a href="<?= get_the_permalink($post); ?>" title="<?= get_the_title($post); ?>" arial-label="<?= get_the_title($post); ?>">
             <h4><?= get_the_title($post); ?></h4>
         </a>
         <div class="meta">

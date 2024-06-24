@@ -23,13 +23,13 @@ function load_admin_scripts($hook)
 {
     if ($hook === 'edit.php' || $hook === 'customize.php') {
         wp_enqueue_script('custom-admin-js', get_template_directory_uri() . '/assets/js/custom-admin.js', array('jquery'), null, true);
-        wp_enqueue_style('custom-admin-css', get_template_directory_uri() . '/assets/css/admin.css', array(), '1.0', 'all');
-
         wp_localize_script('custom-admin-js', 'customAdminAjax', array(
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('custom_admin_nonce')
         ));
     }
+
+    wp_enqueue_style('custom-admin-css', get_template_directory_uri() . '/assets/css/admin.css', array(), '1.0', 'all');
 }
 add_action('admin_enqueue_scripts', 'load_admin_scripts');
 
@@ -63,6 +63,8 @@ function litci_config()
     add_theme_support('custom-header', $args);
 
     add_theme_support('post-thumbnails');
+
+    add_theme_support('align-wide');
 }
 
 add_action('after_setup_theme', 'litci_config', 0);
@@ -307,29 +309,6 @@ function escape_categories($cats)
     return $cat;
 }
 
-function render_section($block)
-{
-    if (get_theme_mod('content_' . $block . '_status') == true) {
-        $layout = get_theme_mod('content_' . $block . '_layout');
-        $block_path = __DIR__ . '/components/blocks/' . $layout . '.php';
-        $block_title = get_theme_mod('content_' . $block . '_title');
-
-        $args = [
-            'posts_per_page' => 5,
-            'orderby' => '',
-            'order' => 'DESC'
-        ];
-
-        $categories = get_theme_mod('content_' . $block . '_category');
-        if (isset($categories[0]) && $categories[0] !== 0) {
-            $args['category__in'] = $categories;
-        }
-
-        $posts = get_posts($args);
-        include($block_path);
-    }
-}
-
 function lit_render_thumbnail($post, $size = "medium")
 {
     $cats = wp_get_post_categories($post->ID);
@@ -345,52 +324,202 @@ function lit_render_thumbnail($post, $size = "medium")
             $tb = '<a class="featured-image-container" href="' . $link . '" title="' . $post->post_title . '" aria-label="' . $post->post_title . '"><div class="opinion-ribbon">Opinião</div><img class="featured-image" src="' . $thumbURL . '" load="lazy" alt="' . $post->post_title . '"/></a>';
         }
     }
-
     return $tb;
 }
 
 
+function register_litci_blocks() {
 
+    $blockList = [
+        "block-01",
+        "block-02",
+        "block-03",
+        "block-04",
+        "block-05",
+        "video-01",
+        "stories"
+    ];
 
-function registrar_meu_bloco() {
-    wp_register_script(
-        'meu-bloco-script',
-        get_template_directory_uri() . '/components/blocks/block01.js',
-        array('wp-blocks', 'wp-editor'),
-        null,
-        true
-    );
+    forEach($blockList as $block)
+    {
+        wp_register_script(
+            'litci-'.$block,
+            get_template_directory_uri() . '/components/blocks/'.$block.'.js',
+            array('wp-blocks', 'wp-editor'),
+            null,
+            true
+        );
+    
+        $callback = 'render_litci_'.$block;
+        $callback = str_replace('-','_', $callback);
 
-    register_block_type('litci/block01', array(
-        'editor_script' => 'meu-bloco-script',
-    ));
-
-    wp_register_script(
-        'litci-block-02',
-        get_template_directory_uri() . '/components/blocks/block02.js',
-        array('wp-blocks', 'wp-editor'),
-        null,
-        true
-    );
-
-    register_block_type('litci/block02', array(
-        'editor_script' => 'litci-block-02',
-        'render_callback' => 'render_litci_block02'
-    ));
+        register_block_type('litci/'.$block, array(
+            'editor_script' => 'litci-'.$block,
+            'render_callback' => $callback
+        ));
+    
+    }
 }
-add_action('init', 'registrar_meu_bloco');
 
-function render_litci_block02($attributes) {
+add_action('init', 'register_litci_blocks');
+
+function render_litci_block_01($attributes) {
+    $args = array(
+        'post_type' => 'post',
+        'posts_per_page' => 4, // Número de posts a serem exibidos
+    );
+
+    $posts = get_posts($args);
+    if(isset($attributes['blockTitle'])){
+        $block_title = $attributes['blockTitle'];
+    }
+    
+    include get_template_directory() . '/components/blocks/block-01.php';
+
+    wp_reset_postdata();
+
+}
+
+function render_litci_block_02($attributes) {
+    $args = array(
+        'post_type' => 'post',
+        'posts_per_page' => 4, // Número de posts a serem exibidos
+    );
+
+    isset($attributes['blockCategories'])
+        ? $args['category__in'] = $attributes['blockCategories']
+        : '';
+
+    isset($attributes['blockTitle'])
+        ? $block_title = $attributes['blockTitle']
+        : '';
+
+    $posts = get_posts($args);
+
+    include get_template_directory() . '/components/blocks/block-02.php';
+
+    wp_reset_postdata();
+
+}
+
+function render_litci_block_03($attributes) {
+    $args = array(
+        'post_type' => 'post',
+        'posts_per_page' => 4, // Número de posts a serem exibidos
+    );
+
+    isset($attributes['blockCategories'])
+        ? $args['category__in'] = $attributes['blockCategories']
+        : '';
+
+    isset($attributes['blockTitle'])
+        ? $block_title = $attributes['blockTitle']
+        : '';
+
+
+    $posts = get_posts($args);
+    include get_template_directory() . '/components/blocks/block-03.php';
+
+    wp_reset_postdata();
+
+}
+
+function render_litci_block_04($attributes) {
     $args = array(
         'post_type' => 'post',
         'posts_per_page' => 5, // Número de posts a serem exibidos
     );
 
-    $posts = get_posts($args);
+    isset($attributes['blockCategories'])
+        ? $args['category__in'] = $attributes['blockCategories']
+        : '';
 
-    $block_title = "Últimas notícias";
-    include get_template_directory() . '/components/blocks/block-02.php';
+    isset($attributes['blockTitle'])
+        ? $block_title = $attributes['blockTitle']
+        : '';
+
+    $posts = get_posts($args);
+    include get_template_directory() . '/components/blocks/block-04.php';
 
     wp_reset_postdata();
+}
 
+
+function render_litci_block_05($attributes) {
+    $args = array(
+        'post_type' => 'post',
+        'posts_per_page' => 5, // Número de posts a serem exibidos
+    );
+
+    isset($attributes['blockCategories'])
+        ? $args['category__in'] = $attributes['blockCategories']
+        : '';
+    isset($attributes['blockTitle'])
+        ? $block_title = $attributes['blockTitle']
+        : '';
+
+    $posts = get_posts($args);
+    include get_template_directory() . '/components/blocks/block-05.php';
+
+    wp_reset_postdata();
+}
+
+function render_litci_video_01($attributes) {
+    include get_template_directory() . '/components/blocks/video-01.php';
+    wp_reset_postdata();
+}
+
+
+function render_litci_stories($attributes) {
+    include get_template_directory() . '/components/blocks/stories.php';
+    wp_reset_postdata();
+}
+
+function custom_breadcrumbs() {
+    // Configurações
+    $separator = ' &gt; ';
+    $home_title = 'Home';
+
+    // Pega a URL do home
+    $home_link = get_home_url();
+
+    // Início dos breadcrumbs
+    echo '<ul class="breadcrumbs">';
+
+    // Home
+    echo '<li><a href="' . $home_link . '">' . $home_title . '</a></li>';
+    echo '<li>' . $separator . '</li>';
+
+    if ( is_single() ) {
+        $category = get_the_category();
+        if (!empty($category)) {
+            $category_link = get_category_link($category[0]->term_id);
+            echo '<li><a href="' . $category_link . '">' . $category[0]->name . '</a></li>';
+            echo '<li>' . $separator . '</li>';
+        }
+        echo '<li>' . get_the_title() . '</li>';
+    } elseif ( is_page() ) {
+        if ($post->post_parent) {
+            $parent_id  = $post->post_parent;
+            $breadcrumbs = array();
+            while ($parent_id) {
+                $page = get_page($parent_id);
+                $breadcrumbs[] = '<li><a href="' . get_permalink($page->ID) . '">' . get_the_title($page->ID) . '</a></li>';
+                $parent_id  = $page->post_parent;
+            }
+            $breadcrumbs = array_reverse($breadcrumbs);
+            foreach ($breadcrumbs as $crumb) {
+                echo $crumb . ' ' . $separator . ' ';
+            }
+        }
+        echo '<li>' . get_the_title() . '</li>';
+    } elseif ( is_category() ) {
+        echo '<li>' . single_cat_title('', false) . '</li>';
+    } elseif ( is_search() ) {
+        echo '<li>Search results for: ' . get_search_query() . '</li>';
+    } elseif ( is_404() ) {
+        echo '<li>Error 404</li>';
+    }
+
+    echo '</ul>';
 }

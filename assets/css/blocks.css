@@ -1,31 +1,32 @@
-.block-header{
+.block-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
 }
-.block-header h3{
+
+.block-header h3 {
     font-family: 'Inter', sans-serif;
     margin-bottom: var(--gap);
 }
 
-.block-header .see-more{
-    color:var(--primary);
+.block-header .see-more {
+    color: var(--primary);
     display: flex;
     align-items: center;
-    gap:8px;
+    gap: 8px;
 }
 
-.block-header .see-more:after{
-    content:'\e941';
+.block-header .see-more:after {
+    content: '\e941';
     font-family: Material Icons;
     font-size: 1.5rem;
 }
 
-.block-02{
-    display:grid;
+.block-02 {
+    display: grid;
     grid-template-columns: repeat(auto-fit, minmax(128px, 1fr));
-    gap:var(--gap);
+    gap: var(--gap);
 }
 
 @media only screen and (max-width: 960px) {
@@ -34,38 +35,67 @@
     }
 }
 
-.block-03{
+.block-03 {
     display: flex;
-    gap:var(--gap);
+    gap: var(--gap);
 }
+
 @media only screen and (max-width: 960px) {
     .block-03 {
         flex-direction: column;
     }
 }
-.block-04{
+
+.block-04 {
     display: flex;
     flex-direction: column;
     gap: var(--gap);
 }
-.block-04 .grid{
-    display:grid;
+
+.block-04 .grid {
+    display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap:var(--gap);
-}
-
-.block-04 .featured{
-    aspect-ratio: 21/9;
-}
-
-.video-block-01 .container{
     gap: var(--gap);
 }
 
-.video-block-01 .container .column:first-of-type{
+.block-04 .featured {
+    aspect-ratio: 21/9;
+}
+
+.video-block-01 .container {
+    gap: var(--gap);
+}
+
+.video-block-01 .container .column:first-of-type {
     flex-basis: 68%;
 }
 
-.video-block-01 .container .column:last-of-type{
+.video-block-01 .container .column:last-of-type {
     flex-basis: 33%;
+}
+
+.block-05 {
+    flex-direction: row;
+    display: flex;
+    gap: var(--gap);
+}
+
+.block-05 > div{
+    flex-basis: 50%;
+}
+
+.block-05 .grid{
+    display: grid;
+    grid-auto-rows: 1fr;
+    gap: var(--gap);
+}
+
+@media only screen and (max-width: 960px) {
+    .block-05 {
+        flex-direction: column;
+    }
+}
+
+.container.result-list{
+    flex-direction:column;
 }

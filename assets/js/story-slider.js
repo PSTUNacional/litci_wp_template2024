@@ -1,4 +1,4 @@
-env = 'prod'
+env = 'dev'
 if (env === 'dev') {
     url = 'http://localhost:8080/?rest_route=/wp/v2/posts'
 } else {

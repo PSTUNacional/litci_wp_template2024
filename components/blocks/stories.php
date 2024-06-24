@@ -60,4 +60,5 @@
             </div>
         </div>
     </div>
+    <script src="wp-content/themes/litci/assets/js/story-slider.js"></script>
 </section>

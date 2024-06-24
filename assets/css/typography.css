@@ -18,17 +18,16 @@ h5,
 h6{
     font-family: "Merriweather", serif;
     color:var(--black-pure);
+    line-height: 1.25;
 }
 
 /* Major Third Scale */
 h1 {
     font-size: 3.815rem;
-    line-height: 1.15;
 }
 
 h2 {
     font-size: 3.052rem;
-    line-height: 1.15;
 }
 
 h3 {
