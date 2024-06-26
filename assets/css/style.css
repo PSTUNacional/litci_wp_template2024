@@ -899,6 +899,11 @@ section.video-section {
     padding: var(--gap-large) 0;
 }
 
+.video-section h3,
+.video-section h4{
+    font-family: 'Inter', sans-serif;
+}
+
 section.video-section .block-header h3,
 section.video-section .block-header a {
     color: #fff;
