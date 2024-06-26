@@ -18,7 +18,7 @@
             </div>
             <div class="party-grid">
                 <a class="party-item">
-                    <div class="logo" style="background-image:url('/wp-content/themes/litci/assets/img/parties/pstu.jpg')"></div>
+                    <div class="logo" style="background-image:url('<?=get_template_directory()?>/assets/img/parties/pstu.jpg')"></div>
                     <div class="circle"></div>
                     <span class="fi fi-br fis"></span>
                 </a>
