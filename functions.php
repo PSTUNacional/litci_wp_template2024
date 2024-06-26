@@ -477,7 +477,7 @@ function prepare_args_to_render($attributes)
 
     if(isset($attributes['sortOption']))
     {
-        $args['order_by'] = $attributes['sortOption'];
+        $args['orderby'] = $attributes['sortOption'];
         $args['sort'] = 'DESC';
     }
 
