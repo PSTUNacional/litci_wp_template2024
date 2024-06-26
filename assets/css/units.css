@@ -82,6 +82,15 @@
     .unit-02 .featured-image-container {
         aspect-ratio: 16/9;
     }
+
+    .grid .unit-02 .featured-image-container{
+        aspect-ratio: inherit;
+        height: 100%;
+    }
+
+    .grid .unit-02 h3{
+        font-size: 1rem;
+    }
 }
 
 .result-list .unit-02{

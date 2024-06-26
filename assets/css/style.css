@@ -431,6 +431,9 @@ article .author-line {
     .party-grid {
         grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
     }
+    .party-item .circle {
+        border: 3px solid #c04;
+    }
 }
 
 /*========================================
