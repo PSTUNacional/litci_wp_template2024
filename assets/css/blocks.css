@@ -90,6 +90,12 @@
     gap:var(--gap);
 }
 
+@media only screen and (max-width: 960px) {
+    .block-06 {
+        flex-direction: column;
+    }
+}
+
 .block-06.minor{
     display: grid;
     gap:var(--gap);
