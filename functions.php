@@ -467,7 +467,7 @@ function prepare_args_to_render($attributes)
 {
     $args = array(
         'post_type' => 'post',
-        'posts_per_page' => 4, // Número de posts a serem exibidos
+        'posts_per_page' => 10, // Número de posts a serem exibidos
     );
 
     if(isset($attributes['blockCategories']))
