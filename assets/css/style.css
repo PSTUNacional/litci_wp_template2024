@@ -430,6 +430,7 @@ article .author-line {
 @media only screen and (max-width: 960px) {
     .party-grid {
         grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+        gap:12px;
     }
     .party-item .circle {
         border: 3px solid #c04;
