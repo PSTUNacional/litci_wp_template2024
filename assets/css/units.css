@@ -204,4 +204,10 @@
     .unit-04 h4 {
         font-size: 1rem;
     }
+
+    .block-05 .unit-04 .featured-image-container{
+        height: 100%;
+        aspect-ratio: inherit;
+    }
+    
 }
