@@ -17,6 +17,7 @@
     --gap-large: calc(2*var(--gap));
     --gap-medium: calc(var(--gap)/2);
     --gap-small: calc(var(--gap)/3);
+    --radius: 8px;
 
     --primary: #cc0000;
 
@@ -343,7 +344,7 @@ article .author-line {
 }
 
 .featured-image-container {
-    border-radius: var(--gap);
+    border-radius: var(--radius);
     overflow: hidden;
     background-color: var(--gray-100);
 }
@@ -910,7 +911,6 @@ section.video-section .block-header span {
 section.video-section .video-item {
     display: flex;
     gap: calc(var(--gap)/2);
-    align-items: center;
 }
 
 section.video-section .video-item .video-thumb {
@@ -954,7 +954,7 @@ section.video-section .video-item.main:hover .video-info {
     width: 100%;
     height: auto;
     aspect-ratio: 16/9;
-    border-radius: var(--gap-small);
+    border-radius: var(--radius);
     overflow: hidden;
     border: 1px solid #ccc;
 }
@@ -993,7 +993,7 @@ section.video-section .video-item.main:hover .video-info {
 
 .ads {
     background-color: var(--gray-100);
-    border-radius: var(--gap);
+    border-radius: var(--radius);
     text-align: center;
     overflow: hidden;
     aspect-ratio: 21/4;

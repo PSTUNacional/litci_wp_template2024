@@ -4,6 +4,7 @@
     var InspectorControls = editor.InspectorControls;
     var CheckboxControl = components.CheckboxControl;
     var withSelect = wp.data.withSelect;
+    var SelectControl = components.SelectControl;
 
     blocks.registerBlockType('litci/block-02', {
         title: 'LIT-Bloco 2',
@@ -17,6 +18,10 @@
             blockCategories: {
                 type: 'array',
                 default: [],
+            },
+            sortOption: { // Novo atributo para a opção de ordenação
+                type: 'string',
+                default: 'recent',
             },
         },
         edit: withSelect(function (select) {
@@ -49,6 +54,11 @@
                 props.setAttributes({ blockCategories: newCategory });
             };
 
+            var onChangeSortOption = function (newSortOption) {
+                props.setAttributes({ sortOption: newSortOption });
+            };
+
+
             return el('div', { className: "block-card" },
                 el('h3', {}, attributes.blockTitle),
                 el('div', {
@@ -65,6 +75,16 @@
                         label: 'Título do Bloco',
                         value: attributes.blockTitle,
                         onChange: onChangeTitle
+                    }),
+                    el(SelectControl, {
+                        className: "block-editor-block-card",
+                        label: 'Opção de Ordenação',
+                        value: attributes.sortOption,
+                        options: [
+                            { label: 'Mais recentes', value: 'publish_date' },
+                            { label: 'Prioritários primeiro', value: 'menu_order' }
+                        ],
+                        onChange: onChangeSortOption
                     }),
                     el('fieldset', { className: "category-multi-select-container"},
                         el('legend', {}, 'Categorias do Bloco'),

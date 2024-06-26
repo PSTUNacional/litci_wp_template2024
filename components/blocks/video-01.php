@@ -12,11 +12,11 @@ $videos = $videos['data'];
         </div>
     </div>
     <div class="container">
-        <div class="column">
-            <div class="video-item only-thumb" data-video="<?= $videos[0]['video_id'] ?>">
+        <div class="column ta-left video-grid">
+            <div class="video-item" data-video="<?= $videos[0]['video_id'] ?>">
                 <div class="video-thumb" style="background-image:url('https://i.ytimg.com/vi/<?= $videos[0]['video_id'] ?>/hqdefault.jpg')"></div>
                 <div class="video-info">
-                    <span class="badge primary"></span>
+                    <!--<span class="badge primary"></span>-->
                     <h3><?= $videos[0]['title'] ?></h3>
                     <span class="date"><?= date("d M Y", strtotime($videos[0]['publication_date'])) ?></span>
                     <!--<p class="description"><?= $videos[0]['description'] ?></p>-->
@@ -24,11 +24,11 @@ $videos = $videos['data'];
                 </div>
             </div>
         </div>
-        <div class="column">
-            <div class="video-item only-thumb" data-video="<?= $videos[1]['video_id'] ?>">
+        <div class="column video-grid">
+            <div class="video-item" data-video="<?= $videos[1]['video_id'] ?>">
                 <div class="video-thumb" style="background-image:url('https://i.ytimg.com/vi/<?= $videos[1]['video_id'] ?>/hqdefault.jpg')"></div>
                 <div class="video-info">
-                    <span class="badge primary"></span>
+                    <!--<span class="badge primary"></span>-->
                     <h3><?= $videos[1]['title'] ?></h3>
                     <span class="date"><?= date("d M Y", strtotime($videos[1]['publication_date'])) ?></span>
                     <!--<p class="description"><?= $videos[1]['description'] ?></p>-->
@@ -37,15 +37,16 @@ $videos = $videos['data'];
             </div>
         </div>
     </div>
-    <div class="container minor-grid" style="margin-top:var(--gap)">
+    <div class="container" style="margin-top:var(--gap)">
+        <div class="video-grid">
             <?php
             for($i=2; $i<6; $i++)
             { ?>
-                <div class="video-item only-thumb" data-video="<?= $videos[$i]['video_id'] ?>">
+                <div class="video-item" data-video="<?= $videos[$i]['video_id'] ?>">
                     <div class="video-thumb" style="background-image:url('https://i.ytimg.com/vi/<?= $videos[$i]['video_id'] ?>/hqdefault.jpg')"></div>
                     <div class="video-info">
                         <!--<span class="badge primary"><?= $videos[$i]['channel_name'] ?></span>-->
-                        <h3><?= $videos[1]['title'] ?></h3>
+                        <h3><?= $videos[$i]['title'] ?></h3>
                         <span class="date"><?= date("d M Y", strtotime($videos[$i]['publication_date'])) ?></span>
                         <!--<p class="description"><?= $videos[$i]['description'] ?></p>-->
                         <!--<p class="duration"><?= $videos[$i]['duration'] ?></p>-->
@@ -54,6 +55,7 @@ $videos = $videos['data'];
             <?php
                 }
             ?>
+    </div>
     </div>
 </section>
 <script>

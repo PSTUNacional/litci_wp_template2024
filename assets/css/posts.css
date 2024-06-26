@@ -56,7 +56,7 @@ article.post .thumbnail-container {
     width: 100%;
     height: auto;
     overflow: hidden;
-    border-radius: var(--gap);
+    border-radius: var(--radius);
 }
 
 article.post .thumbnail-container img {

@@ -364,12 +364,10 @@ function register_litci_blocks() {
 add_action('init', 'register_litci_blocks');
 
 function render_litci_block_01($attributes) {
-    $args = array(
-        'post_type' => 'post',
-        'posts_per_page' => 4, // Número de posts a serem exibidos
-    );
-
+    
+    $args = prepare_args_to_render($attributes);
     $posts = get_posts($args);
+
     if(isset($attributes['blockTitle'])){
         $block_title = $attributes['blockTitle'];
     }
@@ -381,36 +379,13 @@ function render_litci_block_01($attributes) {
 }
 
 function render_litci_block_02($attributes) {
-    $args = array(
-        'post_type' => 'post',
-        'posts_per_page' => 4, // Número de posts a serem exibidos
-    );
 
-    if(isset($attributes['blockCategories']))
-    {
-        $cats = [];
-        foreach($attributes['blockCategories'] as $category)
-        {
-            $childrens = prepare_children_categories($category);
-            if(is_array($childrens))
-            {
-                foreach($childrens as $children)
-                {
-                    array_push($cats, $children);
-                }   
-            } else {
-                array_push($cats, $childrens);
-            }
-
-        }
-        $args['category__in'] = $cats;
-    }
+    $args = prepare_args_to_render($attributes);
+    $posts = get_posts($args);
 
     isset($attributes['blockTitle'])
         ? $block_title = $attributes['blockTitle']
         : '';
-
-    $posts = get_posts($args);
 
     include get_template_directory() . '/components/blocks/block-02.php';
 
@@ -419,37 +394,14 @@ function render_litci_block_02($attributes) {
 }
 
 function render_litci_block_03($attributes) {
-    $args = array(
-        'post_type' => 'post',
-        'posts_per_page' => 4, // Número de posts a serem exibidos
-    );
 
-    if(isset($attributes['blockCategories']))
-    {
-        $cats = [];
-        foreach($attributes['blockCategories'] as $category)
-        {
-            $childrens = prepare_children_categories($category);
-            if(is_array($childrens))
-            {
-                foreach($childrens as $children)
-                {
-                    array_push($cats, $children);
-                }   
-            } else {
-                array_push($cats, $childrens);
-            }
-
-        }
-        $args['category__in'] = $cats;
-    }
+    $args = prepare_args_to_render($attributes);
+    $posts = get_posts($args);
 
     isset($attributes['blockTitle'])
         ? $block_title = $attributes['blockTitle']
         : '';
 
-
-    $posts = get_posts($args);
     include get_template_directory() . '/components/blocks/block-03.php';
 
     wp_reset_postdata();
@@ -457,36 +409,14 @@ function render_litci_block_03($attributes) {
 }
 
 function render_litci_block_04($attributes) {
-    $args = array(
-        'post_type' => 'post',
-        'posts_per_page' => 5, // Número de posts a serem exibidos
-    );
-
-     if(isset($attributes['blockCategories']))
-    {
-        $cats = [];
-        foreach($attributes['blockCategories'] as $category)
-        {
-            $childrens = prepare_children_categories($category);
-            if(is_array($childrens))
-            {
-                foreach($childrens as $children)
-                {
-                    array_push($cats, $children);
-                }   
-            } else {
-                array_push($cats, $childrens);
-            }
-
-        }
-        $args['category__in'] = $cats;
-    }
+        
+    $args = prepare_args_to_render($attributes);
+    $posts = get_posts($args);
 
     isset($attributes['blockTitle'])
         ? $block_title = $attributes['blockTitle']
         : '';
 
-    $posts = get_posts($args);
     include get_template_directory() . '/components/blocks/block-04.php';
 
     wp_reset_postdata();
@@ -494,36 +424,14 @@ function render_litci_block_04($attributes) {
 
 
 function render_litci_block_05($attributes) {
-    $args = array(
-        'post_type' => 'post',
-        'posts_per_page' => 5, // Número de posts a serem exibidos
-    );
+        
+    $args = prepare_args_to_render($attributes);
+    $posts = get_posts($args);
 
-     if(isset($attributes['blockCategories']))
-    {
-        $cats = [];
-        foreach($attributes['blockCategories'] as $category)
-        {
-            $childrens = prepare_children_categories($category);
-            if(is_array($childrens))
-            {
-                foreach($childrens as $children)
-                {
-                    array_push($cats, $children);
-                }   
-            } else {
-                array_push($cats, $childrens);
-            }
-
-        }
-        $args['category__in'] = $cats;
-    }
-    
     isset($attributes['blockTitle'])
         ? $block_title = $attributes['blockTitle']
         : '';
 
-    $posts = get_posts($args);
     include get_template_directory() . '/components/blocks/block-05.php';
 
     wp_reset_postdata();
@@ -538,6 +446,42 @@ function render_litci_video_01($attributes) {
 function render_litci_stories($attributes) {
     include get_template_directory() . '/components/blocks/stories.php';
     wp_reset_postdata();
+}
+
+function prepare_args_to_render($attributes)
+{
+    $args = array(
+        'post_type' => 'post',
+        'posts_per_page' => 4, // Número de posts a serem exibidos
+    );
+
+    if(isset($attributes['blockCategories']))
+    {
+        $cats = [];
+        foreach($attributes['blockCategories'] as $category)
+        {
+            $childrens = prepare_children_categories($category);
+            if(is_array($childrens))
+            {
+                foreach($childrens as $children)
+                {
+                    array_push($cats, $children);
+                }   
+            } else {
+                array_push($cats, $childrens);
+            }
+
+        }
+        $args['category__in'] = $cats;
+    }
+
+    if(isset($attributes['sortOption']))
+    {
+        $args['order_by'] = $attributes['sortOption'];
+        $args['sort'] = 'DESC';
+    }
+
+    return $args;
 }
 
 function custom_breadcrumbs() {

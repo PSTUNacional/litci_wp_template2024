@@ -51,8 +51,9 @@
 
   .video-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(224px, 1fr));
       gap: var(--gap);
+      width: 100%;
   }
 
   .video-grid .video-item {

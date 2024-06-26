@@ -1,6 +1,7 @@
 (function (blocks, editor, element, components) {
     var el = element.createElement;
     var TextControl = components.TextControl;
+    var SelectControl = components.SelectControl;
     var InspectorControls = editor.InspectorControls;
     
 
@@ -11,7 +12,11 @@
         attributes: {
             blockTitle: {
                 type: 'string',
-                default: 'Bloco 03',
+                default: 'Bloco 01',
+            },
+            sortOption: { // Novo atributo para a opção de ordenação
+                type: 'string',
+                default: 'recent',
             },
         },
         edit: function (props) {
@@ -19,6 +24,10 @@
 
             var onChangeTitle = function (newTitle) {
                 props.setAttributes({ blockTitle: newTitle });
+            };
+
+            var onChangeSortOption = function (newSortOption) {
+                props.setAttributes({ sortOption: newSortOption });
             };
 
             return el('div', { className: "block-card" },
@@ -35,6 +44,16 @@
                         label: 'Título do Bloco',
                         value: attributes.blockTitle,
                         onChange: onChangeTitle
+                    }),
+                    el(SelectControl, {
+                        className: "block-editor-block-card",
+                        label: 'Opção de Ordenação',
+                        value: attributes.sortOption,
+                        options: [
+                            { label: 'Mais recentes', value: 'publish_date' },
+                            { label: 'Prioritários primeiro', value: 'menu_order' }
+                        ],
+                        onChange: onChangeSortOption
                     })
                 )
             );
