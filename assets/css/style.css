@@ -435,6 +435,10 @@ article .author-line {
     .party-item .circle {
         border: 3px solid #c04;
     }
+    .party-item .fis {
+        right: 4px;
+        bottom: 4px;
+    }
 }
 
 /*========================================
