@@ -14,7 +14,7 @@ $videos = $videos['data'];
     <div class="container">
         <div class="column">
             <div class="video-item only-thumb" data-video="<?= $videos[0]['video_id'] ?>">
-                <div class="video-thumb" style="background-image:url('https://i.ytimg.com/vi/<?= $videos[0]['video_id'] ?>/mqdefault.jpg')"></div>
+                <div class="video-thumb" style="background-image:url('https://i.ytimg.com/vi/<?= $videos[0]['video_id'] ?>/hqdefault.jpg')"></div>
                 <div class="video-info">
                     <span class="badge primary"></span>
                     <h3><?= $videos[0]['title'] ?></h3>
@@ -26,26 +26,34 @@ $videos = $videos['data'];
         </div>
         <div class="column">
             <div class="video-item only-thumb" data-video="<?= $videos[1]['video_id'] ?>">
-                <div class="video-thumb" style="background-image:url('https://i.ytimg.com/vi/<?= $videos[1]['video_id'] ?>/mqdefault.jpg')"></div>
+                <div class="video-thumb" style="background-image:url('https://i.ytimg.com/vi/<?= $videos[1]['video_id'] ?>/hqdefault.jpg')"></div>
                 <div class="video-info">
-                    <!--<span class="badge primary"><?= $videos[1]['channel_name'] ?></span>-->
+                    <span class="badge primary"></span>
                     <h3><?= $videos[1]['title'] ?></h3>
                     <span class="date"><?= date("d M Y", strtotime($videos[1]['publication_date'])) ?></span>
                     <!--<p class="description"><?= $videos[1]['description'] ?></p>-->
                     <!--<p class="duration"><?= $videos[1]['duration'] ?></p>-->
                 </div>
             </div>
-            <div class="video-item only-thumb" data-video="<?= $videos[2]['video_id'] ?>">
-                <div class="video-thumb" style="background-image:url('https://i.ytimg.com/vi/<?= $videos[2]['video_id'] ?>/mqdefault.jpg')"></div>
-                <div class="video-info">
-                    <!--<span class="badge primary"><?= $videos[2]['channel_name'] ?></span>-->
-                    <h3><?= $videos[2]['title'] ?></h3>
-                    <span class="date"><?= date("d M Y", strtotime($videos[2]['publication_date'])) ?></span>
-                    <!--<p class="description"><?= $videos[2]['description'] ?></p>-->
-                    <!--<p class="duration"><?= $videos[2]['duration'] ?></p>-->
-                </div>
-            </div>
         </div>
+    </div>
+    <div class="container minor-grid" style="margin-top:var(--gap)">
+            <?php
+            for($i=2; $i<6; $i++)
+            { ?>
+                <div class="video-item only-thumb" data-video="<?= $videos[$i]['video_id'] ?>">
+                    <div class="video-thumb" style="background-image:url('https://i.ytimg.com/vi/<?= $videos[$i]['video_id'] ?>/hqdefault.jpg')"></div>
+                    <div class="video-info">
+                        <!--<span class="badge primary"><?= $videos[$i]['channel_name'] ?></span>-->
+                        <h3><?= $videos[1]['title'] ?></h3>
+                        <span class="date"><?= date("d M Y", strtotime($videos[$i]['publication_date'])) ?></span>
+                        <!--<p class="description"><?= $videos[$i]['description'] ?></p>-->
+                        <!--<p class="duration"><?= $videos[$i]['duration'] ?></p>-->
+                    </div>
+                </div>
+            <?php
+                }
+            ?>
     </div>
 </section>
 <script>

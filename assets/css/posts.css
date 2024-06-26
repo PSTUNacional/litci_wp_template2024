@@ -9,6 +9,10 @@ article.post {
     margin-top: var(--gap-large);
 }
 
+article.post h1{
+    font-size: 3rem;
+}
+
 article.post p,
 article.post a {
     font-family: 'Merriweather', serif;
@@ -149,7 +153,9 @@ article .metainfo.container {
 
 .socialmedia {
     display: flex;
-    gap: 4px;
+    gap: 8px;
+    width: fit-content;
+    margin-top: var(--gap);
 }
 
 .socialmedia .share {

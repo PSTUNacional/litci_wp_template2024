@@ -62,17 +62,6 @@
     aspect-ratio: 21/9;
 }
 
-.video-block-01 .container {
-    gap: var(--gap);
-}
-
-.video-block-01 .container .column:first-of-type {
-    flex-basis: 68%;
-}
-
-.video-block-01 .container .column:last-of-type {
-    flex-basis: 33%;
-}
 
 .block-05 {
     flex-direction: row;
@@ -98,4 +87,13 @@
 
 .container.result-list{
     flex-direction:column;
+}
+
+.video-block-01 .container {
+    gap: var(--gap);
+}
+
+.video-block-01 .minor-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(128px, 1fr));
 }

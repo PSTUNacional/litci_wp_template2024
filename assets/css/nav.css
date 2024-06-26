@@ -132,11 +132,12 @@ section.menu-area.active .custom-logo {
     color: inherit;
 }
 
-.menu-area .social-media {
-    margin-left: auto;
+.menu-area .socialmedia{
     display: flex;
-    gap: 12px;
+    gap:8px;
+    margin-left: auto;
 }
+
 
 
 @media screen and (max-width:560px) {
@@ -264,20 +265,6 @@ nav hr {
 
 .main-menu .mobile {
     display: none;
-}
-
-#socialmediatop {
-    display: flex;
-    gap: 8px;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 0;
-}
-
-#socialmediatop i {
-    font-size: 18px;
-    color: var(--gray-500);
 }
 
 .main-menu .mobile .social-media {

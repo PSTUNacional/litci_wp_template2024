@@ -99,15 +99,39 @@ function litci_theme_customizer($wp_customize)
 
     /***
      * 
-     * Blocks Section
+     * Socialmedia Settings
      * 
      */
 
-    $wp_customize->add_panel('blocks_panel', [
-        'title' => __('Blocos', 'litci_theme'),
-        'description'   => __('Configurações dos blocos.'),
-        'priority' => 40,
+
+    // Adiciona uma seção dentro do painel de redes sociais
+    $wp_customize->add_section('socialmedia_section', [
+        'title' => __('Redes Sociais', 'litci_theme'),
+        'priority' => 35,
     ]);
+
+    // Adiciona configurações e controles para URLs das redes sociais
+    $social_medias = [
+        'facebook' => __('Facebook', 'litci_theme'),
+        'twitter' => __('Twitter', 'litci_theme'),
+        'instagram' => __('Instagram', 'litci_theme'),
+        'telegram' => __('Telegram', 'litci_theme'),
+        'tiktok' => __('TikTok', 'litci_theme'),
+        // Adicione outras redes sociais conforme necessário
+    ];
+
+    foreach ($social_medias as $slug => $label) {
+        $wp_customize->add_setting("socialmedia_url_{$slug}", [
+            'default' => '',
+            'sanitize_callback' => 'esc_url_raw',
+        ]);
+
+        $wp_customize->add_control("socialmedia_url_{$slug}", [
+            'label' => $label,
+            'type' => 'url',
+            'section' => 'socialmedia_section'
+        ]);
+    }
 }
 
 add_action('customize_register', 'litci_theme_customizer');

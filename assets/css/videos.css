@@ -10,7 +10,6 @@
       border-radius: var(--corner);
       background-color: #555;
       overflow: hidden;
-      border:1px solid #ccc;
   }
 
   .video-thumb .image {

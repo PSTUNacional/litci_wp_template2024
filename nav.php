@@ -55,10 +55,20 @@
 				</div>
 			</nav>
 			<div class="socialmedia">
-				<a href="https://www.facebook.com/opiniaosocialista" target="_blank" title="Facebook" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-				<a href="https://www.instagram.com/opiniaosocialista/" target="_blank" title="Instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-				<a href="https://twitter.com/opsocialista" target="_blank" title="X / Twitter" aria-label="X/Twitter"><i class="fab fa-twitter"></i></a>
-				<a target="_blank" href="https://t.me/JornalOpiniaoSocialistaPSTU"><i class="fab fa-telegram"></i></a>
+				<?php
+					if(get_theme_mod('socialmedia_url_facebook')){
+						echo '<a href="'.get_theme_mod('socialmedia_url_facebook').'" target="_blank" title="Facebook" aria-label="Facebook"><i class="fab fa-facebook"></i></a>';
+					}
+					if(get_theme_mod('socialmedia_url_instagram')){
+						echo '<a href="'.get_theme_mod('socialmedia_url_instagram').'" target="_blank" title="Instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>';
+					}
+					if(get_theme_mod('socialmedia_url_twitter')){
+						echo '<a href="'.get_theme_mod('socialmedia_url_twitter').'" target="_blank" title="Twitter" aria-label="Twitter"><i class="fab fa-twitter"></i></a>';
+					}
+					if(get_theme_mod('socialmedia_url_telegram')){
+						echo '<a href="'.get_theme_mod('socialmedia_url_telegram').'" target="_blank" title="Telegram" aria-label="Telegram"><i class="fab fa-telegram"></i></a>';
+					}
+				?>
 			</div>
 			<div class="backdrop" onclick="openMobileMenu()"></div>
 		</div>
