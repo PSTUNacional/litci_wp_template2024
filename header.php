@@ -8,11 +8,11 @@
 	<meta http-equiv="content-language" content="pt-br">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="robots" content="follow">
-	<meta name="description" content="O jornal oficial do PSTU. Uma visão socialista do mundo a serviço da classa trabalhadora.">
+	<meta name="description" content="<?=__('Liga Internacional dos Trabalhadores - Quarta Internacional')?>">
 
 	<meta property="og:title" content="<?php is_front_page() ? bloginfo('name') : wp_title('|', 1, 'right').' | '.bloginfo('name'); ?>"/>
 	<meta property="og:type" content="article"/>
-	<meta property="og:description" content="O jornal oficial do PSTU"/>
+	<meta property="og:description" content="<?=__('Liga Internacional dos Trabalhadores - Quarta Internacional')?>"/>
 	<meta property="og:site_name" content="Opinião Socialista"/>
 	<meta property="or:url" content=""/>
 	<!-- End of Meta tags -->

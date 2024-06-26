@@ -151,14 +151,14 @@ article .metainfo.container {
     margin-bottom: var(--gap);
 }
 
-.socialmedia {
+article .socialmedia {
     display: flex;
     gap: 8px;
     width: fit-content;
     margin-top: var(--gap);
 }
 
-.socialmedia .share {
+article .socialmedia .share {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -173,16 +173,16 @@ article .metainfo.container {
     text-decoration: none;
 }
 
-.socialmedia .share.wa {
+article .socialmedia .share.wa {
     background-color: #090;
     display: none;
 }
 
-.socialmedia .share.fb {
+article .socialmedia .share.fb {
     background-color: #339;
 }
 
-.socialmedia .share.tw {
+article .socialmedia .share.tw {
     background-color: #39f;
 }
 

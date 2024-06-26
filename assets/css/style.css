@@ -399,6 +399,8 @@ article .author-line {
     aspect-ratio: 1;
     border-radius: 50rem;
     background-color: var(--gray-200);
+    background-size: cover;
+    background-position: center;
     margin: 12px;
 }
 
