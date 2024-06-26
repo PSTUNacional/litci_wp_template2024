@@ -97,6 +97,7 @@
 }
 
 .block-06.minor{
+    margin-top: var(--gap);
     display: grid;
     gap:var(--gap);
     grid-template-columns: repeat(auto-fit, minmax(224px, 1fr));
