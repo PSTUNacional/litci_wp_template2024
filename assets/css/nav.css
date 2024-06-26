@@ -93,10 +93,6 @@ section.menu-area.active .custom-logo {
     position: relative;
 }
 
-.main-menu div {
-    height: 100%;
-}
-
 .main-menu ul,
 .lang-menu ul {
     display: flex;
