@@ -336,6 +336,7 @@ function register_litci_blocks() {
         "block-03",
         "block-04",
         "block-05",
+        "block-06",
         "video-01",
         "stories"
     ];
@@ -433,6 +434,20 @@ function render_litci_block_05($attributes) {
         : '';
 
     include get_template_directory() . '/components/blocks/block-05.php';
+
+    wp_reset_postdata();
+}
+
+function render_litci_block_06($attributes) {
+        
+    $args = prepare_args_to_render($attributes);
+    $posts = get_posts($args);
+
+    isset($attributes['blockTitle'])
+        ? $block_title = $attributes['blockTitle']
+        : '';
+
+    include get_template_directory() . '/components/blocks/block-06.php';
 
     wp_reset_postdata();
 }

@@ -12,24 +12,31 @@
                 <a class="see-more" href="<?=get_category_link($attributes['blockCategories'][0])?>">Veja mais</a>
                 <?php } ?>
             </div>
-            <div class="block-05">
+            <div class="block-06 main">
                 <div class="featured">
                     <?php
                     $post = $posts[0];
                     include __DIR__ . '/../units/unit-03.php';
                     ?>
                 </div>
-                <div class="grid">
+                <div class="featured">
                     <?php
-                    $i = 1;
-                    for ($i = 1; $i < 4; $i++) {
-                        if (isset($posts[$i])) {
+                    $post = $posts[1];
+                    include __DIR__ . '/../units/unit-03.php';
+                    ?>
+                </div>
+            </div>
+            <div class="block-06 minor">
+                <?php
+                    for($i=2; $i<6; $i++)
+                    {
+                        if(isset($posts[$i]))
+                        {
                             $post = $posts[$i];
                             include __DIR__ . '/../units/unit-04.php';
                         }
                     }
-                    ?>
-                </div>
+                ?>
             </div>
         </div>
     </div>

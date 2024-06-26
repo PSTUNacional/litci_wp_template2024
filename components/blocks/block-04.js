@@ -23,6 +23,14 @@
                 type: 'string',
                 default: 'recent',
             },
+            backgroundColor: { 
+                type: 'string',
+                default: 'white',
+            },
+            isDark: { 
+                type: 'boolean',
+                default: false,
+            },
         },
         edit: withSelect(function (select) {
             // Busca todas as catgorias
@@ -58,6 +66,12 @@
                 props.setAttributes({ sortOption: newSortOption });
             };
 
+             var onChangeBackgroundColor = function (newColor) {
+                var darkColors = ['#666666', '#565656', '#474747', '#323232', '#222222'];
+                var isDark = darkColors.includes(newColor);
+                props.setAttributes({ backgroundColor: newColor, isDark: isDark });
+            };
+
             return el('div', { className: "block-card" },
                 el('h3', {}, attributes.blockTitle),
                 el('div', { className: 'block04-preview' }),
@@ -85,6 +99,25 @@
                             { label: 'Prioritários primeiro', value: 'menu_order' }
                         ],
                         onChange: onChangeSortOption
+                    }),
+                    el(SelectControl, {
+                        className: "block-editor-block-card",
+                        label: 'Cor de Fundo',
+                        value: attributes.backgroundColor,
+                        options: [
+                            { label: 'Gray 50', value: '#f8f8f8' },
+                            { label: 'Gray 100', value: '#eaeaea' },
+                            { label: 'Gray 200', value: '#d8d8d8' },
+                            { label: 'Gray 300', value: '#bababa' },
+                            { label: 'Gray 400', value: '#aaaaaa' },
+                            { label: 'Gray 500', value: '#9b9b9b' },
+                            { label: 'Gray 600', value: '#666666' },
+                            { label: 'Gray 700', value: '#565656' },
+                            { label: 'Gray 800', value: '#474747' },
+                            { label: 'Gray 900', value: '#323232' },
+                            { label: 'Gray 950', value: '#222222' },
+                        ],
+                        onChange: onChangeBackgroundColor
                     }),
                     el('fieldset', { className: "category-multi-select-container"},
                         el('legend', {}, 'Categorias do Bloco'),

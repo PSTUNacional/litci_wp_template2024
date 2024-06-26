@@ -21,6 +21,19 @@ h6{
     line-height: 1.25;
 }
 
+.dark h1,
+.dark h2,
+.dark h3,
+.dark h4,
+.dark h5,
+.dark h6{
+    color: #fff
+}
+
+.dark p{
+    color: var(--gray-300);
+}
+
 /* Major Third Scale */
 h1 {
     font-size: 3.815rem;

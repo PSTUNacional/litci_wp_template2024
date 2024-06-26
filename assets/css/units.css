@@ -161,6 +161,10 @@
     transform: scale(1.05);
 }
 
+
+.block-06 .unit-03 {
+    aspect-ratio: 1;
+}
 @media only screen and (max-width: 960px) {
 
     .unit-03,

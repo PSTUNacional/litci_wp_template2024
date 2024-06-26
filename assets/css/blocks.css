@@ -85,6 +85,17 @@
     }
 }
 
+.block-06.main{
+    display: flex;
+    gap:var(--gap);
+}
+
+.block-06.minor{
+    display: grid;
+    gap:var(--gap);
+    grid-template-columns: repeat(auto-fit, minmax(224px, 1fr));
+}
+
 .container.result-list{
     flex-direction:column;
 }

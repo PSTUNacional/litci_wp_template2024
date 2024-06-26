@@ -1,6 +1,8 @@
 <?php
 ?>
-<section>
+<section style="background-color:
+    <?=isset($attributes['backgroundColor']) ? $attributes['backgroundColor'] : 'inherit'?>"
+    class="<?=isset($attributes['isDark']) ? 'dark' : ''?>">
     <div class="block-01">
         <div class="container">
             <?php
