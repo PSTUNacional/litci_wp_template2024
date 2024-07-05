@@ -700,12 +700,6 @@ add_action('init', 'create_custom_taxonomies');
 
 // Desativa o oEmbed para links nos posts
 function disable_embed() {
-    // Remove o script do oEmbed
-    wp_dequeue_script('wp-embed');
-    
-    // Remove as ações de oEmbed
-    remove_action('wp_head', 'wp_oembed_add_discovery_links');
-    remove_action('wp_head', 'wp_oembed_add_host_js');
     remove_filter('the_content', [$GLOBALS['wp_embed'], 'autoembed'], 8);
 }
 add_action('wp_enqueue_scripts', 'disable_embed');
