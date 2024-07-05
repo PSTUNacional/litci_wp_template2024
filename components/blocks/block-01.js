@@ -74,6 +74,7 @@
                         label: 'Cor de Fundo',
                         value: attributes.backgroundColor,
                         options: [
+                            { label: 'White', value: '#ffffff' },
                             { label: 'Gray 50', value: '#f8f8f8' },
                             { label: 'Gray 100', value: '#eaeaea' },
                             { label: 'Gray 200', value: '#d8d8d8' },

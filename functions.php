@@ -585,3 +585,127 @@ function prepare_children_categories($category)
 
     return $category;
 }
+
+function create_custom_post_types() {
+    // Notícias
+    register_post_type('noticias',
+        array(
+            'labels'      => array(
+                'name'               => __('Notícias'),
+                'singular_name'      => __('Notícia'),
+                'add_new'            => __('Adicionar Nova'),
+                'add_new_item'       => __('Adicionar Nova Notícia'),
+                'edit_item'          => __('Editar Notícia'),
+                'new_item'           => __('Nova Notícia'),
+                'view_item'          => __('Ver Notícia'),
+                'search_items'       => __('Procurar Notícias'),
+                'not_found'          => __('Nenhuma Notícia Encontrada'),
+                'not_found_in_trash' => __('Nenhuma Notícia Encontrada na Lixeira'),
+                'all_items'          => __('Todas as Notícias'),
+                'menu_name'          => __('Notícias'),
+                'name_admin_bar'     => __('Notícia'),
+            ),
+            'public'      => true,
+            'has_archive' => true,
+            'rewrite'     => array('slug' => 'noticias'),
+            'supports'    => array('title', 'editor', 'thumbnail', 'excerpt', 'comments', 'categories', 'tags'),
+            'taxonomies'  => array('category', 'post_tag'),
+        )
+    );
+
+    // Análises
+    register_post_type('analises',
+        array(
+            'labels'      => array(
+                'name'               => __('Análises'),
+                'singular_name'      => __('Análise'),
+                'add_new'            => __('Adicionar Nova'),
+                'add_new_item'       => __('Adicionar Nova Análise'),
+                'edit_item'          => __('Editar Análise'),
+                'new_item'           => __('Nova Análise'),
+                'view_item'          => __('Ver Análise'),
+                'search_items'       => __('Procurar Análises'),
+                'not_found'          => __('Nenhuma Análise Encontrada'),
+                'not_found_in_trash' => __('Nenhuma Análise Encontrada na Lixeira'),
+                'all_items'          => __('Todas as Análises'),
+                'menu_name'          => __('Análises'),
+                'name_admin_bar'     => __('Análise'),
+            ),
+            'public'      => true,
+            'has_archive' => true,
+            'rewrite'     => array('slug' => 'analises'),
+            'supports'    => array('title', 'editor', 'thumbnail', 'excerpt', 'comments', 'categories', 'tags'),
+            'taxonomies'  => array('category', 'post_tag'),
+        )
+    );
+
+    // Propaganda
+    register_post_type('propaganda',
+        array(
+            'labels'      => array(
+                'name'               => __('Propaganda'),
+                'singular_name'      => __('Propaganda'),
+                'add_new'            => __('Adicionar Nova'),
+                'add_new_item'       => __('Adicionar Nova Propaganda'),
+                'edit_item'          => __('Editar Propaganda'),
+                'new_item'           => __('Nova Propaganda'),
+                'view_item'          => __('Ver Propaganda'),
+                'search_items'       => __('Procurar Propaganda'),
+                'not_found'          => __('Nenhuma Propaganda Encontrada'),
+                'not_found_in_trash' => __('Nenhuma Propaganda Encontrada na Lixeira'),
+                'all_items'          => __('Todas as Propagandas'),
+                'menu_name'          => __('Propaganda'),
+                'name_admin_bar'     => __('Propaganda'),
+            ),
+            'public'      => true,
+            'has_archive' => true,
+            'rewrite'     => array('slug' => 'propaganda'),
+            'supports'    => array('title', 'editor', 'thumbnail', 'excerpt', 'comments', 'categories', 'tags'),
+            'taxonomies'  => array('post_tag'),
+        )
+    );
+}
+
+add_action('init', 'create_custom_post_types');
+
+// Adicionar uma nova taxonomia específica para o post type 'propaganda'
+function create_custom_taxonomies() {
+    // Categoria de Propaganda
+    register_taxonomy('categoria_propaganda', 'propaganda',
+        array(
+            'labels' => array(
+                'name'              => __('Categorias de Propaganda'),
+                'singular_name'     => __('Categoria de Propaganda'),
+                'search_items'      => __('Procurar Categorias de Propaganda'),
+                'all_items'         => __('Todas as Categorias de Propaganda'),
+                'parent_item'       => __('Categoria de Propaganda Mãe'),
+                'parent_item_colon' => __('Categoria de Propaganda Mãe:'),
+                'edit_item'         => __('Editar Categoria de Propaganda'),
+                'update_item'       => __('Atualizar Categoria de Propaganda'),
+                'add_new_item'      => __('Adicionar Nova Categoria de Propaganda'),
+                'new_item_name'     => __('Novo Nome de Categoria de Propaganda'),
+                'menu_name'         => __('Categoria de Propaganda'),
+            ),
+            'hierarchical' => true, // Se verdadeiro, funciona como categorias. Se falso, funciona como tags.
+            'show_ui'      => true,
+            'show_admin_column' => true,
+            'query_var'    => true,
+            'rewrite'      => array('slug' => 'categoria-propaganda'),
+        )
+    );
+}
+
+add_action('init', 'create_custom_taxonomies');
+
+
+// Desativa o oEmbed para links nos posts
+function disable_embed() {
+    // Remove o script do oEmbed
+    wp_dequeue_script('wp-embed');
+    
+    // Remove as ações de oEmbed
+    remove_action('wp_head', 'wp_oembed_add_discovery_links');
+    remove_action('wp_head', 'wp_oembed_add_host_js');
+    remove_filter('the_content', [$GLOBALS['wp_embed'], 'autoembed'], 8);
+}
+add_action('wp_enqueue_scripts', 'disable_embed');
