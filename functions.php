@@ -515,7 +515,7 @@ function prepare_args_to_render($attributes)
         $args['sort'] = 'DESC';
     }
 
-    if(sizeof($GLOBALS['featured_ids']) > 0){
+    if(isset($GLOBALS['featured_ids']) && sizeof($GLOBALS['featured_ids']) > 0){
         $args['post__not_in'] = $GLOBALS['featured_ids'];
     }
     
