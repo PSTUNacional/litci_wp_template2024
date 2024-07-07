@@ -9,6 +9,10 @@
                 $post = $posts[0];
                 setup_postdata($post);
                 include __DIR__ . '/../units/unit-01.php'; 
+
+                isset($attributes['sortOption']) && $attributes['sortOption'] == 'menu_order'
+                    ? $GLOBALS['featured_ids'][] = $post->ID
+                    : '' ;
             ?>
         </div>
     </div>

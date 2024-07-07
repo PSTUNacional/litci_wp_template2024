@@ -16,7 +16,7 @@
 		<div class="container">
 		<?php wp_nav_menu(
 					array(
-						'theme_location' => 'top-menu'
+						'theme_location' => 'top_menu'
 					)
 				); ?>
 		</div>
@@ -40,9 +40,8 @@
 				<div class="mobile">
 					<hr />
 					<ul>
-						<li><a href="colabore" targe="_blank">Seja um colaborador</a></li>
-						<li><a href="https://www.opiniaosocialista.com.br/contribua/?utm_source=opiniao&utm_medium=navmenu&campaign=regular" target="_blank">Contribua</a></li>
-						<li><a href="https://facaparte.pstu.org.br" targe="_blank">Venha para o PSTU</a></li>
+						<li><a href="colabore" targe="_blank"><?=__('Envie sua matéria')?></a></li>
+						<li><a href="https://www.opiniaosocialista.com.br/contribua/?utm_source=opiniao&utm_medium=navmenu&campaign=regular" target="_blank"><?=__('Venha para LIT-QI');?></a></li>
 					</ul>
 					<hr />
 					<p style="padding-left:24px;">Siga a <b>LIT-QI</b></p><br />

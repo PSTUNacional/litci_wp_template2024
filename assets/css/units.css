@@ -224,3 +224,17 @@
     }
     
 }
+
+/***
+*
+*   Unit 05
+*
+*/
+
+.unit-05 h4{
+    font-size: 1em;
+}
+
+.unit-05 .featured-image-container{
+    aspect-ratio: 16/9;
+}

@@ -1,4 +1,7 @@
 <?php get_header(); ?>
+<?php
+$featured_ids = [];
+?>
 <div class="content-area">
     <main>
             <div class="column">

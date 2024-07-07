@@ -20,6 +20,10 @@
     --radius: 8px;
 
     --primary: #cc0000;
+    --primary-50: #cc000080;
+    --primary-25: #cc000040;
+    --primary-10: #cc00001A;
+    --primary-05: #cc00000D;
 
     --gray-50: #f8f8f8;
     --gray-100: #eaeaea;
@@ -50,7 +54,7 @@ a:active {
 }
 
 section {
-    padding: var(--gap-large) 0;
+    padding: var(--gap) 0;
 }
 
 .container {
@@ -1060,7 +1064,7 @@ footer .col:last-child {
 }
 
 footer .footer-logo img {
-    max-width: 180px;
+    max-width: 240px;
     height: auto;
 }
 

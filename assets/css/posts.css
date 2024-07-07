@@ -188,14 +188,14 @@ article .socialmedia .share.tw {
 
 .related-posts {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 423px));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 288px));
     gap: var(--gap);
     width: 100%;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .related-posts .related-post h3 {
-    font-size: 1.25em;
+    font-size: 1em;
 }
 
 @media screen and (max-width:560px) {

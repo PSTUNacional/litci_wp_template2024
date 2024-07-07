@@ -11,17 +11,18 @@
                     <a class="see-more" href="<?= get_category_link($attributes['blockCategories'][0]) ?>">Veja mais</a>
                 <?php } ?>
             </div>
-            <div class="block-02">
+            <div class="block-07">
                 <?php
-                for ($i = 0; $i < 4; $i++) {
+                $i = 1;
+                for ($i = 0; $i < 6; $i++) {
                     if (isset($posts[$i])) {
                         $post = $posts[$i];
-                        include __DIR__ . '/../units/unit-02.php';
+                        include __DIR__ . '/../units/unit-05.php';
 
                         isset($attributes['sortOption']) && $attributes['sortOption'] == 'menu_order'
                             ? $GLOBALS['featured_ids'][] = $post->ID
                             : '';
-                    };
+                    }
                 }
                 ?>
             </div>

@@ -337,8 +337,10 @@ function register_litci_blocks() {
         "block-04",
         "block-05",
         "block-06",
+        "block-07",
         "video-01",
-        "stories"
+        "stories",
+        "ad-01"
     ];
 
     forEach($blockList as $block)
@@ -425,7 +427,6 @@ function render_litci_block_04($attributes) {
 
 
 function render_litci_block_05($attributes) {
-        
     $args = prepare_args_to_render($attributes);
     $posts = get_posts($args);
 
@@ -452,6 +453,20 @@ function render_litci_block_06($attributes) {
     wp_reset_postdata();
 }
 
+function render_litci_block_07($attributes) {
+        
+    $args = prepare_args_to_render($attributes);
+    $posts = get_posts($args);
+
+    isset($attributes['blockTitle'])
+        ? $block_title = $attributes['blockTitle']
+        : '';
+
+    include get_template_directory() . '/components/blocks/block-07.php';
+
+    wp_reset_postdata();
+}
+
 function render_litci_video_01($attributes) {
     include get_template_directory() . '/components/blocks/video-01.php';
     wp_reset_postdata();
@@ -463,11 +478,15 @@ function render_litci_stories($attributes) {
     wp_reset_postdata();
 }
 
+function render_litci_ad_01($attributes) {
+    include get_template_directory() . '/components/blocks/ad-01.php';
+}
+
 function prepare_args_to_render($attributes)
 {
     $args = array(
         'post_type' => 'post',
-        'posts_per_page' => 10, // Número de posts a serem exibidos
+        'posts_per_page' => 12, // Número de posts a serem exibidos
     );
 
     if(isset($attributes['blockCategories']))
@@ -496,6 +515,10 @@ function prepare_args_to_render($attributes)
         $args['sort'] = 'DESC';
     }
 
+    if(sizeof($GLOBALS['featured_ids']) > 0){
+        $args['post__not_in'] = $GLOBALS['featured_ids'];
+    }
+    
     return $args;
 }
 

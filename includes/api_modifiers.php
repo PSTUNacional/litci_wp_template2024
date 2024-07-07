@@ -25,7 +25,7 @@ function get_rest_featured_image($object, $field_name, $request)
 
     if ($object['featured_media']) {
         $img = wp_get_attachment_image_src($object['featured_media'], 'app-thumb');
-        return $img[0];
+        //return $img[0];
     } else {
         $img = get_the_post_thumbnail_url($object['id']);
         return $img;
@@ -90,7 +90,7 @@ function register_author_info()
 function get_author_info($object, $field_name, $request)
 {
 
-    $name = get_author_name();
+    $name = get_the_author_meta('display_name');
     $profile = get_avatar_url($object['author']);
 
     $arr = [
