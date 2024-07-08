@@ -13,7 +13,7 @@
         attributes: {
             blockTitle: {
                 type: 'string',
-                default: 'Bloco 02',
+                default: 'Bloco 04',
             },
             blockCategories: {
                 type: 'array',

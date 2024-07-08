@@ -62,7 +62,7 @@ get_header(); ?>
             </section>
         <?php
         } else {
-            echo '<section><h3 class="ta-center">Ainda não há conteúdo aqui...</h3></section>';
+            echo '><section><div class="container"><h5 class="ta-center">Ainda não há conteúdo aqui...</h5></div></section>';
         } ?>
         <div class="container result-list">
             <?php

@@ -54,6 +54,7 @@ section.menu-area {
     display: flex;
     z-index: 100;
     transition: all .3s ease-in-out;
+    position: relative;
 }
 
 section.menu-area.active {
@@ -93,6 +94,7 @@ section.menu-area.active .custom-logo {
     padding: 0px var(--gap);
     z-index: 99;
     position: relative;
+    font-size: 0.9em;
 }
 
 .main-menu ul,
@@ -129,13 +131,20 @@ section.menu-area.active .custom-logo {
     color: inherit;
 }
 
-.menu-area .socialmedia{
+.menu-area .socialmedia {
     display: flex;
-    gap:8px;
+    gap: 8px;
     margin-left: auto;
 }
 
-.menu-mainmenu-container{
+.menu-area .search-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.menu-mainmenu-container {
     height: 100%;
 }
 
@@ -250,7 +259,7 @@ nav .sub-menu>li:hover {
     background-color: var(--primary-05);
 }
 
-.menu-item:hover > a{
+.menu-item:hover>a {
     color: var(--primary) !important;
 }
 
@@ -406,6 +415,38 @@ nav hr {
     padding: 8px;
     font-size: 0.8em;
     font-weight: bold;
-    color:var(--gray-700);
+    color: var(--gray-700);
     display: flex;
+}
+
+.menu-search-bar {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    transform: translateY(100%);
+    display: none;
+}
+
+.menu-search-bar .bar{
+    background-color: var(--gray-100);
+    width: 100%;
+    padding: var(--gap);
+    box-shadow: 0 30px 30px 0 #0009;
+    position: relative;
+    z-index: 2;
+}
+
+.menu-search-bar .search-backdrop{
+    background-color: #0009;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  backdrop-filter: blur(5px);
+  z-index: 1;
+}
+
+.menu-search-bar.active {
+    display: inherit;
 }

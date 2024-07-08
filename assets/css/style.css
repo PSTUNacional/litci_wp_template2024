@@ -117,6 +117,41 @@ ul.breadcrumbs {
 
 *========================================*/
 
+section.search-header{
+    background-color: var(--gray-100);
+    margin-bottom: var(--gap-large);
+}
+
+#searchform{
+    width: 100%;
+    margin-bottom: var(--gap);
+}
+
+#searchform div {
+    width: 100%;
+    display: flex;
+    gap: var(--gap-small);
+    cursor: pointer
+}
+
+#searchform input[type="submit"]{
+    background-color: var(--primary);
+    color: #fff;
+    padding: 8px 24px;
+    border-radius: 8px;
+    border: none;
+}
+input#s{
+    width: 100%;
+    border: none;
+    background-color: #fff0;
+    border-bottom: 1px solid var(--gray-300);
+    padding: 8px;
+}
+
+input#s:focus{
+    outline: none;
+}
 .top-bar .search {
     position: absolute;
     right: var(--gap);

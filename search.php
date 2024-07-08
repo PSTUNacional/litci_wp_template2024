@@ -8,15 +8,20 @@ get_header(); ?>
 
 <div class="content-area">
 	<main>
-		<div class="container">
-			<div class="category-title">
-				<?php custom_breadcrumbs() ?>
-				<h1><?php
-					/* translators: %s: search query. */
-					printf(esc_html__('Resutlados para: %s', 'litci_theme'), '<span>' . get_search_query() . '</span>');
-					?></h1>
+		<section class="search-header">
+			<div class="container">
+				<div class="column ta-center">
+					<div class="category-title">
+						<?php custom_breadcrumbs() ?>
+						<h1><?php
+							/* translators: %s: search query. */
+							printf(esc_html__('Resultados para: %s', 'litci_theme'), '<span>' . get_search_query() . '</span>');
+							?></h1>
+					</div>
+					<?php get_search_form(); ?>
+				</div>
 			</div>
-		</div>
+		</section>
 		<div class="container result-list">
 			<?php
 			/* Start the Loop */
@@ -46,7 +51,9 @@ get_header(); ?>
 					echo '</nav>';
 				}
 			} else {
+				echo '<div class="container">';
 				printf(esc_html__('Nenhum resultado encontrado =/'));
+				echo '</div>'
 			}
 
 			?>

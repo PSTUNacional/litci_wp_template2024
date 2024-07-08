@@ -110,6 +110,31 @@
     gap:var(--gap);
 }
 
+.block-08{
+    display: flex;
+    gap:var(--gap);
+}
+
+.block-08 .column.main{
+    flex-basis: 80%;
+    padding-right: var(--gap);
+    border-right: 1px solid var(--gray-200);
+}
+.block-08 .column.minor{
+    flex-basis: 20%;
+}
+
+.block-08 .column.minor article:not(:last-child){
+    padding-bottom: var(--gap);
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.block-08 .column.main .post-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(128px, 1fr));
+    gap: var(--gap);
+}
+
 .container.result-list{
     flex-direction:column;
 }

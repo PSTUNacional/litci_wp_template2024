@@ -9,6 +9,10 @@ function openMobileMenu() {
     document.querySelector('.backdrop').classList.toggle('active');
 }
 
+function openSearch() {
+    document.querySelector('.menu-search-bar').classList.toggle('active');
+    document.getElementById('s').focus() 
+}
 
 window.addEventListener('scroll', ()=>{
    var scroll = window.pageYOffset;

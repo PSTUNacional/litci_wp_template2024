@@ -6,14 +6,14 @@
     var SelectControl = components.SelectControl;
     var withSelect = wp.data.withSelect;
 
-    blocks.registerBlockType('litci/block-05', {
-        title: 'LIT-Bloco 5',
+    blocks.registerBlockType('litci/block-08', {
+        title: 'LIT-Bloco 8',
         icon: 'align-full-width',
         category: 'common',
         attributes: {
             blockTitle: {
                 type: 'string',
-                default: 'Bloco 05',
+                default: 'Bloco 08',
             },
             blockCategories: {
                 type: 'array',
