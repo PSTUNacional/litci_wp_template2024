@@ -135,6 +135,17 @@
     gap: var(--gap);
 }
 
+@media only screen and (max-width: 960px) {
+    .block-08 {
+        flex-direction: column;
+    }
+    .block-08 .column.main{
+        border: none;
+        padding-right: inherit;
+    }
+
+}
+
 .container.result-list{
     flex-direction:column;
 }

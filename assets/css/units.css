@@ -275,3 +275,8 @@
 .unit-07 .grid .excerpt{
     flex-basis: 50%;
 }
+@media only screen and (max-width: 960px) {
+    .unit-07 .grid{
+        flex-direction: column;
+    }
+}
