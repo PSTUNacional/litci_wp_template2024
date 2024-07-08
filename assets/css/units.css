@@ -174,7 +174,7 @@
 
 
 .block-06 .unit-03 {
-    aspect-ratio: 1;
+    aspect-ratio: 4/3;
 }
 @media only screen and (max-width: 960px) {
 
@@ -198,7 +198,7 @@
 }
 
 .block-04 .unit-04 .featured-image-container {
-    aspect-ratio: 1;
+    aspect-ratio: 4/3;
 }
 
 .unit-04 h4 {
