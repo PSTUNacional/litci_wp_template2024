@@ -271,6 +271,9 @@
     gap: var(--gap)
 }
 
+.unit-07 .grid .featured-image-container{
+    aspect-ratio: 16/9;
+}
 .unit-07 .grid .featured-image-container,
 .unit-07 .grid .excerpt{
     flex-basis: 50%;
