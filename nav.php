@@ -9,6 +9,9 @@
 				}
 				?>
 			</div>
+			<div class="search-icon mobile" onclick="openSearch()">
+				<i class="material-icons">search</i>
+			</div>
 		</div>
 	</section>
 
@@ -69,7 +72,7 @@
 				}
 				?>
 			</div>
-			<div class="search-icon" onclick="openSearch()">
+			<div class="search-icon desktop" onclick="openSearch()">
 				<i class="material-icons">search</i>
 			</div>
 			<div class="backdrop" onclick="openMobileMenu()"></div>

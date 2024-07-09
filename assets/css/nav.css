@@ -8,6 +8,12 @@ header {
     width: 100%;
 }
 
+/***
+*
+*   TOP BAR
+*
+*/
+
 .top-bar {
     display: none;
     flex-direction: column;
@@ -43,6 +49,101 @@ header {
     justify-content: space-between;
     width: 100%;
 }
+
+@media screen and (max-width:560px) {
+
+    main {
+        margin-top: 73px;
+    }
+
+    .top-bar {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--gray-300);
+        position: fixed;
+        top: 0;
+        background: #fff;
+        margin: 0;
+        z-index: 99;
+        height: 72px;
+    }
+
+    .top-bar .container {
+        align-items: center;
+        padding: 12px 24px;
+        flex-direction: row;
+    }
+
+    .top-bar .hamb {
+        display: block;
+        cursor: pointer;
+    }
+
+    .top-bar .custom-logo {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        max-height: 100px;
+        width: auto;
+        transition: all .3s ease-in-out;
+        top: 50%;
+        max-height: 72px;
+    }
+
+    #socialmediatop {
+        display: none;
+    }
+}
+
+/***
+*
+*   Lang Menu
+*
+*/
+
+.lang-menu {
+    background-color: var(--gray-100);
+    padding: 8px;
+    font-size: 0.8em;
+    font-weight: bold;
+    color: var(--gray-700);
+    display: flex;
+}
+
+.lang-menu ul {
+    display: flex;
+    justify-content: center;
+    gap: var(--gap);
+}
+
+.lang-menu ul li {
+    list-style-type: none;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.lang-menu .search-icon {
+    display: none;
+}
+
+@media screen and (max-width: 560px) {
+    .lang-menu {
+        display: none;
+    }
+
+    .lang-menu .search-icon {
+        display: flex;
+    }
+}
+
+/***
+*
+*   MENU AREA
+*
+*/
 
 section.menu-area {
     margin: 0;
@@ -89,6 +190,41 @@ section.menu-area.active .custom-logo {
     align-items: center;
 }
 
+.menu-area .socialmedia {
+    display: flex;
+    gap: 8px;
+    margin-left: auto;
+}
+
+.menu-area .search-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+@media screen and (max-width:560px) {
+    section.menu-area {
+        height: 0;
+    }
+
+    section.menu-area.active {
+        position: inherit;
+    }
+
+    .menu-area .socialmedia,
+    .menu-area .custom-logo,
+    .menu-area .search-icon {
+        display: none;
+    }
+}
+
+/***
+*
+*   MAIN MENU
+*
+*/
+
 .main-menu {
     max-width: var(--max-width);
     padding: 0px var(--gap);
@@ -97,15 +233,13 @@ section.menu-area.active .custom-logo {
     font-size: 0.9em;
 }
 
-.main-menu ul,
-.lang-menu ul {
+.main-menu ul {
     display: flex;
     justify-content: center;
     gap: var(--gap);
 }
 
-.main-menu ul li,
-.lang-menu ul li {
+.main-menu ul li {
     list-style-type: none;
     position: relative;
     display: flex;
@@ -131,89 +265,8 @@ section.menu-area.active .custom-logo {
     color: inherit;
 }
 
-.menu-area .socialmedia {
-    display: flex;
-    gap: 8px;
-    margin-left: auto;
-}
-
-.menu-area .search-icon{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
-
 .menu-mainmenu-container {
     height: 100%;
-}
-
-@media screen and (max-width:560px) {
-
-    main {
-        margin-top: 73px;
-    }
-
-    .top-bar {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-between;
-        border-bottom: 1px solid var(--gray-300);
-        position: fixed;
-        top: 0;
-        background: #fff;
-        margin: 0;
-        z-index: 99;
-        height: 72px;
-    }
-
-    .top-bar .container {
-        align-items: center;
-        padding: 12px 24px;
-        flex-direction: row;
-    }
-
-    .top-bar .hamb {
-        display: block;
-        cursor: pointer;
-    }
-
-    .top-bar .custom-logo {
-        position: absolute;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        max-height: 100px;
-        width: auto;
-        transition: all .3s ease-in-out;
-        top: 50%;
-        max-height: 72px;
-
-    }
-
-    .lang-menu {
-        display: none;
-    }
-
-    section.menu-area {
-        height: 0;
-    }
-
-    section.menu-area.active {
-        position: inherit;
-    }
-
-    .menu-area .socialmedia,
-    .menu-area .custom-logo {
-        display: none;
-    }
-
-    .menu-area .main-menu {
-        max-width: 80%;
-        position: absolute;
-        display: flex;
-        flex-direction: column;
-    }
 }
 
 nav .sub-menu {
@@ -299,12 +352,11 @@ nav hr {
 }
 
 @media screen and (max-width:560px) {
-    #socialmediatop {
-        display: none;
-    }
 
     .main-menu {
         position: fixed;
+        display: flex;
+        flex-direction: column;
         background: #fff;
         width: 80%;
         box-shadow: 10px 0 100px 0 #000900;
@@ -321,6 +373,7 @@ nav hr {
         position: fixed;
         opacity: 1;
         z-index: 98;
+        left: 0;
         backdrop-filter: blur(5px);
         width: 100%;
         height: 100%;
@@ -410,14 +463,11 @@ nav hr {
 
 }
 
-.lang-menu {
-    background-color: var(--gray-100);
-    padding: 8px;
-    font-size: 0.8em;
-    font-weight: bold;
-    color: var(--gray-700);
-    display: flex;
-}
+/***
+*
+*   MENU SEARCH BAR
+*
+*/
 
 .menu-search-bar {
     position: absolute;
@@ -427,7 +477,7 @@ nav hr {
     display: none;
 }
 
-.menu-search-bar .bar{
+.menu-search-bar .bar {
     background-color: var(--gray-100);
     width: 100%;
     padding: var(--gap);
@@ -436,17 +486,31 @@ nav hr {
     z-index: 2;
 }
 
-.menu-search-bar .search-backdrop{
+.menu-search-bar .search-backdrop {
     background-color: #0009;
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-  top: 0;
-  left: 0;
-  backdrop-filter: blur(5px);
-  z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    backdrop-filter: blur(5px);
+    z-index: 1;
 }
 
 .menu-search-bar.active {
     display: inherit;
+}
+
+@media screen and (max-width:560px) {
+    .menu-search-bar.active{
+        position: fixed;
+        bottom: inherit;
+        top: -72px;
+        z-index: 99;
+    }
+
+    #searchform div{
+        flex-direction: column;
+        gap:24px
+    }
 }

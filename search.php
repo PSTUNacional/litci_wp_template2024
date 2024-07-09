@@ -53,7 +53,7 @@ get_header(); ?>
 			} else {
 				echo '<div class="container">';
 				printf(esc_html__('Nenhum resultado encontrado =/'));
-				echo '</div>'
+				echo '</div>';
 			}
 
 			?>
