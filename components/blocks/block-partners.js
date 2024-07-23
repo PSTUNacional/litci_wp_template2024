@@ -2,9 +2,7 @@
     var el = element.createElement;
     var TextControl = components.TextControl;
     var InspectorControls = editor.InspectorControls;
-    var CheckboxControl = components.CheckboxControl;
     var SelectControl = components.SelectControl;
-    var withSelect = wp.data.withSelect;
 
     // Adiciona a nova categoria
     blocks.updateCategory('litci-category', {
@@ -13,22 +11,14 @@
         slug: 'litci-category',
     });
 
-    blocks.registerBlockType('litci/block-06', {
-        title: 'LIT-Bloco 6',
+    blocks.registerBlockType('litci/block-partners', {
+        title: 'LIT-Bloco Parceiros',
         icon: 'align-full-width',
         category: 'litci-category',
         attributes: {
             blockTitle: {
                 type: 'string',
-                default: 'Bloco 06',
-            },
-            blockCategories: {
-                type: 'array',
-                default: [],
-            },
-            sortOption: { // Novo atributo para a opção de ordenação
-                type: 'string',
-                default: 'recent',
+                default: 'Parceiros',
             },
             backgroundColor: {
                 type: 'string',
@@ -39,38 +29,12 @@
                 default: false,
             },
         },
-        edit: withSelect(function (select) {
-            // Busca todas as catgorias
-            var categories = select('core').getEntityRecords('taxonomy', 'category', { per_page: -1 });
-            var categoryOptions = [];
-
-            if (categories) {
-                categoryOptions = categories.map(function (category) {
-                    return {
-                        label: category.name,
-                        value: category.id,
-                    };
-                });
-            }
-
-            return {
-                categories: categories,
-                categoryOptions: categoryOptions,
-            };
-        })(function (props) {
+        edit: (function (props) {
             var attributes = props.attributes;
             var categoryOptions = props.categoryOptions;
 
             var onChangeTitle = function (newTitle) {
                 props.setAttributes({ blockTitle: newTitle });
-            };
-
-            var onChangeCategories = function (newCategory) {
-                props.setAttributes({ blockCategories: newCategory });
-            };
-
-            var onChangeSortOption = function (newSortOption) {
-                props.setAttributes({ sortOption: newSortOption });
             };
 
             var onChangeBackgroundColor = function (newColor) {
@@ -87,7 +51,6 @@
                     el('div', { className: 'block02-preview' }),
                     el('div', { className: 'block02-preview' }),
                     el('div', { className: 'block02-preview' }),
-                    el('div', { className: 'block02-preview' }),
                 ),
                 el(InspectorControls, {},
                     el(TextControl, {
@@ -95,16 +58,6 @@
                         label: 'Título do Bloco',
                         value: attributes.blockTitle,
                         onChange: onChangeTitle
-                    }),
-                    el(SelectControl, {
-                        className: "block-editor-block-card",
-                        label: 'Opção de Ordenação',
-                        value: attributes.sortOption,
-                        options: [
-                            { label: 'Mais recentes', value: 'publish_date' },
-                            { label: 'Prioritários primeiro', value: 'menu_order' }
-                        ],
-                        onChange: onChangeSortOption
                     }),
                     el(SelectControl, {
                         className: "block-editor-block-card",
@@ -125,28 +78,7 @@
                             { label: 'Gray 950', value: '#222222' },
                         ],
                         onChange: onChangeBackgroundColor
-                    }),
-                    el('fieldset', { className: "category-multi-select-container" },
-                        el('legend', {}, 'Categorias do Bloco'),
-                        categoryOptions.map(function (option) {
-                            return el(CheckboxControl, {
-                                key: option.value,
-                                label: option.label,
-                                checked: attributes.blockCategories.includes(option.value),
-                                onChange: function (checked) {
-                                    var newCategories = attributes.blockCategories.slice();
-                                    if (checked) {
-                                        newCategories.push(option.value);
-                                    } else {
-                                        newCategories = newCategories.filter(function (category) {
-                                            return category !== option.value;
-                                        });
-                                    }
-                                    onChangeCategories(newCategories);
-                                }
-                            });
-                        })
-                    )
+                    })
                 )
             );
         }),

@@ -2,9 +2,7 @@
     var el = element.createElement;
     var TextControl = components.TextControl;
     var InspectorControls = editor.InspectorControls;
-    var CheckboxControl = components.CheckboxControl;
     var SelectControl = components.SelectControl;
-    var withSelect = wp.data.withSelect;
 
     // Adiciona a nova categoria
     blocks.updateCategory('litci-category', {
@@ -13,22 +11,14 @@
         slug: 'litci-category',
     });
 
-    blocks.registerBlockType('litci/block-06', {
-        title: 'LIT-Bloco 6',
+    blocks.registerBlockType('litci/block-socialmedia', {
+        title: 'LIT-Bloco Social Media',
         icon: 'align-full-width',
         category: 'litci-category',
         attributes: {
             blockTitle: {
                 type: 'string',
-                default: 'Bloco 06',
-            },
-            blockCategories: {
-                type: 'array',
-                default: [],
-            },
-            sortOption: { // Novo atributo para a opção de ordenação
-                type: 'string',
-                default: 'recent',
+                default: 'Social Media',
             },
             backgroundColor: {
                 type: 'string',
@@ -38,45 +28,48 @@
                 type: 'boolean',
                 default: false,
             },
+            facebook: {
+                type: 'string',
+                default: '',
+            },
+            instagram: {
+                type: 'string',
+                default: '',
+            },
+            twitter: {
+                type: 'string',
+                default: '',
+            },
+            youtube: {
+                type: 'string',
+                default: '',
+            },
+            tiktok: {
+                type: 'string',
+                default: '',
+            },
+            whatsapp: {
+                type: 'string',
+                default: '',
+            },
         },
-        edit: withSelect(function (select) {
-            // Busca todas as catgorias
-            var categories = select('core').getEntityRecords('taxonomy', 'category', { per_page: -1 });
-            var categoryOptions = [];
-
-            if (categories) {
-                categoryOptions = categories.map(function (category) {
-                    return {
-                        label: category.name,
-                        value: category.id,
-                    };
-                });
-            }
-
-            return {
-                categories: categories,
-                categoryOptions: categoryOptions,
-            };
-        })(function (props) {
+        edit: (function (props) {
             var attributes = props.attributes;
-            var categoryOptions = props.categoryOptions;
 
             var onChangeTitle = function (newTitle) {
                 props.setAttributes({ blockTitle: newTitle });
-            };
-
-            var onChangeCategories = function (newCategory) {
-                props.setAttributes({ blockCategories: newCategory });
-            };
-
-            var onChangeSortOption = function (newSortOption) {
-                props.setAttributes({ sortOption: newSortOption });
             };
 
             var onChangeBackgroundColor = function (newColor) {
                 var darkColors = ['#666666', '#565656', '#474747', '#323232', '#222222'];
                 var isDark = darkColors.includes(newColor);
                 props.setAttributes({ backgroundColor: newColor, isDark: isDark });
+            };
+
+            var onChangeSocialMedia = function (platform, value) {
+                var newAttributes = {};
+                newAttributes[platform] = value;
+                props.setAttributes(newAttributes);
             };
 
             return el('div', { className: "block-card" },
@@ -87,7 +80,6 @@
                     el('div', { className: 'block02-preview' }),
                     el('div', { className: 'block02-preview' }),
                     el('div', { className: 'block02-preview' }),
-                    el('div', { className: 'block02-preview' }),
                 ),
                 el(InspectorControls, {},
                     el(TextControl, {
@@ -95,16 +87,6 @@
                         label: 'Título do Bloco',
                         value: attributes.blockTitle,
                         onChange: onChangeTitle
-                    }),
-                    el(SelectControl, {
-                        className: "block-editor-block-card",
-                        label: 'Opção de Ordenação',
-                        value: attributes.sortOption,
-                        options: [
-                            { label: 'Mais recentes', value: 'publish_date' },
-                            { label: 'Prioritários primeiro', value: 'menu_order' }
-                        ],
-                        onChange: onChangeSortOption
                     }),
                     el(SelectControl, {
                         className: "block-editor-block-card",
@@ -126,27 +108,42 @@
                         ],
                         onChange: onChangeBackgroundColor
                     }),
-                    el('fieldset', { className: "category-multi-select-container" },
-                        el('legend', {}, 'Categorias do Bloco'),
-                        categoryOptions.map(function (option) {
-                            return el(CheckboxControl, {
-                                key: option.value,
-                                label: option.label,
-                                checked: attributes.blockCategories.includes(option.value),
-                                onChange: function (checked) {
-                                    var newCategories = attributes.blockCategories.slice();
-                                    if (checked) {
-                                        newCategories.push(option.value);
-                                    } else {
-                                        newCategories = newCategories.filter(function (category) {
-                                            return category !== option.value;
-                                        });
-                                    }
-                                    onChangeCategories(newCategories);
-                                }
-                            });
-                        })
-                    )
+                    el(TextControl, {
+                        className: "block-editor-block-card",
+                        label: 'Facebook',
+                        value: attributes.facebook,
+                        onChange: function (value) { onChangeSocialMedia('facebook', value); }
+                    }),
+                    el(TextControl, {
+                        className: "block-editor-block-card",
+                        label: 'Instagram',
+                        value: attributes.instagram,
+                        onChange: function (value) { onChangeSocialMedia('instagram', value); }
+                    }),
+                    el(TextControl, {
+                        className: "block-editor-block-card",
+                        label: 'Twitter',
+                        value: attributes.twitter,
+                        onChange: function (value) { onChangeSocialMedia('twitter', value); }
+                    }),
+                    el(TextControl, {
+                        className: "block-editor-block-card",
+                        label: 'Youtube',
+                        value: attributes.youtube,
+                        onChange: function (value) { onChangeSocialMedia('youtube', value); }
+                    }),
+                    el(TextControl, {
+                        className: "block-editor-block-card",
+                        label: 'TikTok',
+                        value: attributes.tiktok,
+                        onChange: function (value) { onChangeSocialMedia('tiktok', value); }
+                    }),
+                    el(TextControl, {
+                        className: "block-editor-block-card",
+                        label: 'Whatsapp',
+                        value: attributes.whatsapp,
+                        onChange: function (value) { onChangeSocialMedia('whatsapp', value); }
+                    })
                 )
             );
         }),

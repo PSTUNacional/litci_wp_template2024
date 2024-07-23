@@ -4,11 +4,17 @@
     var SelectControl = components.SelectControl;
     var InspectorControls = editor.InspectorControls;
     
+    // Adiciona a nova categoria
+    blocks.updateCategory('litci-category', {
+        title: 'LIT-CI Blocks',
+        icon: 'admin-customizer',
+        slug: 'litci-category',
+    });
 
     blocks.registerBlockType('litci/block-01', {
         title: 'LIT-Bloco 1',
         icon: 'align-pull-left',
-        category: 'common',
+        category: 'litci-category',
         attributes: {
             blockTitle: {
                 type: 'string',

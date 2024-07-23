@@ -146,6 +146,24 @@
 
 }
 
+.block-partners{
+    display: grid;
+    gap:var(--gap);
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.block-partners a.card{
+    aspect-ratio: 16/9;
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.block-partners a.card img{
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+}
+
 .container.result-list{
     flex-direction:column;
 }
@@ -158,3 +176,100 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(128px, 1fr));
 }
+
+/***
+*
+*   Social Media
+*
+*/
+
+.block-socialmedia{
+    display: grid;
+    gap:var(--gap);
+    grid-template-columns: repeat(auto-fit, minmax(104px, 1fr));
+}
+
+.block-socialmedia .card{
+    padding: 12px;
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 0 0 #0000;
+    transform: translateY(0px);
+    transition: all .15s ease-in-out;
+}
+.block-socialmedia .card:hover{
+    box-shadow: 0 3px 6px 0 #0003;
+    transform: translateY(-6px);
+    transition: all .15s ease-in-out;
+}
+
+.block-socialmedia .card span{
+    width:80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: var(--gray-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    font-family: "Font Awesome 5 Brands";
+    font-weight: 900;
+    color:var(--gray-400)
+}
+
+.block-socialmedia .card:hover span{
+    color:#fff;
+}
+
+.block-socialmedia .card.facebook span:before{
+    content: '\f082';
+}
+.block-socialmedia .card.facebook:hover span{
+    background-color: #1877f2;
+} 
+
+.block-socialmedia .card.instagram span:before{
+    content: '\f16d';
+}
+.block-socialmedia .card.instagram:hover span{
+    background-color: #C13584;
+}
+
+.block-socialmedia .card.tiktok span:before{
+    content: '\f3cd';
+    font-family: "Font Awesome 5 Free";
+}
+.block-socialmedia .card.tiktok:hover span{
+    background-color: #000;
+} 
+
+.block-socialmedia .card.youtube span:before{
+    content: '\f167';
+}
+.block-socialmedia .card.youtube:hover span{
+    background-color: #E62117;
+} 
+
+.block-socialmedia .card.whatsapp span:before{
+    content: '\f232';
+}
+.block-socialmedia .card.whatsapp:hover span{
+    background-color: #25D366;
+} 
+
+.block-socialmedia .card.twitter span:before{
+    content: '\f099';
+}
+.block-socialmedia .card.twitter:hover span{
+    background-color: #1DA1F2;
+} 
+
+
+
+
+
+

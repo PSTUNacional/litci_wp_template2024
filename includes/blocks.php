@@ -11,6 +11,8 @@ function register_litci_blocks() {
         "block-06",
         "block-07",
         "block-08",
+        "block-partners",
+        "block-socialmedia",
         "video-01",
         "stories",
         "ad-01"
@@ -150,6 +152,26 @@ function render_litci_block_08($attributes) {
         : '';
 
     include get_template_directory() . '/components/blocks/block-08.php';
+
+    wp_reset_postdata();
+}
+
+function render_litci_block_partners($attributes) {
+    isset($attributes['blockTitle'])
+        ? $block_title = $attributes['blockTitle']
+        : '';
+
+    include get_template_directory() . '/components/blocks/block-partners.php';
+
+    wp_reset_postdata();
+}
+
+function render_litci_block_socialmedia($attributes) {
+    isset($attributes['blockTitle'])
+        ? $block_title = $attributes['blockTitle']
+        : '';
+
+    include get_template_directory() . '/components/blocks/block-socialmedia.php';
 
     wp_reset_postdata();
 }

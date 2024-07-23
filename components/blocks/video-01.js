@@ -6,7 +6,7 @@
     blocks.registerBlockType('litci/video-01', {
         title: 'LIT-Video 01',
         icon: 'video-alt3',
-        category: 'common',
+        category: 'litci-category',
         attributes: {
             blockTitle: {
                 type: 'string',

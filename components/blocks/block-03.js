@@ -6,10 +6,17 @@
     var CheckboxControl = components.CheckboxControl;
     var withSelect = wp.data.withSelect;
 
+    // Adiciona a nova categoria
+    blocks.updateCategory('litci-category', {
+        title: 'LIT-CI Blocks',
+        icon: 'admin-customizer',
+        slug: 'litci-category',
+    });
+
     blocks.registerBlockType('litci/block-03', {
         title: 'LIT-Bloco 3',
         icon: 'list-view',
-        category: 'common',
+        category: 'litci-category',
         attributes: {
             blockTitle: {
                 type: 'string',
@@ -23,11 +30,11 @@
                 type: 'string',
                 default: 'recent',
             },
-            backgroundColor: { 
+            backgroundColor: {
                 type: 'string',
                 default: 'white',
             },
-            isDark: { 
+            isDark: {
                 type: 'boolean',
                 default: false,
             },
@@ -64,7 +71,7 @@
             var onChangeSortOption = function (newSortOption) {
                 props.setAttributes({ sortOption: newSortOption });
             };
-             var onChangeBackgroundColor = function (newColor) {
+            var onChangeBackgroundColor = function (newColor) {
                 var darkColors = ['#666666', '#565656', '#474747', '#323232', '#222222'];
                 var isDark = darkColors.includes(newColor);
                 props.setAttributes({ backgroundColor: newColor, isDark: isDark });

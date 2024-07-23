@@ -6,7 +6,7 @@
     blocks.registerBlockType('litci/stories', {
         title: 'LIT-Stories',
         icon: 'ellipsis',
-        category: 'common',
+        category: 'litci-category',
         attributes: {
             blockTitle: {
                 type: 'string',

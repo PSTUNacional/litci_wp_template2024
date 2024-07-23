@@ -6,10 +6,17 @@
     var SelectControl = components.SelectControl;
     var withSelect = wp.data.withSelect;
 
+    // Adiciona a nova categoria
+    blocks.updateCategory('litci-category', {
+        title: 'LIT-CI Blocks',
+        icon: 'admin-customizer',
+        slug: 'litci-category',
+    });
+
     blocks.registerBlockType('litci/block-08', {
         title: 'LIT-Bloco 8',
         icon: 'align-full-width',
-        category: 'common',
+        category: 'litci-category',
         attributes: {
             blockTitle: {
                 type: 'string',
@@ -23,20 +30,20 @@
                 type: 'string',
                 default: 'recent',
             },
-            backgroundColor: { 
+            backgroundColor: {
                 type: 'string',
                 default: 'white',
             },
-            isDark: { 
+            isDark: {
                 type: 'boolean',
                 default: false,
             },
         },
         edit: withSelect(function (select) {
             // Busca todas as catgorias
-            var categories = select('core').getEntityRecords('taxonomy', 'category',{ per_page: -1 });
+            var categories = select('core').getEntityRecords('taxonomy', 'category', { per_page: -1 });
             var categoryOptions = [];
-        
+
             if (categories) {
                 categoryOptions = categories.map(function (category) {
                     return {
@@ -66,7 +73,7 @@
                 props.setAttributes({ sortOption: newSortOption });
             };
 
-             var onChangeBackgroundColor = function (newColor) {
+            var onChangeBackgroundColor = function (newColor) {
                 var darkColors = ['#666666', '#565656', '#474747', '#323232', '#222222'];
                 var isDark = darkColors.includes(newColor);
                 props.setAttributes({ backgroundColor: newColor, isDark: isDark });
@@ -119,7 +126,7 @@
                         ],
                         onChange: onChangeBackgroundColor
                     }),
-                    el('fieldset', { className: "category-multi-select-container"},
+                    el('fieldset', { className: "category-multi-select-container" },
                         el('legend', {}, 'Categorias do Bloco'),
                         categoryOptions.map(function (option) {
                             return el(CheckboxControl, {
@@ -146,8 +153,8 @@
         save: function () {
             return null; // Não é necessário salvar nada no frontend
         },
-});
-}) (
+    });
+})(
     window.wp.blocks,
     window.wp.editor,
     window.wp.element,
