@@ -20,18 +20,23 @@ function register_rest_images()
     );
 }
 
-function get_rest_featured_image($object, $field_name, $request)
-{
-
-    if ($object['featured_media']) {
-        $img = wp_get_attachment_image_src($object['featured_media'], 'app-thumb');
-        //return $img[0];
-    } else {
-        $img = get_the_post_thumbnail_url($object['id']);
-        return $img;
+function get_rest_featured_image($object) {
+    // Verifique se 'featured_media' está definido e não é falso
+    if (!empty($object['featured_media'])) {
+        $imgArr = wp_get_attachment_image_src($object['featured_media'], 'full');
+        
+        // Verifique se $imgArr é um array válido e não é falso
+        if (is_array($imgArr) && isset($imgArr[0])) {
+            return $imgArr[0];
+        }
     }
-    return false;
+    
+    // Como fallback, use get_the_post_thumbnail_url
+    $img = get_the_post_thumbnail_url($object['id']);
+    return $img ? $img : false; // Retorne a URL ou false se não houver thumbnail
 }
+
+
 
 add_action('rest_api_init', 'register_rest_images');
 
