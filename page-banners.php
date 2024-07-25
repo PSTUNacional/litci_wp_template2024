@@ -33,10 +33,11 @@ get_header();
                 position: relative;
                 z-index: 2;
             }
+
             #banner-container #content .logo {
                 position: absolute;
                 z-index: 100;
-                top:100px;
+                top: 100px;
                 right: 100px;
                 max-width: 100px;
             }
@@ -64,7 +65,7 @@ get_header();
             #story-container #content .logo {
                 position: absolute;
                 z-index: 100;
-                top:100px;
+                top: 100px;
                 right: 80px;
                 max-width: 140px;
 
@@ -174,15 +175,28 @@ get_header();
                 gap: 24px;
                 margin: 24px 0;
             }
+
+            @media screen and (max-width:768px) {
+                #result {
+                    flex-direction: column;
+                }
+
+                #banner-container #content h1 {
+                    font-size: 4em;
+                }
+
+                #story-container #content h1 {
+                    font-size: 3.5em
+                }
+            }
         </style>
         <div class="container">
             <div class="controls">
-                <select></select>
+                <select style="width:100%"></select>
                 <button onclick="render()">Gerar</button>
             </div>
         </div>
         <div class="container">
-
             <div class="hide">
                 <div id="banner-container">
                     <div id="content">
