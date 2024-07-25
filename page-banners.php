@@ -33,6 +33,13 @@ get_header();
                 position: relative;
                 z-index: 2;
             }
+            #banner-container #content .logo {
+                position: absolute;
+                z-index: 100;
+                top:100px;
+                right: 100px;
+                max-width: 100px;
+            }
 
             #story-container {
                 width: 1080px;
@@ -51,6 +58,16 @@ get_header();
                 justify-content: end;
                 position: relative;
                 z-index: 2;
+            }
+
+
+            #story-container #content .logo {
+                position: absolute;
+                z-index: 100;
+                top:100px;
+                right: 80px;
+                max-width: 140px;
+
             }
 
             #banner-container #content #category,
@@ -169,6 +186,7 @@ get_header();
             <div class="hide">
                 <div id="banner-container">
                     <div id="content">
+                        <img class="logo" src="<?= get_template_directory_uri() . '/assets/img/logo_white_shadow.png' ?>" />
                         <div id="category">Palestina</div>
                         <h1>Lorem ipsum</h1>
                         <h4>www.litci.org</h4>
@@ -180,6 +198,7 @@ get_header();
                 </div>
                 <div id="story-container">
                     <div id="content">
+                        <img class="logo" src="<?= get_template_directory_uri() . '/assets/img/logo_white_shadow.png' ?>" />
                         <div id="category">Cateroria</div>
                         <h1>Title</h1>
                         <h4>www.litci.org</h4>
@@ -206,7 +225,12 @@ get_header();
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
     <script>
         let posts
-        fetch('/wp-json/wp/v2/posts?per_page=50')
+        if (window.location.href.includes('dev.')) {
+            url = '/litci/wp-json/wp/v2/posts?per_page=50'
+        } else {
+            url = '/wp-json/wp/v2/posts?per_page=50'
+        }
+        fetch(url)
             .then(resp => resp.json())
             .then(data => {
                 posts = data
@@ -218,7 +242,7 @@ get_header();
                     place.append(opt)
                 })
             })
-            .then(()=>{
+            .then(() => {
                 renderContent(posts[0])
             })
 
