@@ -9,39 +9,25 @@
     var useSelect = data.useSelect;
 
     const blockStructure = (posts) => (
-        el('div', { className: "block-04" },
-            el('div', { className: "featured" },
-                el('div', { className: "unit-03" },
+        el('div', { className: "block-10", style: { gridTemplateColumns: "repeat(auto-fit, minmax(128px, 1fr))", width:"100%" } },
+            posts.map(post => (
+                el('article', { className: "unit-03" },
                     el('div', { className: "featured-image-container" },
-                        el('img', { src: posts[0].fimg_url, style: { width: '100%' } })
+                        el('img', { src: post.fimg_url, style: { width: '100%' } })
                     ),
                     el('div', { className: 'info', style: { fontSize: "0.7em" } },
-                        el('h3', { style: {} }, posts[0].title.rendered),
-                        el('p', { className: 'excerpt' }, posts[0].excerpt.rendered)
+                        el('h3', { style: { fontSize: "0.7em" } }, post.title.rendered),
+                        el('p', { className: 'excerpt' }, post.excerpt.rendered)
                     )
-                ),
-            ),
-            el('div', { className: "grid", style: { gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))" } },
-                posts.slice(1, 5).map(post =>
-                (el('div', { className: "unit-04" },
-                    el('div', { className: "column" },
-                        el('div', { className: "featured-image-container" },
-                            el('img', { src: post.fimg_url, style: { width: '100%' } })
-                        ),
-                    ),
-                    el('div', { className: "column" },
-                        el('h4', { style: {} }, post.title.rendered)
-                    )
-                ))
                 )
-            ),
+            ))
         )
     )
 
-    const icon = el('img', {src:'/wp-content/themes/litci/components/blocks/icons/block04.svg'})
+    const icon = el('img', {src:'/wp-content/themes/litci/components/blocks/icons/block10.svg'})
 
-    blocks.registerBlockType('litci/block-04', {
-        title: 'LIT-Bloco 4',
+    blocks.registerBlockType('litci/block-10', {
+        title: 'LIT-Bloco 10',
         icon: icon,
         category: 'litci-category',
         attributes: {
@@ -119,7 +105,7 @@
 
                 // Constrói o objeto de parâmetros para a consulta
                 var query = {
-                    per_page: 5, // Número de posts a serem exibidos
+                    per_page: 4, // Número de posts a serem exibidos
                     orderby: attributes.customIds.length > 0 ? 'include' : (attributes.sortOption === 'menu_order' ? 'menu_order' : 'date'),
                     order: 'desc',
                 };

@@ -129,15 +129,17 @@
     border-radius: var(--radius);
     overflow: hidden;
     padding: 0;
+    z-index: 0;
 }
 
-.unit-03 .featured-image-container {
+.unit-03 img{
     position: absolute;
     height: 100%;
     width: 100%;
     z-index: 1;
     top: 0;
     left: 0;
+    object-fit: cover;
 }
 
 .unit-03 .info h3 {
@@ -167,7 +169,7 @@
     -webkit-box-orient: vertical;
 }
 
-.unit-03:hover .featured-image-container img {
+.unit-03:hover img {
     transition: all .15s ease-in-out;
     transform: scale(1.05);
 }

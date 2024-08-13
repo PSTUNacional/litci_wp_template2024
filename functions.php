@@ -30,6 +30,7 @@ function load_admin_scripts($hook)
     }
 
     wp_enqueue_style('custom-admin-css', get_template_directory_uri() . '/assets/css/admin.css', array(), '1.0', 'all');
+    wp_enqueue_style('style', get_template_directory_uri() . '/assets/css/style.css', array(), '1.0', 'all');
 }
 add_action('admin_enqueue_scripts', 'load_admin_scripts');
 

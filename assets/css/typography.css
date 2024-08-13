@@ -29,7 +29,8 @@ h6{
     color: #fff
 }
 
-.dark p{
+.dark p,
+.dark .excerpt{
     color: var(--gray-300);
 }
 

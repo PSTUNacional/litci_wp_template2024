@@ -1,5 +1,16 @@
 <?php
 
+add_filter( 'block_categories_all' , function( $categories ) {
+
+    // Adding a new category.
+	$categories[] = array(
+		'slug'  => 'litci-category',
+		'title' => 'LIT-CI Blocks'
+	);
+
+	return $categories;
+} );
+
 function register_litci_blocks() {
 
     $blockList = [
@@ -11,6 +22,8 @@ function register_litci_blocks() {
         "block-06",
         "block-07",
         "block-08",
+        "block-09",
+        "block-10",
         "block-partners",
         "block-socialmedia",
         "video-01",
@@ -44,7 +57,8 @@ add_action('init', 'register_litci_blocks');
 function render_litci_block_01($attributes) {
     
     $args = prepare_args_to_render($attributes);
-    $posts = get_posts($args);
+    $posts = new WP_Query($args);
+    $posts = $posts->posts;
 
     if(isset($attributes['blockTitle'])){
         $block_title = $attributes['blockTitle'];
@@ -59,7 +73,8 @@ function render_litci_block_01($attributes) {
 function render_litci_block_02($attributes) {
 
     $args = prepare_args_to_render($attributes);
-    $posts = get_posts($args);
+    $posts = new WP_Query($args);
+    $posts = $posts->posts;
 
     isset($attributes['blockTitle'])
         ? $block_title = $attributes['blockTitle']
@@ -74,7 +89,8 @@ function render_litci_block_02($attributes) {
 function render_litci_block_03($attributes) {
 
     $args = prepare_args_to_render($attributes);
-    $posts = get_posts($args);
+    $posts = new WP_Query($args);
+    $posts = $posts->posts;
 
     isset($attributes['blockTitle'])
         ? $block_title = $attributes['blockTitle']
@@ -89,7 +105,8 @@ function render_litci_block_03($attributes) {
 function render_litci_block_04($attributes) {
         
     $args = prepare_args_to_render($attributes);
-    $posts = get_posts($args);
+    $posts = new WP_Query($args);
+    $posts = $posts->posts;
 
     isset($attributes['blockTitle'])
         ? $block_title = $attributes['blockTitle']
@@ -103,7 +120,8 @@ function render_litci_block_04($attributes) {
 
 function render_litci_block_05($attributes) {
     $args = prepare_args_to_render($attributes);
-    $posts = get_posts($args);
+    $posts = new WP_Query($args);
+    $posts = $posts->posts;
 
     isset($attributes['blockTitle'])
         ? $block_title = $attributes['blockTitle']
@@ -117,7 +135,8 @@ function render_litci_block_05($attributes) {
 function render_litci_block_06($attributes) {
         
     $args = prepare_args_to_render($attributes);
-    $posts = get_posts($args);
+    $posts = new WP_Query($args);
+    $posts = $posts->posts;
 
     isset($attributes['blockTitle'])
         ? $block_title = $attributes['blockTitle']
@@ -131,7 +150,8 @@ function render_litci_block_06($attributes) {
 function render_litci_block_07($attributes) {
         
     $args = prepare_args_to_render($attributes);
-    $posts = get_posts($args);
+    $posts = new WP_Query($args);
+    $posts = $posts->posts;
 
     isset($attributes['blockTitle'])
         ? $block_title = $attributes['blockTitle']
@@ -145,13 +165,48 @@ function render_litci_block_07($attributes) {
 function render_litci_block_08($attributes) {
         
     $args = prepare_args_to_render($attributes);
-    $posts = get_posts($args);
+    $posts = new WP_Query($args);
+    $posts = $posts->posts;
 
     isset($attributes['blockTitle'])
         ? $block_title = $attributes['blockTitle']
         : '';
 
     include get_template_directory() . '/components/blocks/block-08.php';
+
+    wp_reset_postdata();
+}
+
+function render_litci_block_09($attributes) {
+        
+    $args = prepare_args_to_render($attributes);
+    $posts = new WP_Query($args);
+    $posts = $posts->posts;
+
+    $args = prepare_args_to_render($attributes);
+    $propaganda = new WP_Query($args);
+    $propaganda = $propaganda->posts;
+
+    isset($attributes['blockTitle'])
+        ? $block_title = $attributes['blockTitle']
+        : '';
+
+    include get_template_directory() . '/components/blocks/block-09.php';
+
+    wp_reset_postdata();
+}
+
+function render_litci_block_10($attributes) {
+        
+    $args = prepare_args_to_render($attributes);
+    $posts = new WP_Query($args);
+    $posts = $posts->posts;
+
+    isset($attributes['blockTitle'])
+        ? $block_title = $attributes['blockTitle']
+        : '';
+
+    include get_template_directory() . '/components/blocks/block-10.php';
 
     wp_reset_postdata();
 }
@@ -191,11 +246,13 @@ function render_litci_ad_01($attributes) {
     include get_template_directory() . '/components/blocks/ad-01.php';
 }
 
-function prepare_args_to_render($attributes)
+function prepare_args_to_render($attributes, $postType = array('noticias', 'artigos', 'propaganda', 'post'))
 {
     $args = array(
-        'post_type' => 'post',
+        'post_type' => $postType,
         'posts_per_page' => 12, // Número de posts a serem exibidos
+        'order' => 'DESC',
+        'ignore_sticky_posts' => true,
     );
 
     if(isset($attributes['blockCategories']))
@@ -221,12 +278,19 @@ function prepare_args_to_render($attributes)
     if(isset($attributes['sortOption']))
     {
         $args['orderby'] = $attributes['sortOption'];
-        $args['sort'] = 'DESC';
+        $args['order'] = 'DESC';
+    } 
+
+    if(isset($attributes['customIds']) && strlen($attributes['customIds']) > 1)
+    {
+        $args['orderby'] = 'post__in';
+        $ids = array_map('intval', explode(',', $attributes['customIds']));
+        $args['post__in'] = $ids;
     }
 
     if(isset($GLOBALS['featured_ids']) && sizeof($GLOBALS['featured_ids']) > 0){
         $args['post__not_in'] = $GLOBALS['featured_ids'];
     }
-    
+
     return $args;
 }

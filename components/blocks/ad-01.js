@@ -7,16 +7,9 @@
     var URLInput = editor.URLInput;
     var Button = components.Button;
 
-    // Adiciona a nova categoria
-    blocks.updateCategory('litci-category', {
-        title: 'LIT-CI Blocks',
-        icon: 'admin-customizer',
-        slug: 'litci-category',
-    });
-
     blocks.registerBlockType('litci/ad-01', {
         title: 'LIT-BannerAds 1',
-        icon: 'align-pull-left',
+        icon: icon,
         category: 'litci-category', 
         attributes: {
             backgroundColor: {

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Camada_1" data-name="Camada 1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 200 200">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #1d1d1b;
+        stroke-width: 0px;
+      }
+    </style>
+  </defs>
+  <rect class="cls-1" x="51.23" y="116.38" width="46.32" height="46.32"/>
+  <rect class="cls-1" y="37.31" width="200" height="71.93"/>
+  <rect class="cls-1" y="116.38" width="46.32" height="46.32"/>
+  <rect class="cls-1" x="153.68" y="116.38" width="46.32" height="46.32"/>
+  <rect class="cls-1" x="102.46" y="116.38" width="46.32" height="46.32"/>
+  <rect class="cls-1" x="-218.47" y="-15.59" width="90" height="90"/>
+  <rect class="cls-1" x="-218.47" y="84.47" width="90" height="20"/>
+  <rect class="cls-1" x="-218.47" y="113.16" width="59.91" height="20"/>
+</svg>

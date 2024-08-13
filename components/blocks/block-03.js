@@ -1,32 +1,73 @@
-(function (blocks, editor, element, components) {
+(function (blocks, editor, element, components, data) {
     var el = element.createElement;
     var TextControl = components.TextControl;
     var InspectorControls = editor.InspectorControls;
-    var SelectControl = components.SelectControl;
+    var PanelBody = components.PanelBody;
     var CheckboxControl = components.CheckboxControl;
     var withSelect = wp.data.withSelect;
+    var SelectControl = components.SelectControl;
+    var useSelect = data.useSelect;
 
-    // Adiciona a nova categoria
-    blocks.updateCategory('litci-category', {
-        title: 'LIT-CI Blocks',
-        icon: 'admin-customizer',
-        slug: 'litci-category',
-    });
+    const blockStructure = (posts) => (
+        el('div', { className: "block-03" },
+            el('div', { className: "column quarter" },
+                el('div', { className: "unit-04" },
+                    el('div', { className: "featured-image-container" },
+                        el('img', { src: posts[1].fimg_url, style: { width: '100%' } })
+                    ),
+                    el('h4', { style: {} }, posts[1].title.rendered),
+                ),
+                el('div', { className: "unit-04" },
+                    el('div', { className: "featured-image-container" },
+                        el('img', { src: posts[2].fimg_url, style: { width: '100%' } })
+                    ),
+                    el('h4', { style: {} }, posts[2].title.rendered),
+                )
+            ),
+            el('div', { className: "column half" },
+                el('div', { className: "unit-03" },
+                    el('div', { className: "featured-image-container" },
+                        el('img', { src: posts[0].fimg_url, style: { width: '100%' } })
+                    ),
+                    el('div', { className: 'info', style: { fontSize: "0.7em" } },
+                        el('h3', { style: {} }, posts[0].title.rendered),
+                        el('p', { className: 'excerpt' }, posts[0].excerpt.rendered)
+                    )
+                ),
+            ),
+            el('div', { className: "column quarter" },
+                el('div', { className: "unit-04" },
+                    el('div', { className: "featured-image-container" },
+                        el('img', { src: posts[3].fimg_url, style: { width: '100%' } })
+                    ),
+                    el('h4', { style: {} }, posts[3].title.rendered),
+                ),
+                el('div', { className: "unit-04" },
+                    el('div', { className: "featured-image-container" },
+                        el('img', { src: posts[4].fimg_url, style: { width: '100%' } })
+                    ),
+                    el('h4', { style: {} }, posts[4].title.rendered),
+                )
+            ),
+        )
+    )
+
+    const icon = el('img', {src:'/wp-content/themes/litci/components/blocks/icons/block03.svg'})
 
     blocks.registerBlockType('litci/block-03', {
         title: 'LIT-Bloco 3',
-        icon: 'list-view',
+        icon: icon,
         category: 'litci-category',
         attributes: {
             blockTitle: {
                 type: 'string',
-                default: 'Bloco 03',
+                default: '',
             },
             blockCategories: {
                 type: 'array',
                 default: [],
             },
-            sortOption: { // Novo atributo para a opção de ordenação
+            sortOption: {
                 type: 'string',
                 default: 'recent',
             },
@@ -38,6 +79,10 @@
                 type: 'boolean',
                 default: false,
             },
+            customIds: {
+                type: 'string',
+                default: ''
+            }
         },
         edit: withSelect(function (select) {
             // Busca todas as catgorias
@@ -68,95 +113,120 @@
             var onChangeCategories = function (newCategory) {
                 props.setAttributes({ blockCategories: newCategory });
             };
+
             var onChangeSortOption = function (newSortOption) {
                 props.setAttributes({ sortOption: newSortOption });
             };
+
             var onChangeBackgroundColor = function (newColor) {
                 var darkColors = ['#666666', '#565656', '#474747', '#323232', '#222222'];
                 var isDark = darkColors.includes(newColor);
                 props.setAttributes({ backgroundColor: newColor, isDark: isDark });
             };
 
+            var onCustomIdsChange = function (newIds) {
+                props.setAttributes({ customIds: newIds })
+            }
 
-            return el('div', { className: "block-card" },
+            // Obtém os posts baseados na opção de ordenação
+            var posts = useSelect((select) => {
+
+                // Constrói o objeto de parâmetros para a consulta
+                var query = {
+                    per_page: 5, // Número de posts a serem exibidos
+                    orderby: attributes.customIds.length > 0 ? 'include' : (attributes.sortOption === 'menu_order' ? 'menu_order' : 'date'),
+                    order: 'desc',
+                };
+
+                // Adiciona filtro de categorias se blockCategories não estiver vazio
+                if (attributes.blockCategories.length > 0 && attributes.customIds.length == 0) {
+                    query.categories = attributes.blockCategories.join(','); // Une os IDs em uma string separada por vírgula
+                }
+
+                if (attributes.customIds.length > 0) {
+                    query.include = attributes.customIds
+
+                }
+
+                // Retorna os posts filtrados
+                return select('core').getEntityRecords('postType', 'post', query);
+
+            }, [attributes.sortOption, attributes.blockCategories, attributes.customIds]);
+
+            return el('div', { className: "block-card", style: { backgroundColor: attributes.backgroundColor } },
                 el('h3', {}, attributes.blockTitle),
-                el('div', {
-                    style: { display: 'flex', gap: '24px' }
-                },
-                    el('div', {
-                        className: 'block02-preview',
-                        style: {
-                            flexBasis: '25%'
-                        }
-                    }),
-                    el('div', { style: { display: 'flex', flexBasis: "50%" } },
-                        el('div', { className: 'block02-preview' }),
-                    ),
-                    el('div', {
-                        style: { display: 'flex', gap: '24px', flexDirection: "column", flexBasis: '25%' }
-                    },
-                        el('div', { className: 'block02-preview' }),
-                        el('div', { className: 'block02-preview' }),
-                    ),
+                el('div', { style: { display: 'flex' } },
+                    posts && posts.length > 4
+                        ? blockStructure(posts)
+                        : el('li', {}, 'Nenhum post encontrado.')
                 ),
                 el(InspectorControls, {},
-                    el(TextControl, {
-                        className: "block-editor-block-card",
-                        label: 'Título do Bloco',
-                        value: attributes.blockTitle,
-                        onChange: onChangeTitle
-                    }),
-                    el(SelectControl, {
-                        className: "block-editor-block-card",
-                        label: 'Opção de Ordenação',
-                        value: attributes.sortOption,
-                        options: [
-                            { label: 'Mais recentes', value: 'publish_date' },
-                            { label: 'Prioritários primeiro', value: 'menu_order' }
-                        ],
-                        onChange: onChangeSortOption
-                    }),
-                    el(SelectControl, {
-                        className: "block-editor-block-card",
-                        label: 'Cor de Fundo',
-                        value: attributes.backgroundColor,
-                        options: [
-                            { label: 'White', value: '#ffffff' },
-                            { label: 'Gray 50', value: '#f8f8f8' },
-                            { label: 'Gray 100', value: '#eaeaea' },
-                            { label: 'Gray 200', value: '#d8d8d8' },
-                            { label: 'Gray 300', value: '#bababa' },
-                            { label: 'Gray 400', value: '#aaaaaa' },
-                            { label: 'Gray 500', value: '#9b9b9b' },
-                            { label: 'Gray 600', value: '#666666' },
-                            { label: 'Gray 700', value: '#565656' },
-                            { label: 'Gray 800', value: '#474747' },
-                            { label: 'Gray 900', value: '#323232' },
-                            { label: 'Gray 950', value: '#222222' },
-                        ],
-                        onChange: onChangeBackgroundColor
-                    }),
-                    el('fieldset', { className: "category-multi-select-container" },
-                        el('legend', {}, 'Categorias do Bloco'),
-                        categoryOptions.map(function (option) {
-                            return el(CheckboxControl, {
-                                key: option.value,
-                                label: option.label,
-                                checked: attributes.blockCategories.includes(option.value),
-                                onChange: function (checked) {
-                                    var newCategories = attributes.blockCategories.slice();
-                                    if (checked) {
-                                        newCategories.push(option.value);
-                                    } else {
-                                        newCategories = newCategories.filter(function (category) {
-                                            return category !== option.value;
-                                        });
-                                    }
-                                    onChangeCategories(newCategories);
-                                }
-                            });
+                    el(PanelBody, { title: 'Geral', initialOpen: true },
+                        el(TextControl, {
+                            label: 'Título do Bloco',
+                            value: attributes.blockTitle,
+                            onChange: onChangeTitle
+                        }),
+                        el(SelectControl, {
+                            label: 'Cor de Fundo',
+                            value: attributes.backgroundColor,
+                            options: [
+                                { label: 'White', value: '#ffffff' },
+                                { label: 'Gray 50', value: '#f8f8f8' },
+                                { label: 'Gray 100', value: '#eaeaea' },
+                                { label: 'Gray 200', value: '#d8d8d8' },
+                                { label: 'Gray 300', value: '#bababa' },
+                                { label: 'Gray 400', value: '#aaaaaa' },
+                                { label: 'Gray 500', value: '#9b9b9b' },
+                                { label: 'Gray 600', value: '#666666' },
+                                { label: 'Gray 700', value: '#565656' },
+                                { label: 'Gray 800', value: '#474747' },
+                                { label: 'Gray 900', value: '#323232' },
+                                { label: 'Gray 950', value: '#222222' },
+                                { label: 'Black', value: '#000000' },
+                            ],
+                            onChange: onChangeBackgroundColor
                         })
-                    )
+                    ),
+                    el(PanelBody, { title: 'Filtro automático', initialOpen: false },
+                        el(SelectControl, {
+                            label: 'Ordenação',
+                            value: attributes.sortOption,
+                            options: [
+                                { label: 'Mais recentes', value: 'date' },
+                                { label: 'Prioritários primeiro', value: 'menu_order' }
+                            ],
+                            onChange: onChangeSortOption
+                        }),
+                        el('fieldset', { className: "category-multi-select-container" },
+                            el('legend', {}, 'Categorias do Bloco'),
+                            categoryOptions.map(function (option) {
+                                return el(CheckboxControl, {
+                                    key: option.value,
+                                    label: option.label,
+                                    checked: attributes.blockCategories.includes(option.value),
+                                    onChange: function (checked) {
+                                        var newCategories = attributes.blockCategories.slice();
+                                        if (checked) {
+                                            newCategories.push(option.value);
+                                        } else {
+                                            newCategories = newCategories.filter(function (category) {
+                                                return category !== option.value;
+                                            });
+                                        }
+                                        onChangeCategories(newCategories);
+                                    }
+                                });
+                            })
+                        )
+                    ),
+                    el(PanelBody, { title: "Filtro manual", initialOpen: false },
+                        el(TextControl, {
+                            label: 'IDs dos posts',
+                            value: attributes.customIds,
+                            onChange: onCustomIdsChange
+                        })
+                    ),
                 )
             );
         }),
@@ -168,5 +238,6 @@
     window.wp.blocks,
     window.wp.editor,
     window.wp.element,
-    window.wp.components
+    window.wp.components,
+    window.wp.data
 );
