@@ -5,10 +5,6 @@
             <div class="block-header">
                 <?php if (isset($block_title)) { ?>
                     <h3><?= $block_title ?></h3>
-                <?php }
-                if (isset($attributes['blockCategories'][0])) {
-                ?>
-                    <a class="see-more" href="<?= get_category_link($attributes['blockCategories'][0]) ?>">Veja mais</a>
                 <?php } ?>
             </div>
             <div class="block-09">
@@ -21,7 +17,7 @@
                     : '';
                 ?>
                 <div class="block-header" style="margin-top:24px;">
-                    <h3><?= __('Últimas notícias') ?></h3>
+                    <h3 class="last-news"><?= __('Últimas notícias') ?></h3>
                 </div>
                 <div class="news-line">
                     <?php

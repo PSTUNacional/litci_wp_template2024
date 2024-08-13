@@ -41,7 +41,7 @@
             };
 
             var onChangeBackgroundColor = function (newColor) {
-                var darkColors = ['#666666', '#565656', '#474747', '#323232', '#222222'];
+                var darkColors = ['#666666', '#565656', '#474747', '#323232', '#222222', '#000000'];
                 var isDark = darkColors.includes(newColor);
                 props.setAttributes({ backgroundColor: newColor, isDark: isDark });
             };
