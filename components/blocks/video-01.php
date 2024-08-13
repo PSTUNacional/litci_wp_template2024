@@ -77,7 +77,7 @@ if(isset($channelData))
             <?php
             $start = $isSingle ? 1 : 2;
             for ($i = $start; $i < 6; $i++) {
-                if ($videos[$i]) { ?>
+                if (isset($videos[$i])) { ?>
                     <div class="video-item" data-video="<?= $videos[$i]['video_id'] ?>">
                         <a href="<?= $videos[$i]['url'] ?>" class="video-thumb" style="background-image:url('https://i.ytimg.com/vi/<?= $videos[$i]['video_id'] ?>/hqdefault.jpg')"></a>
                         <div class="video-info">
