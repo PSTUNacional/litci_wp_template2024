@@ -1,5 +1,6 @@
 (function (blocks, editor, element, components, data) {
     var el = element.createElement;
+    const { useState, useEffect } = wp.element;
     var TextControl = components.TextControl;
     var InspectorControls = editor.InspectorControls;
     var PanelBody = components.PanelBody;
