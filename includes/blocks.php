@@ -27,6 +27,7 @@ function register_litci_blocks() {
         "block-partners",
         "block-socialmedia",
         "video-01",
+        "video-02",
         "stories",
         "ad-01"
     ];
@@ -245,6 +246,20 @@ function render_litci_video_01($attributes) {
 
     include get_template_directory() . '/components/blocks/video-01.php';
 }
+
+function render_litci_video_02($attributes) {
+    $url = 'https://videos.litci.org/api/videos';
+
+    if(isset($attributes['selectedChannel']) && sizeof($attributes['selectedChannel']) > 0 )
+    {
+        $id = $attributes['selectedChannel'][0];
+        $url = 'https://videos.litci.org/api/videos/channel/'.$id;
+        $channelData = 'https://videos.litci.org/api/channels/'.$id;
+    }
+
+    include get_template_directory() . '/components/blocks/video-02.php';
+}
+
 
 
 function render_litci_stories($attributes) {

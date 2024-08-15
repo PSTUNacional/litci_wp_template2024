@@ -11,9 +11,16 @@
                     <a class="see-more" href="<?= get_category_link($attributes['blockCategories'][0]) ?>">Veja mais</a>
                 <?php } ?>
             </div>
-            <div class="block-10">
+            <?php
+                $amount = isset($attributes['postAmount']) ? $attributes['postAmount'] : 3;
+                $amount == 3 || $amount == 6 || $amount == 9
+                    ? $columns = 'three-columns'
+                    : $columns = 'four-columns';
+            ?>
+            <div class="block-10 <?=$columns?>">
                 <?php
-                for($i = 0; $i<3; $i++)
+                
+                for($i = 0; $i < $amount; $i++)
                 {
                     $post = $posts[$i];
                     include __DIR__ . '/../units/unit-03.php';

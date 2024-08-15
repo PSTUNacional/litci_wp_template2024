@@ -25,6 +25,27 @@
       transition: all .3s ease-in-out;
   }
 
+  .video-thumb .icon {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #000a;
+      opacity: 0;
+      transition: all .15s ease-in-out;
+  }
+
+  .video-thumb .icon:hover {
+      opacity: 1;
+      transition: all .15s ease-in-out;
+  }
+
+  .video-thumb .icon i{
+      font-size: 48px;
+      color: #fff
+  }
+
   /* ========================================
   
     Channel Picture
@@ -72,9 +93,10 @@
       order: 1;
       max-width: calc(100% - 44px);
   }
-  .video-grid .video-item .video-info .title h4{
-    font-size: 1em;
-}
+
+  .video-grid .video-item .video-info .title h4 {
+      font-size: 1em;
+  }
 
   .video-grid .video-item .author {
       font-size: 0.8rem;

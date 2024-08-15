@@ -54,6 +54,11 @@
             customIds: {
                 type: 'string',
                 default: ''
+            },
+            postAmount:
+            {
+                type: 'int',
+                default: 3
             }
         },
         edit: withSelect(function (select) {
@@ -100,12 +105,16 @@
                 props.setAttributes({ customIds: newIds })
             }
 
+            var onChangeAmount = function (amount) {
+                props.setAttributes({ postAmount: amount })
+            }
+
             // Obtém os posts baseados na opção de ordenação
             var posts = useSelect((select) => {
 
                 // Constrói o objeto de parâmetros para a consulta
                 var query = {
-                    per_page: 4, // Número de posts a serem exibidos
+                    per_page: attributes.postAmount, // Número de posts a serem exibidos
                     orderby: attributes.customIds.length > 0 ? 'include' : (attributes.sortOption === 'menu_order' ? 'menu_order' : 'date'),
                     order: 'desc',
                 };
@@ -123,7 +132,7 @@
                 // Retorna os posts filtrados
                 return select('core').getEntityRecords('postType', 'post', query);
 
-            }, [attributes.sortOption, attributes.blockCategories, attributes.customIds]);
+            }, [attributes.sortOption, attributes.blockCategories, attributes.customIds, attributes.postAmount]);
 
             return el('div', { className: "block-card", style: { backgroundColor: attributes.backgroundColor } },
                 el('h3', {}, attributes.blockTitle),
@@ -138,6 +147,18 @@
                             label: 'Título do Bloco',
                             value: attributes.blockTitle,
                             onChange: onChangeTitle
+                        }),
+                        el(SelectControl,{
+                            label: 'Quantidade de posts',
+                            value: attributes.postAmount,
+                            options: [
+                                {label: '3 posts', value: 3},
+                                {label: '4 posts', value: 4},
+                                {label: '6 posts', value: 6},
+                                {label: '8 posts', value: 8},
+                                {label: '9 posts', value: 9},
+                            ],
+                            onChange: onChangeAmount
                         }),
                         el(SelectControl, {
                             label: 'Cor de Fundo',
