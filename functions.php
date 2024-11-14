@@ -237,7 +237,7 @@ function show_menu_order_column($column, $post_id)
         echo '<input type="text" class="menu-order-input" value="' . esc_attr($menu_order) . '" data-post-id="' . esc_attr($post_id) . '">';
     }
 }
-add_action('manage_posts_custom_column', 'show_menu_order_column');
+add_action('manage_posts_custom_column', 'show_menu_order_column', 10, 2);
 
 // Tornar a coluna 'menu_order' ordenável
 function set_menu_order_column_sortable($columns)
