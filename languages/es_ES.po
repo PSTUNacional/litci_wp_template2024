@@ -1,0 +1,6 @@
+msgid "See more"
+msgstr "Vee más"
+msgid "Read also"
+msgstr "Lea también"
+msgid "Developed by Tiê"
+msgstr "Desarrollado por Tiê"

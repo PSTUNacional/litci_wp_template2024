@@ -102,7 +102,7 @@ if (have_posts()) {
 
                 ?>
                 <div class="block-header">
-                <h3><?=__('Leia também')?></h3>
+                <h3><?=_e('Read also', 'litci')?></h3>
             </div>
                 <div class="related-posts">
                     <?php

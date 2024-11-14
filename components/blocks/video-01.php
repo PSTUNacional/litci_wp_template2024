@@ -30,7 +30,7 @@ if(isset($channelData))
     <div class="container">
         <div class="block-header">
             <h3>Vídeos</h3>
-            <a class="see-more" href="/videos">Vee más</a>
+            <a class="see-more" href="/videos"><?= _e('See more', 'litci')?></a>
         </div>
     </div>
     <div class="container">

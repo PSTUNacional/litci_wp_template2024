@@ -8,7 +8,7 @@
                 <?php }
                 if (isset($attributes['blockCategories'][0])) {
                 ?>
-                    <a class="see-more" href="<?= get_category_link($attributes['blockCategories'][0]) ?>">Vee más</a>
+                    <a class="see-more" href="<?= get_category_link($attributes['blockCategories'][0]) ?>"><?= _e('See more', 'litci')?></a>
                 <?php } ?>
             </div>
             <div class="block-02">
