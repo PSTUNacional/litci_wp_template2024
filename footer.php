@@ -36,7 +36,7 @@
     </div>
     <div class="bottom-line ta-center">
         <div class="container">
-            <?= _e('Desenvolvido por Tiê', 'litci')?>
+            <?= _e('Developed by Tiê', 'litci')?>
         </div>
     </div>
     <?php wp_footer(); ?>
