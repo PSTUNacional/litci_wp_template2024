@@ -178,6 +178,10 @@
 .block-06 .unit-03 {
     aspect-ratio: 4/3;
 }
+
+.block-10 .unit-03 .info h3{
+    font-size:1.2em;
+}
 @media only screen and (max-width: 960px) {
 
     .unit-03,

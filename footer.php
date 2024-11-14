@@ -1,11 +1,21 @@
 <footer>
     <div class="container">
-        <div class="column quarter">
+        <div class="column third">
             <?php if (get_theme_mod('footer_logo')) : ?>
                 <div class="footer-logo">
                     <img src="<?php echo esc_url(get_theme_mod('footer_logo')); ?>" alt="<?php bloginfo('name'); ?>">
                 </div>
-                <div class="socialmedia">
+            <?php endif; ?>
+        </div>
+        <div class="column third">
+        <?php wp_nav_menu(
+					array(
+						'theme_location' => 'main_menu',
+                        'depth'=> 1,
+					)
+				); ?>
+        </div>
+        <div class="socialmedia">
                 <?php
 					if(get_theme_mod('socialmedia_url_facebook')){
 						echo '<a href="'.get_theme_mod('socialmedia_url_facebook').'" target="_blank" title="Facebook" aria-label="Facebook"><i class="fab fa-facebook"></i></a>';
@@ -21,11 +31,8 @@
 					}
 				?>
                 </div>
-            <?php endif; ?>
         </div>
-        <div class="column quarter"></div>
-        <div class="column quarter"></div>
-        <div class="column quarter"></div>
+        <div class="column third"></div>
     </div>
     <div class="bottom-line ta-center">
         <div class="container">

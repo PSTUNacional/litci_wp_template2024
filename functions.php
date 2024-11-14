@@ -29,8 +29,12 @@ function load_admin_scripts($hook)
         ));
     }
 
+    if($hook == 'posts.php' || $hook == 'post-new.php')
+    {
+        wp_enqueue_style('style', get_template_directory_uri() . '/assets/css/style.css', array(), '1.0', 'all');
+    }
+
     wp_enqueue_style('custom-admin-css', get_template_directory_uri() . '/assets/css/admin.css', array(), '1.0', 'all');
-    wp_enqueue_style('style', get_template_directory_uri() . '/assets/css/style.css', array(), '1.0', 'all');
 }
 add_action('admin_enqueue_scripts', 'load_admin_scripts');
 
@@ -534,3 +538,21 @@ function disable_embed() {
     remove_filter('the_content', [$GLOBALS['wp_embed'], 'autoembed'], 8);
 }
 add_action('wp_enqueue_scripts', 'disable_embed');
+
+// Adiciona parametros UTMs nos posts e paginas
+function add_custom_utms() {
+    // Adiciona o script diretamente no HTML
+    ?>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(() => {
+                console.log('Run, Forest! Run');
+                window.history.replaceState(null, null, "?utm_source=copylink&utm_medium=browser");
+            }, 2000);
+        });
+    </script>
+    <?php
+}
+add_action('wp_footer', 'add_custom_utms');
+
+include get_template_directory() . '/includes/admin/functions.php';

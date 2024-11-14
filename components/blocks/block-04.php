@@ -8,7 +8,7 @@
                 <?php }
                 if (isset($attributes['blockCategories'][0])) {
                 ?>
-                    <a class="see-more" href="<?= get_category_link($attributes['blockCategories'][0]) ?>">Veja mais</a>
+                    <a class="see-more" href="<?= get_category_link($attributes['blockCategories'][0]) ?>">Vee más</a>
                 <?php } ?>
             </div>
             <div class="block-04">

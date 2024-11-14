@@ -1,10 +1,8 @@
 <?php
 
-/****
- * 
+/**
  * Featured image url
  * Returns the original path direct on JSON root
- * 
  */
 
 function register_rest_images()
@@ -20,31 +18,24 @@ function register_rest_images()
     );
 }
 
-function get_rest_featured_image($object) {
-    // Verifique se 'featured_media' está definido e não é falso
+function get_rest_featured_image($object)
+{
     if (!empty($object['featured_media'])) {
         $imgArr = wp_get_attachment_image_src($object['featured_media'], 'full');
-        
-        // Verifique se $imgArr é um array válido e não é falso
         if (is_array($imgArr) && isset($imgArr[0])) {
             return $imgArr[0];
         }
     }
-    
-    // Como fallback, use get_the_post_thumbnail_url
+
     $img = get_the_post_thumbnail_url($object['id']);
-    return $img ? $img : false; // Retorne a URL ou false se não houver thumbnail
+    return $img ? $img : false;
 }
-
-
 
 add_action('rest_api_init', 'register_rest_images');
 
-/***
- * 
+/**
  * Categories names
- * Returns the names as a array of strings
- * 
+ * Returns the names as an array of strings
  */
 
 function register_categories_names()
@@ -73,10 +64,8 @@ function get_categories_names($object, $field_name, $request)
 
 add_action('rest_api_init', 'register_categories_names');
 
-/***
- * 
+/**
  * Author name and profile pic
- * 
  */
 
 function register_author_info()
@@ -94,7 +83,6 @@ function register_author_info()
 
 function get_author_info($object, $field_name, $request)
 {
-
     $name = get_the_author_meta('display_name');
     $profile = get_avatar_url($object['author']);
 
@@ -106,3 +94,28 @@ function get_author_info($object, $field_name, $request)
 }
 
 add_action('rest_api_init', 'register_author_info');
+
+/**
+ * Menu order
+ * Adds the menu order field to the REST API response
+ */
+
+function register_menu_order()
+{
+    register_rest_field(
+        array('post', 'search-result'),
+        'menu_order',
+        array(
+            'get_callback'    => 'get_menu_order',
+            'update_callback' => null,
+            'schema'          => null,
+        )
+    );
+}
+
+function get_menu_order($object, $field_name, $request)
+{
+    return get_post_field('menu_order', $object['id']);
+}
+
+add_action('rest_api_init', 'register_menu_order');

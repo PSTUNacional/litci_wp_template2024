@@ -12,7 +12,7 @@
         </a>
         <p><?= get_the_excerpt($post); ?></p>
         <div class="meta">
-            <span class="sup-category desktop"><?= escape_categories(wp_get_post_categories($post->ID)); ?></span>
+            <a class="sup-category desktop" href="<?=  get_category_link(wp_get_post_categories($post->ID)[0]) ?>"><?= escape_categories(wp_get_post_categories($post->ID)); ?></a>
             <p class="post-date"><?= formatDate($post->post_date) ?></p>
         </div>
 </article>

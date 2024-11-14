@@ -24,6 +24,17 @@ window.addEventListener('scroll', ()=>{
    }
 })
 
+function openSubitem(){
+    event.stopPropagation();
+    e = event.currentTarget
+    console.log( e.querySelector('ul'))
+    e.querySelector('ul.sub-menu').classList.toggle('active')
+}
+
+document.querySelectorAll('.menu-item-has-children').forEach(el=>{
+    el.addEventListener('click', openSubitem)
+})
+
 // Adds chevron icon to Nav menu
 menuitems = document.querySelectorAll('.sub-menu')
 menuitems.forEach((s) => { s.parentElement.querySelector('a').innerHTML += '<i class="fa fa-caret-right"></i>' })

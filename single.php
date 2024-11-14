@@ -40,7 +40,7 @@ if (have_posts()) {
                         <div class="socialmedia">
                             <a href="whatsapp://send?text=<?= the_title(); ?>%0A%0A<?= get_permalink(); ?>" data-action="share/whatsapp/share" class="wa share" target="_blank"><i class="fab fa-whatsapp"></i></a>
                             <a href="https://www.facebook.com/sharer.php?u=<?= urlencode(get_permalink()); ?>" class="fb share" target="_blank"> <i class="fab fa-facebook-f"></i></a>
-                            <a href="https://twitter.com/intent/tweet?text=<?= urlencode(the_title()); ?>&url=<?= get_permalink(); ?>%0A%0A&via=opiniaosocialista" class="tw share" target="_blank"><i class="fab fa-twitter"></i></a>
+                            <a href="https://twitter.com/intent/tweet?text=<?= urlencode(the_title()); ?>&url=<?= get_permalink(); ?>%0A%0A&via=litci" class="tw share" target="_blank"><i class="fab fa-twitter"></i></a>
                         </div>
                     </div>
 
@@ -51,7 +51,7 @@ if (have_posts()) {
                         </div>
                     </div>
 
-                    <!-- Author Box -->
+                    <!-- Author Box 
                     <div class="metainfo container">
                         <div class="author-box">
                             <div class="author-avatar" style="background-image:url('<?= $profile ?>')">
@@ -72,6 +72,11 @@ if (have_posts()) {
                                 <span><?= get_the_date() ?></span>
                             </div>
                         </div>
+                    </div>
+                    -->
+                    <div class="container" style="margin-bottom:24px">
+                    <span style="margin-bottom:24px"><?= get_the_date() ?></span>
+                    <hr/>
                     </div>
 
                     <!-- Content -->

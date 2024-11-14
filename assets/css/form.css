@@ -1,0 +1,27 @@
+input{
+    height: 40px;
+    width: 100%;
+    padding: 4px 8px;
+    border-radius: 2px;
+    outline: none;
+    border: 1px solid var(--gray-300)
+}
+
+textarea{
+    width: 100%;
+    resize: vertical;
+    border-radius: 2px;
+    outline: none;
+    border: 1px solid var(--gray-300);
+    padding: 4px 8px;
+}
+
+input:focus,
+textarea:focus{
+    border-color: var(--primary);
+    outline: 3px solid var(--primary-10);
+}
+
+input[type=submit]{
+    width: 100%;
+}

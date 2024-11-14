@@ -410,6 +410,10 @@ nav hr {
         height: 0;
     }
 
+    nav .sub-menu.active{
+        height: 100%;
+    }
+
     nav .sub-menu>li {
         border: none;
     }

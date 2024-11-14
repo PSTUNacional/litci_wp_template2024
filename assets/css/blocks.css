@@ -7,7 +7,6 @@
 
 .block-header h3 {
     font-family: 'Inter', sans-serif;
-    margin-bottom: var(--gap);
     font-size: 1.5em;
 }
 
@@ -220,8 +219,17 @@
 .block-10 .unit-03{
     aspect-ratio: 1;
 }
+
 .block-10 .unit-03 .info .excerpt{
     display: none;
+}
+
+@media only screen and (max-width: 960px) {
+    .block-10,
+	.block-10.three-columns,
+	.block-10.four-columns{
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
 }
 
 .block-partners{

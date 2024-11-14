@@ -8,7 +8,7 @@ setup_postdata($post);
             <h3><?= get_the_title($post); ?></h3>
             <div class="excerpt"><?= get_the_excerpt($post); ?></div>
             <div class="meta">
-                <span class="sup-category"><?= escape_categories(wp_get_post_categories($post->ID)); ?></span>
+                <span class="sup-category" ><?= escape_categories(wp_get_post_categories($post->ID)); ?></span>
                 <p class="post-date"><?= formatDate($post->post_date) ?></p>
             </div>
         </div>

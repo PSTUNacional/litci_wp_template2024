@@ -228,7 +228,7 @@ article .socialmedia .share.tw {
         order: 3;
     }
 
-    .socialmedia .share.wa {
+    article .socialmedia .share.wa {
         display: flex;
     }
 
