@@ -47,7 +47,7 @@
     )
     )
 
-    const icon = el('img', {src:'/wp-content/themes/litci/components/blocks/icons/block08.svg'})
+    const icon = el('img', {src:'./icons/block08.svg'})
 
     blocks.registerBlockType('litci/block-08', {
         title: 'LIT-Bloco 8',
@@ -98,6 +98,7 @@
                 categoryOptions: categoryOptions,
             };
         })(function (props) {
+
             var attributes = props.attributes;
             var categoryOptions = props.categoryOptions;
 

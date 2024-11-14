@@ -59,164 +59,124 @@ add_action('init', 'register_litci_blocks');
 function render_litci_block_01($attributes)
 {
 
-    $args = prepare_args_to_render($attributes);
-    $posts = new WP_Query($args);
-    $posts = $posts->posts;
+    $posts = get_posts_by_query($attributes);
+    $block_title = $attributes['blockTitle'] ?? '';
 
-    if (isset($attributes['blockTitle'])) {
-        $block_title = $attributes['blockTitle'];
-    }
-
+    ob_start();
     include get_template_directory() . '/components/blocks/block-01.php';
-
     wp_reset_postdata();
+    return ob_get_clean();
 }
 
 function render_litci_block_02($attributes)
 {
 
-    $args = prepare_args_to_render($attributes);
-    $posts = new WP_Query($args);
-    $posts = $posts->posts;
+    $posts = get_posts_by_query($attributes);
+    $block_title = $attributes['blockTitle'] ?? '';
 
-    isset($attributes['blockTitle'])
-        ? $block_title = $attributes['blockTitle']
-        : '';
-
+    ob_start();
     include get_template_directory() . '/components/blocks/block-02.php';
-
     wp_reset_postdata();
+    return ob_get_clean();
 }
 
 function render_litci_block_03($attributes)
 {
 
-    $args = prepare_args_to_render($attributes);
-    $posts = new WP_Query($args);
-    $posts = $posts->posts;
+    $posts = get_posts_by_query($attributes);
+    $block_title = $attributes['blockTitle'] ?? '';
 
-    isset($attributes['blockTitle'])
-        ? $block_title = $attributes['blockTitle']
-        : '';
-
+    ob_start();
     include get_template_directory() . '/components/blocks/block-03.php';
-
     wp_reset_postdata();
+    return ob_get_clean();
 }
 
 function render_litci_block_04($attributes)
 {
 
-    $args = prepare_args_to_render($attributes);
-    $posts = new WP_Query($args);
-    $posts = $posts->posts;
+    $posts = get_posts_by_query($attributes);
+    $block_title = $attributes['blockTitle'] ?? '';
 
-    isset($attributes['blockTitle'])
-        ? $block_title = $attributes['blockTitle']
-        : '';
-
+    ob_start();
     include get_template_directory() . '/components/blocks/block-04.php';
-
     wp_reset_postdata();
+    return ob_get_clean();
 }
 
 
 function render_litci_block_05($attributes)
 {
-    $args = prepare_args_to_render($attributes);
-    $posts = new WP_Query($args);
-    $posts = $posts->posts;
+    $posts = get_posts_by_query($attributes);
+    $block_title = $attributes['blockTitle'] ?? '';
 
-    isset($attributes['blockTitle'])
-        ? $block_title = $attributes['blockTitle']
-        : '';
-
+    ob_start();
     include get_template_directory() . '/components/blocks/block-05.php';
-
     wp_reset_postdata();
+    return ob_get_clean();
 }
 
 function render_litci_block_06($attributes)
 {
 
-    $args = prepare_args_to_render($attributes);
-    $posts = new WP_Query($args);
-    $posts = $posts->posts;
+    $posts = get_posts_by_query($attributes);
+    $block_title = $attributes['blockTitle'] ?? '';
 
-    isset($attributes['blockTitle'])
-        ? $block_title = $attributes['blockTitle']
-        : '';
-
+    ob_start();
     include get_template_directory() . '/components/blocks/block-06.php';
-
     wp_reset_postdata();
+    return ob_get_clean();
 }
 
 function render_litci_block_07($attributes)
 {
 
-    $args = prepare_args_to_render($attributes);
-    $posts = new WP_Query($args);
-    $posts = $posts->posts;
+    $posts = get_posts_by_query($attributes);
+    $block_title = $attributes['blockTitle'] ?? '';
 
-    isset($attributes['blockTitle'])
-        ? $block_title = $attributes['blockTitle']
-        : '';
-
+    ob_start();
     include get_template_directory() . '/components/blocks/block-07.php';
-
     wp_reset_postdata();
+    return ob_get_clean();
 }
 
 function render_litci_block_08($attributes)
 {
-    $args = prepare_args_to_render($attributes);
-    $posts = new WP_Query($args);
-    $posts = $posts->posts;
+    $posts = get_posts_by_query($attributes);
+    $block_title = $attributes['blockTitle'] ?? '';
 
-    isset($attributes['blockTitle'])
-        ? $block_title = $attributes['blockTitle']
-        : '';
-
+    ob_start();
     include get_template_directory() . '/components/blocks/block-08.php';
-
     wp_reset_postdata();
+    return ob_get_clean();
 }
 
 function render_litci_block_09($attributes)
 {
 
-    $args = prepare_args_to_render($attributes);
-    $posts = new WP_Query($args);
-    $posts = $posts->posts;
+    $posts = get_posts_by_query($attributes);
+    $block_title = $attributes['blockTitle'] ?? '';
 
     $args = prepare_args_to_render($attributes);
     $propaganda = new WP_Query($args);
     $propaganda = $propaganda->posts;
 
-    isset($attributes['blockTitle'])
-        ? $block_title = $attributes['blockTitle']
-        : '';
-
+    ob_start();
     include get_template_directory() . '/components/blocks/block-09.php';
-
     wp_reset_postdata();
+    return ob_get_clean();
 }
 
 function render_litci_block_10($attributes)
 {
 
-    $args = prepare_args_to_render($attributes);
-    $posts = new WP_Query($args);
-    $posts = $posts->posts;
+    $posts = get_posts_by_query($attributes);
+    $block_title = $attributes['blockTitle'] ?? '';
 
-    isset($attributes['blockTitle'])
-        ? $block_title = $attributes['blockTitle']
-        : '';
-
+    ob_start();
     include get_template_directory() . '/components/blocks/block-10.php';
-
     wp_reset_postdata();
+    return ob_get_clean();
 }
 
 function render_litci_block_11($attributes)
@@ -244,32 +204,31 @@ function render_litci_block_11($attributes)
             ? $block_title_two = $attributes['blockTitleTwo']
             : '';
 
-        include get_template_directory() . '/components/blocks/block-11.php';
-
-        wp_reset_postdata();
+            ob_start();
+            include get_template_directory() . '/components/blocks/block-11.php';
+            wp_reset_postdata();
+            return ob_get_clean();
     }
 }
 
 function render_litci_block_partners($attributes)
 {
-    isset($attributes['blockTitle'])
-        ? $block_title = $attributes['blockTitle']
-        : '';
+    $block_title = $attributes['blockTitle'] ?? '';
 
+    ob_start();
     include get_template_directory() . '/components/blocks/block-partners.php';
-
     wp_reset_postdata();
+    return ob_get_clean();
 }
 
 function render_litci_block_socialmedia($attributes)
 {
-    isset($attributes['blockTitle'])
-        ? $block_title = $attributes['blockTitle']
-        : '';
+    $block_title = $attributes['blockTitle'] ?? '';
 
+    ob_start();
     include get_template_directory() . '/components/blocks/block-socialmedia.php';
-
     wp_reset_postdata();
+    return ob_get_clean();
 }
 
 function render_litci_video_01($attributes)
@@ -284,7 +243,10 @@ function render_litci_video_01($attributes)
         $isSingle = true;
     }
 
+    ob_start();
     include get_template_directory() . '/components/blocks/video-01.php';
+    wp_reset_postdata();
+    return ob_get_clean();
 }
 
 function render_litci_video_02($attributes)
@@ -297,79 +259,93 @@ function render_litci_video_02($attributes)
         $channelData = 'https://videos.litci.org/api/channels/' . $id;
     }
 
+    ob_start();
     include get_template_directory() . '/components/blocks/video-02.php';
+    wp_reset_postdata();
+    return ob_get_clean();
 }
 
 
 function render_litci_video_03($attributes)
 {
+    ob_start();
     include get_template_directory() . '/components/blocks/video-03.php';
+    wp_reset_postdata();
+    return ob_get_clean();
 }
 
 function render_litci_stories($attributes)
 {
+    ob_start();
     include get_template_directory() . '/components/blocks/stories.php';
     wp_reset_postdata();
+    return ob_get_clean();
+
 }
 
 function render_litci_ad_01($attributes)
 {
+    ob_start();
     include get_template_directory() . '/components/blocks/ad-01.php';
+    wp_reset_postdata();
+    return ob_get_clean();
 }
 
 function render_litci_columns_two($attributes)
 {
+    ob_start();
     include get_template_directory() . '/components/blocks/columns-two.php';
+    wp_reset_postdata();
+    return ob_get_clean();
 }
 
 
 function prepare_args_to_render($attributes, $postType = array('noticias', 'artigos', 'propaganda', 'post'), $ignoreFeaturedIds = true)
 {
     $args = array(
-        'post_type' => $postType,
-        'posts_per_page' => 12, // Número de posts a serem exibidos
-        'order' => 'desc',
+        'post_type'           => $postType,
+        'posts_per_page'      => 12,
+        'order'               => 'desc',
         'ignore_sticky_posts' => true,
     );
 
+    // Configura categorias
     if (isset($attributes['blockCategories'])) {
         $cats = [];
         foreach ($attributes['blockCategories'] as $category) {
-            $childrens = prepare_children_categories($category);
-            if (is_array($childrens)) {
-                foreach ($childrens as $children) {
-                    array_push($cats, $children);
-                }
-            } else {
-                array_push($cats, $childrens);
-            }
+            $childrens = (array) prepare_children_categories($category);
+            $cats = array_merge($cats, $childrens);
         }
         $args['category__in'] = $cats;
     }
 
-    if(isset($attributes['sortOption']))
-    {
+    // Configurações de ordenação
+    if (isset($attributes['sortOption'])) {
         $args['orderby'] = [
             $attributes['sortOption'] => 'DESC',
             'date' => 'DESC',
         ];
-        $args['order'] = 'DESC';
-    } 
+    }
 
+    // Configura IDs customizados
     if (isset($attributes['customIds']) && strlen($attributes['customIds']) > 1) {
         $args['orderby'] = 'post__in';
-        $ids = array_map('intval', explode(',', $attributes['customIds']));
-        $args['post__in'] = $ids;
+        $args['post__in'] = array_map('intval', explode(',', $attributes['customIds']));
     }
 
-    if (isset($GLOBALS['featured_ids']) && sizeof($GLOBALS['featured_ids']) > 0) {
+    // Evita IDs destacados globais
+    if ($ignoreFeaturedIds && isset($GLOBALS['featured_ids']) && !empty($GLOBALS['featured_ids'])) {
         $args['post__not_in'] = $GLOBALS['featured_ids'];
     }
-	
-	if($ignoreFeaturedIds == false)
-	{
-		$args['post__not_in'] = "";
-	}
 
     return $args;
+}
+
+function get_posts_by_query($attributes)
+{
+    $args = prepare_args_to_render($attributes);
+    $posts = new WP_Query($args);
+    $posts = $posts->posts;
+
+    return $posts;
 }

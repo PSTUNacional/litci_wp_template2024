@@ -75,7 +75,7 @@ function litci_config()
     load_theme_textdomain('litci', get_template_directory() . '/languages');
 }
 
-add_action('after_setup_theme', 'litci_config', 0);
+add_action('after_setup_theme', 'litci_config');
 
 add_action('init', 'edition_rewrite_rule');
 
@@ -237,7 +237,7 @@ function show_menu_order_column($column, $post_id)
         echo '<input type="text" class="menu-order-input" value="' . esc_attr($menu_order) . '" data-post-id="' . esc_attr($post_id) . '">';
     }
 }
-add_action('manage_posts_custom_column', 'show_menu_order_column', 10, 2);
+add_action('manage_posts_custom_column', 'show_menu_order_column');
 
 // Tornar a coluna 'menu_order' ordenável
 function set_menu_order_column_sortable($columns)
@@ -549,7 +549,6 @@ function add_custom_utms() {
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function() {
             setTimeout(() => {
-                console.log('Run, Forest! Run');
                 window.history.replaceState(null, null, "?utm_source=copylink&utm_medium=browser");
             }, 2000);
         });
