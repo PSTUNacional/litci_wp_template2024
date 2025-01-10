@@ -8,12 +8,14 @@ get_header();
 
 ?>
 <style>
-    html{
+    html {
         margin-top: 0 !important;
     }
-    main{
+
+    main {
         margin-top: 24px;
     }
+
     body {
         background-color: #eee;
     }
@@ -60,7 +62,7 @@ get_header();
         max-width: 88px;
     }
 
-    .container .logo{
+    .container .logo {
         max-width: 180px;
         margin: auto;
         margin-bottom: 24px;
@@ -70,34 +72,49 @@ get_header();
     <main>
         <div class="container" style="display:flex; flex-direction:column;">
             <?php
-                if (function_exists('get_custom_logo')) {
-                    $custom_logo_id = get_theme_mod('custom_logo');
-                    $logo_url = wp_get_attachment_image_url($custom_logo_id, 'full');
-                    echo '<img class="logo" src="' . esc_url($logo_url) . '" alt="Site Logo">';
-                }
+            if (function_exists('get_custom_logo')) {
+                $custom_logo_id = get_theme_mod('custom_logo');
+                $logo_url = wp_get_attachment_image_url($custom_logo_id, 'full');
+                echo '<img class="logo" src="' . esc_url($logo_url) . '" alt="Site Logo">';
+            }
             ?>
             <h3 style="text-align:center; margin-bottom:24px"><?= __('Latest posts') ?></h3>
             <div id="postsContainer"></div>
         </div>
     </main>
     <script>
-        place = document.getElementById('postsContainer')
-        fetch('/wp-json/wp/v2/posts?per_page=12')
-            .then(resp => resp.json())
-            .then(data => {
-                data.forEach(text => {
-                    let link = text['link'] + "?utm_source=instagram&utm_medium=linkbio"
-                    let title = text['title']['rendered']
-                    let image = text['fimg_url']
-                    let category = text['categories_names'][0];
+        const place = document.getElementById('postsContainer');
+        const api = '<?= esc_url(get_site_url()); ?>' + '/wp-json/wp/v2/posts?per_page=12';
 
-                    card = document.createElement("a")
-                    card.className = "postsCard"
-                    card.href = link
-                    card.innerHTML = `<div class="fimg" style="background:url('` + image + `'); background-size:cover"></div><h3><span>` + category + `</span>` + title + `</h3>`
-
-                    place.append(card)
-                })
+        fetch(api)
+            .then(resp => {
+                if (!resp.ok) {
+                    throw new Error('Erro ao carregar os posts: ' + resp.statusText);
+                }
+                return resp.json();
             })
+            .then(data => {
+                data.forEach(post => {
+
+                    const link = post['link'] + "?utm_source=instagram&utm_medium=linkbio";
+                    const title = post['title']['rendered'] || 'Sem título';
+                    const image = post['fimg_url']; 
+                    const category = post['categories_names'] ? post['categories_names'][0] : 'Sem categoria';
+
+                    const card = document.createElement("a");
+                    card.className = "postsCard";
+                    card.href = link;
+
+                    card.innerHTML = `
+                    <div class="fimg" style="background: url('${image}'); background-size: cover;"></div>
+                    <h3><span>${category}</span>${title}</h3>
+                    `;
+                    place.append(card);
+                });
+            })
+            .catch(error => {
+                console.error('Erro ao buscar os posts:', error);
+            });
     </script>
+
 </div>
