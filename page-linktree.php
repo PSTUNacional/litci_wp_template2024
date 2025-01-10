@@ -78,7 +78,7 @@ get_header();
                 echo '<img class="logo" src="' . esc_url($logo_url) . '" alt="Site Logo">';
             }
             ?>
-            <h3 style="text-align:center; margin-bottom:24px"><?= __('Latest posts') ?></h3>
+            <h3 style="text-align:center; margin-bottom:24px"><?= _e('Latest posts', 'litci') ?></h3>
             <div id="postsContainer"></div>
         </div>
     </main>
