@@ -23,7 +23,7 @@ foreach($channels as $channel)
     <div class="container">
         <div class="block-header">
             <h3>Vídeos</h3>
-            <a class="see-more" href="<?= $_SERVER['DOCUMENT_ROOT'] . '/videos'?>"><?= _e('See more', 'litci')?></a>
+            <a class="see-more" href="<?= site_url(). '/videos'?>"><?= _e('See more', 'litci')?></a>
         </div>
     </div>
     <div class="container" style="margin-top:var(--gap)">
