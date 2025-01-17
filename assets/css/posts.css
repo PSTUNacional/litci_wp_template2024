@@ -87,9 +87,10 @@ article.post p {
 
 article.post a,
 article.post p a,
-.wp-block-post-content a {
+.wp-block-post-content a,
+.wp-block-post-content p a {
     text-decoration: underline;
-    color: #339
+    color: rgb(0,0,238)
 }
 
 article.post h6 {
