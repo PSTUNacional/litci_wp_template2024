@@ -22,6 +22,9 @@ add_action('wp_enqueue_scripts', 'load_scripts');
 function load_admin_scripts($hook)
 {
 
+    // Load admin CSS for all admin pages
+    wp_enqueue_style('custom-admin-css', get_template_directory_uri() . '/assets/css/admin.css', array(), '1.0', 'all');
+
     if ($hook === 'edit.php' || $hook === 'customize.php') {
         wp_enqueue_script('custom-admin-js', get_template_directory_uri() . '/assets/js/custom-admin.js', array('jquery'), null, true);
         wp_localize_script('custom-admin-js', 'customAdminAjax', array(
@@ -30,16 +33,65 @@ function load_admin_scripts($hook)
         ));
     }
 
-    if($hook === 'post.php' || $hook === 'post-new.php')
-    {
+    if ($hook === 'post.php' || $hook === 'post-new.php') {
         wp_enqueue_style('style', get_template_directory_uri() . '/assets/css/style.css', array(), '1.0', 'all');
+        wp_enqueue_script('post-validation', get_template_directory_uri() . '/assets/js/post-validation.js', array('jquery'), '1.0', true);
+
+        // Translations
+        wp_localize_script('post-validation', 'postValidationMessages', array(
+            'politicalAuthor' => [
+                'title' => __('Oops... who signs?', 'litci'),
+                'text' => __('You must include at least one political author to publish it.', 'litci')
+            ],
+            'links' => [
+                'success'=> [
+                    'title' => __('The text has links.', 'litci'),
+                    'text' => __('Links help connect different contents and politically deepen the discussions.', 'litci')
+                ],
+                'error' => [
+                    'title' => __('The text does not have links.', 'litci'),
+                    'text' => __('Links help connect different contents and politically deepen the discussions.', 'litci')
+                ]
+            ],
+            'headings' => [
+                'success'=> [
+                    'title' => __('The headings are ok.', 'litci'),
+                    'text' => __('The text has explicitly defined subtitles.', 'litci')
+                ],
+                'error' => [
+                    'title' => __('There is no headings.', 'litci'),
+                    'text' => __('There appear to be no intertitles in the text. It is important to insert some and ensure that they are marked as such.', 'litci')
+                ]
+            ],
+            'tags' => [
+                'success'=> [
+                    'title' => __('The tags are ok.', 'litci'),
+                    'text' => __('The text has tags added.', 'litci')
+                ],
+                'error' => [
+                    'title' => __('There is no tags.', 'litci'),
+                    'text' => __('Consider adding tags and keywords that identify the content of this text.', 'litci')
+                ]
+            ],
+            'modal' => [
+                'title' => __('Good practices', 'litci'),
+                'description'   => __('None of these items are mandatory, but maintaining good practices is always important.', 'litci'),
+                'confirm' => __("I'll fix it", "litci"),
+                'deny'  => __('I want to continue anyway', 'litci')
+            ]
+        ));
     }
 
-    wp_enqueue_style('custom-admin-css', get_template_directory_uri() . '/assets/css/admin.css', array(), '1.0', 'all');
+    // SweetAlert2 Library
+    wp_enqueue_style('sweetalert2-css', 'https://cdn.jsdelivr.net/npm/sweetalert2@11.3.0/dist/sweetalert2.min.css', array(), '11.3.0', 'all');
+    wp_enqueue_script('sweetalert2-js', 'https://cdn.jsdelivr.net/npm/sweetalert2@11.3.0/dist/sweetalert2.min.js', array(), '11.3.0', true);
+
+    // FontAwesome
+    wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css', array(), '6.5.0', 'all');
 }
 add_action('admin_enqueue_scripts', 'load_admin_scripts');
 
-function load_customize_scripts($hook)
+function load_customize_scripts()
 {
     wp_enqueue_style('custom-admin-css', get_template_directory_uri() . '/assets/css/admin.css', array(), '1.0', 'all');
 }
@@ -139,9 +191,12 @@ include __DIR__ . '/includes/security.php';
 /*==============================
 
     Add METABOXES
-    Tagline
 
 ==============================*/
+
+#
+# Tagline
+#
 
 function tagline_metabox()
 {
@@ -179,6 +234,45 @@ function tagline_metabox_saver($postId)
 }
 
 add_action('save_post', 'tagline_metabox_saver');
+
+#
+# Political Author
+#
+
+function political_author_metabox()
+{
+    add_meta_box(
+        'post_political_author',
+        'Autor Político',
+        'political_author_metabox_callback',
+        'post',
+        'side',
+        'high'
+    );
+}
+
+function political_author_metabox_callback($post)
+{
+    $value = get_post_meta($post->ID, 'post_political_author', true); ?>
+    <p>Insira o autor político do artigo.</p>
+    <input type="text" class="panel" name="" id="political_author" value="<?= $value; ?>" />
+<?php
+}
+
+add_action('add_meta_boxes', 'political_author_metabox');
+
+function political_author_metabox_saver($postId)
+{
+    if (array_key_exists('post_political_author', $_POST)) {
+        update_post_meta(
+            $postId,
+            'post_political_author',
+            $_POST['post_political_author']
+        );
+    }
+}
+
+add_action('save_post', 'political_author_metabox_saver');
 
 // Edit menu_order capability
 function add_custom_post_type_support()
@@ -337,7 +431,8 @@ function lit_render_thumbnail($post, $size = "medium")
 
 include get_template_directory() . '/includes/blocks.php';
 
-function custom_breadcrumbs() {
+function custom_breadcrumbs()
+{
     // Configurações
     $separator = ' &gt; ';
     $home_title = 'Home';
@@ -352,7 +447,7 @@ function custom_breadcrumbs() {
     echo '<li><a href="' . $home_link . '">' . $home_title . '</a></li>';
     echo '<li>' . $separator . '</li>';
 
-    if ( is_single() ) {
+    if (is_single()) {
         $category = get_the_category();
         if (!empty($category)) {
             $cat = $category[0];
@@ -371,7 +466,7 @@ function custom_breadcrumbs() {
             echo '<li>' . $separator . '</li>';
         }
         echo '<li>' . get_the_title() . '</li>';
-    } elseif ( is_page() ) {
+    } elseif (is_page()) {
         if (isset($post) && $post->post_parent) {
             $parent_id  = $post->post_parent;
             $breadcrumbs = array();
@@ -386,7 +481,7 @@ function custom_breadcrumbs() {
             }
         }
         echo '<li>' . get_the_title() . '</li>';
-    } elseif ( is_category() ) {
+    } elseif (is_category()) {
         $category = get_queried_object();
         if ($category->parent != 0) {
             $parents = array();
@@ -402,9 +497,9 @@ function custom_breadcrumbs() {
             }
         }
         echo '<li>' . single_cat_title('', false) . '</li>';
-    } elseif ( is_search() ) {
+    } elseif (is_search()) {
         echo '<li>Search results for: ' . get_search_query() . '</li>';
-    } elseif ( is_404() ) {
+    } elseif (is_404()) {
         echo '<li>Error 404</li>';
     }
 
@@ -424,9 +519,11 @@ function prepare_children_categories($category)
     return $category;
 }
 
-function create_custom_post_types() {
+function create_custom_post_types()
+{
     // Notícias
-    register_post_type('noticias',
+    register_post_type(
+        'noticias',
         array(
             'labels'      => array(
                 'name'               => __('Notícias'),
@@ -452,7 +549,8 @@ function create_custom_post_types() {
     );
 
     // Análises
-    register_post_type('analises',
+    register_post_type(
+        'analises',
         array(
             'labels'      => array(
                 'name'               => __('Análises'),
@@ -478,7 +576,8 @@ function create_custom_post_types() {
     );
 
     // Propaganda
-    register_post_type('propaganda',
+    register_post_type(
+        'propaganda',
         array(
             'labels'      => array(
                 'name'               => __('Propaganda'),
@@ -507,9 +606,12 @@ function create_custom_post_types() {
 add_action('init', 'create_custom_post_types');
 
 // Adicionar uma nova taxonomia específica para o post type 'propaganda'
-function create_custom_taxonomies() {
+function create_custom_taxonomies()
+{
     // Categoria de Propaganda
-    register_taxonomy('categoria_propaganda', 'propaganda',
+    register_taxonomy(
+        'categoria_propaganda',
+        'propaganda',
         array(
             'labels' => array(
                 'name'              => __('Categorias de Propaganda'),
@@ -537,15 +639,17 @@ add_action('init', 'create_custom_taxonomies');
 
 
 // Desativa o oEmbed para links nos posts
-function disable_embed() {
+function disable_embed()
+{
     remove_filter('the_content', [$GLOBALS['wp_embed'], 'autoembed'], 8);
 }
 add_action('wp_enqueue_scripts', 'disable_embed');
 
 // Adiciona parametros UTMs nos posts e paginas
-function add_custom_utms() {
+function add_custom_utms()
+{
     // Adiciona o script diretamente no HTML
-    ?>
+?>
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function() {
             setTimeout(() => {
@@ -553,7 +657,7 @@ function add_custom_utms() {
             }, 2000);
         });
     </script>
-    <?php
+<?php
 }
 add_action('wp_footer', 'add_custom_utms');
 

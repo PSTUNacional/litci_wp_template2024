@@ -21,7 +21,8 @@
     border-radius: 2px;
     margin: 16px;
 }
-.category-multi-select-container div{
+
+.category-multi-select-container div {
     margin: 0;
 }
 
@@ -35,11 +36,11 @@
     transform: translateY(0px);
 }
 
-.block-card:hover{
+.block-card:hover {
     box-shadow: 0 3px 6px 0 #0004;
     transition: all .15s ease-in-out;
     transform: translateY(-4px);
-    border:1px solid #c00;
+    border: 1px solid #c00;
     outline: 3px solid #c005;
 }
 
@@ -73,4 +74,72 @@
     aspect-ratio: 1;
     border-radius: 50%;
     background: #e5e5e5;
+}
+
+/*==============================
+
+    Good practices modal
+
+==============================*/
+
+#good-practices-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#good-practices-list .item {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+}
+
+#good-practices-list .item h3 {
+    font-size: 1.2em;
+    margin: 0;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+#good-practices-list .item p {
+    text-align: left;
+    margin: 0;
+}
+
+#good-practices-header {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 0;
+}
+
+#good-practices-header h2 {
+    font-size: 1.4em;
+    margin: 0;
+}
+
+#good-practices-header p {
+    margin: 0;
+}
+
+.highlight-error {
+    border: 2px solid red !important;
+    background-color: #ffe6e6 !important;
+    animation: shake 0.3s; /* Para dar um efeito de vibração */
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
 }

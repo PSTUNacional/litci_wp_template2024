@@ -119,3 +119,29 @@ function get_menu_order($object, $field_name, $request)
 }
 
 add_action('rest_api_init', 'register_menu_order');
+
+
+/**
+ * Political Author
+ * Adds the political author field to the REST API response
+ */
+
+function register_political_author(){
+    register_rest_field(
+        array('post', 'search-result'),
+        'political_author',
+        array(
+            'get_callback'    => 'get_political_author',
+            'update_callback' => null,
+            'schema'          => null,
+        )
+    );
+}
+
+function get_political_author($object, $field_name, $request){
+    $author = get_the_author_meta('ID');
+    $political_author = get_user_meta($author, 'political_author', true);
+    return $political_author ? $political_author : null;
+}
+
+add_action('rest_api_init', 'register_political_author');
