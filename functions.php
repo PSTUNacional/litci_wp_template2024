@@ -35,51 +35,51 @@ function load_admin_scripts($hook)
 
     if ($hook === 'post.php' || $hook === 'post-new.php') {
         wp_enqueue_style('style', get_template_directory_uri() . '/assets/css/style.css', array(), '1.0', 'all');
-        wp_enqueue_script('post-validation', get_template_directory_uri() . '/assets/js/post-validation.js', array('jquery'), '1.0', true);
+        // wp_enqueue_script('post-validation', get_template_directory_uri() . '/assets/js/post-validation.js', array('jquery'), '1.0', true);
 
-        // Translations
-        wp_localize_script('post-validation', 'postValidationMessages', array(
-            'politicalAuthor' => [
-                'title' => __('Oops... who signs?', 'litci'),
-                'text' => __('You must include at least one political author to publish it.', 'litci')
-            ],
-            'links' => [
-                'success'=> [
-                    'title' => __('The text has links.', 'litci'),
-                    'text' => __('Links help connect different contents and politically deepen the discussions.', 'litci')
-                ],
-                'error' => [
-                    'title' => __('The text does not have links.', 'litci'),
-                    'text' => __('Links help connect different contents and politically deepen the discussions.', 'litci')
-                ]
-            ],
-            'headings' => [
-                'success'=> [
-                    'title' => __('The headings are ok.', 'litci'),
-                    'text' => __('The text has explicitly defined subtitles.', 'litci')
-                ],
-                'error' => [
-                    'title' => __('There is no headings.', 'litci'),
-                    'text' => __('There appear to be no intertitles in the text. It is important to insert some and ensure that they are marked as such.', 'litci')
-                ]
-            ],
-            'tags' => [
-                'success'=> [
-                    'title' => __('The tags are ok.', 'litci'),
-                    'text' => __('The text has tags added.', 'litci')
-                ],
-                'error' => [
-                    'title' => __('There is no tags.', 'litci'),
-                    'text' => __('Consider adding tags and keywords that identify the content of this text.', 'litci')
-                ]
-            ],
-            'modal' => [
-                'title' => __('Good practices', 'litci'),
-                'description'   => __('None of these items are mandatory, but maintaining good practices is always important.', 'litci'),
-                'confirm' => __("I'll fix it", "litci"),
-                'deny'  => __('I want to continue anyway', 'litci')
-            ]
-        ));
+        // // Translations
+        // wp_localize_script('post-validation', 'postValidationMessages', array(
+        //     'politicalAuthor' => [
+        //         'title' => __('Oops... who signs?', 'litci'),
+        //         'text' => __('You must include at least one political author to publish it.', 'litci')
+        //     ],
+        //     'links' => [
+        //         'success'=> [
+        //             'title' => __('The text has links.', 'litci'),
+        //             'text' => __('Links help connect different contents and politically deepen the discussions.', 'litci')
+        //         ],
+        //         'error' => [
+        //             'title' => __('The text does not have links.', 'litci'),
+        //             'text' => __('Links help connect different contents and politically deepen the discussions.', 'litci')
+        //         ]
+        //     ],
+        //     'headings' => [
+        //         'success'=> [
+        //             'title' => __('The headings are ok.', 'litci'),
+        //             'text' => __('The text has explicitly defined subtitles.', 'litci')
+        //         ],
+        //         'error' => [
+        //             'title' => __('There is no headings.', 'litci'),
+        //             'text' => __('There appear to be no intertitles in the text. It is important to insert some and ensure that they are marked as such.', 'litci')
+        //         ]
+        //     ],
+        //     'tags' => [
+        //         'success'=> [
+        //             'title' => __('The tags are ok.', 'litci'),
+        //             'text' => __('The text has tags added.', 'litci')
+        //         ],
+        //         'error' => [
+        //             'title' => __('There is no tags.', 'litci'),
+        //             'text' => __('Consider adding tags and keywords that identify the content of this text.', 'litci')
+        //         ]
+        //     ],
+        //     'modal' => [
+        //         'title' => __('Good practices', 'litci'),
+        //         'description'   => __('None of these items are mandatory, but maintaining good practices is always important.', 'litci'),
+        //         'confirm' => __("I'll fix it", "litci"),
+        //         'deny'  => __('I want to continue anyway', 'litci')
+        //     ]
+        // ));
     }
 
     // SweetAlert2 Library
