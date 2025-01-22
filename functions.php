@@ -274,7 +274,6 @@ function political_author_metabox_saver($postId)
 
 add_action('save_post', 'political_author_metabox_saver');
 
-
 // Edit menu_order capability
 function add_custom_post_type_support()
 {

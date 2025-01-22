@@ -138,9 +138,8 @@ function register_political_author(){
     );
 }
 
-function get_political_author($object, $field_name, $request){
-    $author = get_the_author_meta('ID');
-    $political_author = get_user_meta($author, 'political_author', true);
+function get_political_author($object, $field_name, $request) {
+    $political_author = get_post_meta($object['id'], 'post_political_author', true);
     return $political_author ? $political_author : null;
 }
 
