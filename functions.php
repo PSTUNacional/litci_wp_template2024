@@ -270,8 +270,6 @@ function political_author_metabox_callback($post)
     <?php
 }
 
-add_action('add_meta_boxes', 'political_author_metabox');
-
 function political_author_metabox_saver($post_id)
 {
     // Verifica se o nonce está definido
@@ -296,7 +294,8 @@ function political_author_metabox_saver($post_id)
     }
 }
 
-add_action('save_post', 'political_author_metabox_saver');
+// add_action('add_meta_boxes', 'political_author_metabox');
+// add_action('save_post', 'political_author_metabox_saver');
 
 // Edit menu_order capability
 function add_custom_post_type_support()
