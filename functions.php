@@ -239,40 +239,40 @@ add_action('save_post', 'tagline_metabox_saver');
 # Political Author
 #
 
-// function political_author_metabox()
-// {
-//     add_meta_box(
-//         'post_political_author',
-//         'Autor Político',
-//         'political_author_metabox_callback',
-//         'post',
-//         'side',
-//         'high'
-//     );
-// }
+function political_author_metabox()
+{
+    add_meta_box(
+        'post_political_author',
+        'Autor Político',
+        'political_author_metabox_callback',
+        'post',
+        'side',
+        'high'
+    );
+}
 
-// function political_author_metabox_callback($post)
-// {
-//     $value = get_post_meta($post->ID, 'post_political_author', true); ?>
-<!--    <p>Insira o autor político do artigo.</p>
-//     <input type="text" class="panel" name="post_political_author" id="political_author" value="<?= $value; ?>" />
-// <?php
-// }
+function political_author_metabox_callback($post)
+{
+    $value = get_post_meta($post->ID, 'post_political_author', true); ?>
+    <p>Insira o autor político do artigo.</p>
+    <input type="text" class="panel" name="post_political_author" id="political_author" value="<?= $value; ?>" />
+<?php
+}
 
-// add_action('add_meta_boxes', 'political_author_metabox');
+//add_action('add_meta_boxes', 'political_author_metabox');
 
-// function political_author_metabox_saver($postId)
-// {
-//     if (array_key_exists('post_political_author', $_POST)) {
-//         update_post_meta(
-//             $postId,
-//             'post_political_author',
-//             sanitize_text_field($_POST['post_political_author'])
-//         );
-//     }
-// }
+function political_author_metabox_saver($postId)
+{
+    if (array_key_exists('post_political_author', $_POST)) {
+        update_post_meta(
+            $postId,
+            'post_political_author',
+            sanitize_text_field($_POST['post_political_author'])
+        );
+    }
+}
 
-// add_action('save_post', 'political_author_metabox_saver');
+//add_action('save_post', 'political_author_metabox_saver');
 
 // Edit menu_order capability
 function add_custom_post_type_support()
