@@ -254,7 +254,7 @@ add_action('save_post', 'tagline_metabox_saver');
 // function political_author_metabox_callback($post)
 // {
 //     $value = get_post_meta($post->ID, 'post_political_author', true); ?>
-//     <p>Insira o autor político do artigo.</p>
+<!--    <p>Insira o autor político do artigo.</p>
 //     <input type="text" class="panel" name="post_political_author" id="political_author" value="<?= $value; ?>" />
 // <?php
 // }
