@@ -82,12 +82,12 @@ function load_admin_scripts($hook)
         // ));
     }
 
-    // SweetAlert2 Library
-    wp_enqueue_style('sweetalert2-css', 'https://cdn.jsdelivr.net/npm/sweetalert2@11.3.0/dist/sweetalert2.min.css', array(), '11.3.0', 'all');
-    wp_enqueue_script('sweetalert2-js', 'https://cdn.jsdelivr.net/npm/sweetalert2@11.3.0/dist/sweetalert2.min.js', array(), '11.3.0', true);
+    // // SweetAlert2 Library
+    // wp_enqueue_style('sweetalert2-css', 'https://cdn.jsdelivr.net/npm/sweetalert2@11.3.0/dist/sweetalert2.min.css', array(), '11.3.0', 'all');
+    // wp_enqueue_script('sweetalert2-js', 'https://cdn.jsdelivr.net/npm/sweetalert2@11.3.0/dist/sweetalert2.min.js', array(), '11.3.0', true);
 
-    // FontAwesome
-    wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css', array(), '6.5.0', 'all');
+    // // FontAwesome
+    // wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css', array(), '6.5.0', 'all');
 }
 add_action('admin_enqueue_scripts', 'load_admin_scripts');
 
