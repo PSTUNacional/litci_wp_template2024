@@ -1,6 +1,6 @@
 let goodPracticesList = {};
 let isSubmitting = false;
-
+/*
 function publishButtonExists() {
     const publishButton = document.querySelector('.editor-post-publish-button');
     
@@ -163,3 +163,4 @@ function submitPost() {
         publishButton.click();
     }
 }
+*/
