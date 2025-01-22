@@ -174,8 +174,8 @@ function tagline_metabox_saver($postId)
     }
 }
 
-add_action('add_meta_boxes', 'tagline_metabox');
-add_action('save_post', 'tagline_metabox_saver');
+//add_action('add_meta_boxes', 'tagline_metabox');
+//add_action('save_post', 'tagline_metabox_saver');
 
 // Edit menu_order capability
 function add_custom_post_type_support()
