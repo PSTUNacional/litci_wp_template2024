@@ -253,26 +253,50 @@ function political_author_metabox()
 
 function political_author_metabox_callback($post)
 {
-    $value = get_post_meta($post->ID, 'post_political_author', true); ?>
-    <p>Insira o autor político do artigo.</p>
-    <input type="text" class="panel" name="post_political_author" id="political_author" value="<?= $value; ?>" />
-<?php
+    // Recupera o valor do meta campo
+    $value = get_post_meta($post->ID, 'post_political_author', true);
+
+    // Gera um nonce para verificação de segurança
+    wp_nonce_field('save_political_author', 'political_author_nonce');
+
+    // Renderiza o campo de entrada
+    ?>
+    <p>Insira o autor político do artigo:</p>
+    <input type="text" 
+           class="panel" 
+           name="post_political_author" 
+           id="political_author" 
+           value="<?= esc_attr($value); ?>" />
+    <?php
 }
 
-//add_action('add_meta_boxes', 'political_author_metabox');
+add_action('add_meta_boxes', 'political_author_metabox');
 
-function political_author_metabox_saver($postId)
+function political_author_metabox_saver($post_id)
 {
-    if (array_key_exists('post_political_author', $_POST)) {
-        update_post_meta(
-            $postId,
-            'post_political_author',
-            sanitize_text_field($_POST['post_political_author'])
-        );
+    // Verifica se o nonce está definido
+    if (!isset($_POST['political_author_nonce']) || 
+        !wp_verify_nonce($_POST['political_author_nonce'], 'save_political_author')) {
+        return;
+    }
+
+    // Verifica se o usuário tem permissão para editar o post
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+
+    // Verifica se o valor do campo está presente no formulário
+    if (isset($_POST['post_political_author'])) {
+        // Sanitiza o valor antes de salvar
+        $sanitized_value = sanitize_text_field($_POST['post_political_author']);
+        update_post_meta($post_id, 'post_political_author', $sanitized_value);
+    } else {
+        // Remove o meta se o campo estiver vazio
+        delete_post_meta($post_id, 'post_political_author');
     }
 }
 
-//add_action('save_post', 'political_author_metabox_saver');
+add_action('save_post', 'political_author_metabox_saver');
 
 // Edit menu_order capability
 function add_custom_post_type_support()
