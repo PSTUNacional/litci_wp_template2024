@@ -161,11 +161,7 @@ function tagline_metabox_callback($post)
     <p>A linha fina é o resumo que aparece logo abaixo do título e funciona como uma síntese da matéria. Esse valor será exibido também na página inicial como chamada. Não havendo esse valor, o site usará o começo do texto (menos recomendável).</p>
     <textarea class="panel" id="post_tagline" name="post_tagline"><?= $value; ?></textarea>
 <?php
-
 }
-
-add_action('add_meta_boxes', 'tagline_metabox');
-
 
 function tagline_metabox_saver($postId)
 {
@@ -178,7 +174,8 @@ function tagline_metabox_saver($postId)
     }
 }
 
-add_action('save_post', 'tagline_metabox_saver');
+//add_action('add_meta_boxes', 'tagline_metabox');
+//add_action('save_post', 'tagline_metabox_saver');
 
 // Edit menu_order capability
 function add_custom_post_type_support()
@@ -198,7 +195,6 @@ function add_menu_order_meta_box()
         'default'                // Prioridade da meta box ('high', 'low')
     );
 }
-add_action('add_meta_boxes', 'add_menu_order_meta_box');
 
 function display_menu_order_meta_box($post)
 {
@@ -219,6 +215,8 @@ function save_menu_order_meta_box_data($post_id)
         ));
     }
 }
+
+add_action('add_meta_boxes', 'add_menu_order_meta_box');
 add_action('save_post', 'save_menu_order_meta_box_data');
 
 // Adicionar nova coluna na tabela de posts
