@@ -35,7 +35,7 @@ function load_admin_scripts($hook)
 
     if ($hook === 'post.php' || $hook === 'post-new.php') {
         wp_enqueue_style('style', get_template_directory_uri() . '/assets/css/style.css', array(), '1.0', 'all');
-        wp_enqueue_script('post-validation', get_template_directory_uri() . '/assets/js/post-validation.js', array('jquery'), '1.0', true);
+        // wp_enqueue_script('post-validation', get_template_directory_uri() . '/assets/js/post-validation.js', array('jquery'), '1.0', true);
 
         // Translations
         wp_localize_script('post-validation', 'postValidationMessages', array(
