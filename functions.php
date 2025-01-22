@@ -216,8 +216,8 @@ function save_menu_order_meta_box_data($post_id)
     }
 }
 
-add_action('add_meta_boxes', 'add_menu_order_meta_box');
-add_action('save_post', 'save_menu_order_meta_box_data');
+//add_action('add_meta_boxes', 'add_menu_order_meta_box');
+//add_action('save_post', 'save_menu_order_meta_box_data');
 
 // Adicionar nova coluna na tabela de posts
 function add_menu_order_column($columns)
@@ -225,7 +225,6 @@ function add_menu_order_column($columns)
     $columns['menu_order'] = 'Prioridade do post';
     return $columns;
 }
-add_filter('manage_posts_columns', 'add_menu_order_column');
 
 // Preencher a nova coluna com o valor de menu_order
 function show_menu_order_column($column, $post_id)
@@ -235,6 +234,8 @@ function show_menu_order_column($column, $post_id)
         echo '<input type="text" class="menu-order-input" value="' . esc_attr($menu_order) . '" data-post-id="' . esc_attr($post_id) . '">';
     }
 }
+
+add_filter('manage_posts_columns', 'add_menu_order_column');
 add_action('manage_posts_custom_column', 'show_menu_order_column', 10, 2);
 
 // Tornar a coluna 'menu_order' ordenável
