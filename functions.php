@@ -260,15 +260,14 @@ add_action('save_post', 'tagline_metabox_saver');
 //     wp_nonce_field('save_political_author', 'political_author_nonce');
 
 //     // Renderiza o campo de entrada
-//     ?>
-<!--
+//    
 //     <p>Insira o autor político do artigo:</p>
 //     <input type="text" 
 //            class="panel" 
 //            name="post_political_author" 
 //            id="political_author" 
-//            value="<?= esc_attr($value); ?>" />
-// -->    <?php
+//            value="<?= esc_attr($value); " />
+//  <?php
 // }
 
 // function political_author_metabox_saver($post_id)
