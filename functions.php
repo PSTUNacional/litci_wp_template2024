@@ -30,8 +30,7 @@ function load_admin_scripts($hook)
         ));
     }
 
-    if($hook === 'post.php' || $hook === 'post-new.php')
-    {
+    if ($hook === 'post.php' || $hook === 'post-new.php') {
         wp_enqueue_style('style', get_template_directory_uri() . '/assets/css/style.css', array(), '1.0', 'all');
     }
 
@@ -138,7 +137,7 @@ include __DIR__ . '/includes/security.php';
 
 /*==============================
 
-    Add METABOXES
+    METABOXES
     Tagline
 
 ==============================*/
@@ -146,7 +145,7 @@ include __DIR__ . '/includes/security.php';
 function tagline_metabox()
 {
     add_meta_box(
-        'post_tagline',
+        'litci_post_tagline',
         'Linha fina',
         'tagline_metabox_callback',
         'post',
@@ -154,28 +153,42 @@ function tagline_metabox()
         'high'
     );
 }
-
+add_action('add_meta_boxes', 'tagline_metabox');
 function tagline_metabox_callback($post)
 {
-    $value = get_post_meta($post->ID, 'post_tagline', true); ?>
+    $value = get_post_meta($post->ID, 'litci_post_tagline', true); ?>
     <p>A linha fina é o resumo que aparece logo abaixo do título e funciona como uma síntese da matéria. Esse valor será exibido também na página inicial como chamada. Não havendo esse valor, o site usará o começo do texto (menos recomendável).</p>
-    <textarea class="panel" id="post_tagline" name="post_tagline"><?= $value; ?></textarea>
+    <textarea class="panel" id="litci_post_tagline" name="litci_post_tagline"><?= $value; ?></textarea>
 <?php
 }
 
 function tagline_metabox_saver($postId)
 {
-    if (array_key_exists('post_tagline', $_POST)) {
-        update_post_meta(
-            $postId,
-            'post_tagline',
-            $_POST['post_tagline']
-        );
+
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return $postId;
+    }
+
+    if (isset($_POST['litci_post_tagline'])) {
+        $current_value = get_post_meta($postId, 'litci_post_tagline', true);
+        $new_value = sanitize_text_field($_POST['litci_post_tagline']);
+
+        if ($current_value !== $new_value) {
+            update_post_meta($postId, 'litci_post_tagline', $new_value);
+        }
+    } else {
+        error_log('tagline_metabox_saver() => Metavalue not saved. The field "litci_post_tagline" missing.');
     }
 }
 
-//add_action('add_meta_boxes', 'tagline_metabox');
-//add_action('save_post', 'tagline_metabox_saver');
+add_action('save_post', 'tagline_metabox_saver');
+
+/*==============================
+
+    METABOXES
+    Menu Order
+
+==============================*/
 
 // Edit menu_order capability
 function add_custom_post_type_support()
@@ -187,7 +200,7 @@ add_action('init', 'add_custom_post_type_support');
 function add_menu_order_meta_box()
 {
     add_meta_box(
-        'menu_order_meta_box',   // ID da meta box
+        'litci_menu_order_meta_box',   // ID da meta box  
         'Prioridade do post',         // Título da meta box
         'display_menu_order_meta_box', // Callback para exibir o conteúdo
         'post',                  // Tipo de post onde a meta box será adicionada
@@ -196,27 +209,34 @@ function add_menu_order_meta_box()
     );
 }
 
+add_action('add_meta_boxes', 'add_menu_order_meta_box');
+
 function display_menu_order_meta_box($post)
 {
     $menu_order = $post->menu_order;
 ?>
-    <label for="menu_order_field">Ordem do Menu</label>
-    <input type="text" name="menu_order_field" value="<?php echo $menu_order; ?>" />
+    <label for="litci_menu_order_meta_box">Ordem do Menu</label>
+    <input type="text" name="litci_menu_order_meta_box" value="<?php echo $menu_order; ?>" />
 <?php
 }
 
-function save_menu_order_meta_box_data($post_id)
+function save_menu_order_meta_box_data($postId)
 {
-    if (array_key_exists('menu_order_field', $_POST)) {
-        $menu_order = intval($_POST['menu_order_field']);
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return $postId;
+    }
+
+    if (isset($_POST['litci_menu_order_meta_box'], $_POST)) {
+        $menu_order = intval($_POST['litci_menu_order_meta_box']);
+        remove_action('save_post', 'save_menu_order_meta_box_data');
         wp_update_post(array(
-            'ID' => $post_id,
+            'ID' => $postId,
             'menu_order' => $menu_order,
         ));
+        add_action('save_post', 'save_menu_order_meta_box_data');
     }
 }
 
-add_action('add_meta_boxes', 'add_menu_order_meta_box');
 add_action('save_post', 'save_menu_order_meta_box_data');
 
 // Adicionar nova coluna na tabela de posts
@@ -227,11 +247,11 @@ function add_menu_order_column($columns)
 }
 
 // Preencher a nova coluna com o valor de menu_order
-function show_menu_order_column($column, $post_id)
+function show_menu_order_column($column, $postId)
 {
     if ($column === 'menu_order') {
-        $menu_order = get_post_field('menu_order', $post_id);
-        echo '<input type="text" class="menu-order-input" value="' . esc_attr($menu_order) . '" data-post-id="' . esc_attr($post_id) . '">';
+        $menu_order = get_post_field('menu_order', $postId);
+        echo '<input type="text" class="menu-order-input" value="' . esc_attr($menu_order) . '" data-post-id="' . esc_attr($postId) . '">';
     }
 }
 
@@ -266,11 +286,11 @@ function update_menu_order()
     check_ajax_referer('custom_admin_nonce', 'nonce');
 
     if (isset($_POST['post_id']) && isset($_POST['menu_order'])) {
-        $post_id = intval($_POST['post_id']);
+        $postId = intval($_POST['post_id']);
         $menu_order = intval($_POST['menu_order']);
 
         $post_data = array(
-            'ID' => $post_id,
+            'ID' => $postId,
             'menu_order' => $menu_order
         );
 
@@ -336,7 +356,8 @@ function lit_render_thumbnail($post, $size = "medium")
 
 include get_template_directory() . '/includes/blocks.php';
 
-function custom_breadcrumbs() {
+function custom_breadcrumbs()
+{
     // Configurações
     $separator = ' &gt; ';
     $home_title = 'Home';
@@ -351,7 +372,7 @@ function custom_breadcrumbs() {
     echo '<li><a href="' . $home_link . '">' . $home_title . '</a></li>';
     echo '<li>' . $separator . '</li>';
 
-    if ( is_single() ) {
+    if (is_single()) {
         $category = get_the_category();
         if (!empty($category)) {
             $cat = $category[0];
@@ -370,7 +391,7 @@ function custom_breadcrumbs() {
             echo '<li>' . $separator . '</li>';
         }
         echo '<li>' . get_the_title() . '</li>';
-    } elseif ( is_page() ) {
+    } elseif (is_page()) {
         if (isset($post) && $post->post_parent) {
             $parent_id  = $post->post_parent;
             $breadcrumbs = array();
@@ -385,7 +406,7 @@ function custom_breadcrumbs() {
             }
         }
         echo '<li>' . get_the_title() . '</li>';
-    } elseif ( is_category() ) {
+    } elseif (is_category()) {
         $category = get_queried_object();
         if ($category->parent != 0) {
             $parents = array();
@@ -401,9 +422,9 @@ function custom_breadcrumbs() {
             }
         }
         echo '<li>' . single_cat_title('', false) . '</li>';
-    } elseif ( is_search() ) {
+    } elseif (is_search()) {
         echo '<li>Search results for: ' . get_search_query() . '</li>';
-    } elseif ( is_404() ) {
+    } elseif (is_404()) {
         echo '<li>Error 404</li>';
     }
 
@@ -423,9 +444,11 @@ function prepare_children_categories($category)
     return $category;
 }
 
-function create_custom_post_types() {
+function create_custom_post_types()
+{
     // Notícias
-    register_post_type('noticias',
+    register_post_type(
+        'noticias',
         array(
             'labels'      => array(
                 'name'               => __('Notícias'),
@@ -451,7 +474,8 @@ function create_custom_post_types() {
     );
 
     // Análises
-    register_post_type('analises',
+    register_post_type(
+        'analises',
         array(
             'labels'      => array(
                 'name'               => __('Análises'),
@@ -477,7 +501,8 @@ function create_custom_post_types() {
     );
 
     // Propaganda
-    register_post_type('propaganda',
+    register_post_type(
+        'propaganda',
         array(
             'labels'      => array(
                 'name'               => __('Propaganda'),
@@ -506,9 +531,12 @@ function create_custom_post_types() {
 add_action('init', 'create_custom_post_types');
 
 // Adicionar uma nova taxonomia específica para o post type 'propaganda'
-function create_custom_taxonomies() {
+function create_custom_taxonomies()
+{
     // Categoria de Propaganda
-    register_taxonomy('categoria_propaganda', 'propaganda',
+    register_taxonomy(
+        'categoria_propaganda',
+        'propaganda',
         array(
             'labels' => array(
                 'name'              => __('Categorias de Propaganda'),
@@ -536,15 +564,17 @@ add_action('init', 'create_custom_taxonomies');
 
 
 // Desativa o oEmbed para links nos posts
-function disable_embed() {
+function disable_embed()
+{
     remove_filter('the_content', [$GLOBALS['wp_embed'], 'autoembed'], 8);
 }
 add_action('wp_enqueue_scripts', 'disable_embed');
 
 // Adiciona parametros UTMs nos posts e paginas
-function add_custom_utms() {
+function add_custom_utms()
+{
     // Adiciona o script diretamente no HTML
-    ?>
+?>
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function() {
             setTimeout(() => {
@@ -552,7 +582,7 @@ function add_custom_utms() {
             }, 2000);
         });
     </script>
-    <?php
+<?php
 }
 add_action('wp_footer', 'add_custom_utms');
 
