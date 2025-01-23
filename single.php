@@ -40,7 +40,7 @@ if (have_posts()) {
                         <div class="socialmedia">
                             <a href="whatsapp://send?text=<?= the_title(); ?>%0A%0A<?= get_permalink(); ?>" data-action="share/whatsapp/share" class="wa share" target="_blank"><i class="fab fa-whatsapp"></i></a>
                             <a href="https://www.facebook.com/sharer.php?u=<?= urlencode(get_permalink()); ?>" class="fb share" target="_blank"> <i class="fab fa-facebook-f"></i></a>
-                            <a href="https://twitter.com/intent/tweet?text=<?= urlencode(the_title()); ?>&url=<?= get_permalink(); ?>%0A%0A&via=litci" class="tw share" target="_blank"><i class="fab fa-twitter"></i></a>
+                            <a href="https://twitter.com/intent/tweet?text=<?= urlencode(get_the_title()); ?>&url=<?= get_permalink(); ?>%0A%0A&via=litci" class="tw share" target="_blank"><i class="fab fa-twitter"></i></a>
                         </div>
                     </div>
 
@@ -86,8 +86,10 @@ if (have_posts()) {
                 </article>
                 <?php
                 $tags_id = array();
-                foreach ($tags as $tag) {
-                    $tags_id[] = $tag->term_id;
+                if (is_array($tags) || is_object($tags)) {
+                    foreach ($tags as $tag) {
+                        $tags_id[] = $tag->term_id;
+                    }
                 }
 
                 $args = array(

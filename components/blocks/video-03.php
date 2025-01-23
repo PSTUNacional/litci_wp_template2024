@@ -36,7 +36,7 @@ foreach($channels as $channel)
                             <div class="icon"><i class="material-icons">play_circle_filled</i></div>
                         </a>
                         <div class="video-info">
-                            <!--<span class="badge primary"><?= $video['channel_name'] ?></span>-->
+                            <!--<span class="badge primary"><?= isset($video['channel_name']) ? $video['channel_name'] : null; ?></span>-->
                             <a href="<?= $video['url'] ?>">
                                 <h3><?= $video['title'] ?></h3>
                             </a>
