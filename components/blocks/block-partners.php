@@ -18,7 +18,7 @@
                 <a href="https://archivoleontrotsky.org/" target="_blank" class="card">
                     <img src="https://litci.org/pt/wp-content/uploads/2022/06/archivo-3-e1654633929865-300x168.png" alt="Archivo Leon Trostky">
                 </a>
-                <a href="https://marxismovivo.org/" target="_blank" class="card">
+                <a href="https://marxismovivo.litci.org/" target="_blank" class="card">
                     <img src="https://litci.org/pt/wp-content/uploads/2022/05/marxismo-vivo-e1653342337533-300x168.png" alt="Marxismo Vivo">
                 </a>
             </div>
