@@ -24,7 +24,7 @@
         )
     )
 
-    const icon = el('img', {src:'./icons/block10.svg'})
+    const icon = el('img', {src:'../wp-content/themes/litci/components/blocks/icons/block10.svg'})
 
     blocks.registerBlockType('litci/block-10', {
         title: 'LIT-Bloco 10',
