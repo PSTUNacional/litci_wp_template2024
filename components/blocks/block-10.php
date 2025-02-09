@@ -12,15 +12,21 @@
                 <?php } ?>
             </div>
             <?php
-                $amount = isset($attributes['postAmount']) ? $attributes['postAmount'] : 3;
-                $amount == 3 || $amount == 6 || $amount == 9
-                    ? $columns = 'three-columns'
-                    : $columns = 'four-columns';
+                $postAmount = isset($attributes['postAmount']) ? $attributes['postAmount'] : 4;
+                $columnsAmount = isset($attributes['columns']) ? $attributes['columns'] : 3;
+                $validColumns = [
+                    2 => 'two-columns',
+                    3 => 'three-columns',
+                    4 => 'four-columns',
+                    5 => 'five-columns'
+                ];
+
+                $columns = isset($validColumns[$columnsAmount]) ? $validColumns[$columnsAmount] : 'three-columns';
             ?>
             <div class="block-10 <?=$columns?>">
                 <?php
                 
-                for($i = 0; $i < $amount; $i++)
+                for($i = 0; $i < $postAmount; $i++)
                 {
                     $post = $posts[$i];
                     include __DIR__ . '/../units/unit-03.php';

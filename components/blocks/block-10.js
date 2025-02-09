@@ -8,8 +8,8 @@
     var SelectControl = components.SelectControl;
     var useSelect = data.useSelect;
 
-    const blockStructure = (posts) => (
-        el('div', { className: "block-10", style: { gridTemplateColumns: "repeat(auto-fit, minmax(128px, 1fr))", width:"100%" } },
+    const blockStructure = (posts, columns) => (
+        el('div', { className: "block-10", style: { display: "grid", gridTemplateColumns: `repeat(${columns}, 1fr)`, width:"100%" } },
             posts.map(post => (
                 el('article', { className: "unit-03" },
                     el('div', { className: "featured-image-container" },
@@ -56,6 +56,11 @@
                 default: ''
             },
             postAmount:
+            {
+                type: 'int',
+                default: 3
+            },
+            columns:
             {
                 type: 'int',
                 default: 3
@@ -109,6 +114,10 @@
                 props.setAttributes({ postAmount: amount })
             }
 
+            var onChangeColumns = function (amount) {
+                props.setAttributes({columns: parseInt(amount)})
+            }
+
             // Obtém os posts baseados na opção de ordenação
             var posts = useSelect((select) => {
 
@@ -121,24 +130,23 @@
 
                 // Adiciona filtro de categorias se blockCategories não estiver vazio
                 if (attributes.blockCategories.length > 0 && attributes.customIds.length == 0) {
-                    query.categories = attributes.blockCategories.join(','); // Une os IDs em uma string separada por vírgula
+                    query.categories = attributes.blockCategories; // Une os IDs em uma string separada por vírgula
                 }
 
                 if (attributes.customIds.length > 0) {
-                    query.include = attributes.customIds
-
+                    query.include = attributes.customIds.split(',').map(id => id.trim())
                 }
 
                 // Retorna os posts filtrados
                 return select('core').getEntityRecords('postType', 'post', query);
 
-            }, [attributes.sortOption, attributes.blockCategories, attributes.customIds, attributes.postAmount]);
+            }, [attributes.sortOption, attributes.blockCategories, attributes.customIds, attributes.postAmount, attributes.columns]);
 
             return el('div', { className: "block-card", style: { backgroundColor: attributes.backgroundColor } },
                 el('h3', {}, attributes.blockTitle),
                 el('div', { style: { display: 'flex' } },
                     posts && posts.length > 0
-                        ? blockStructure(posts)
+                        ? blockStructure(posts, attributes.columns)
                         : el('li', {}, 'Nenhum post encontrado.')
                 ),
                 el(InspectorControls, {},
@@ -157,8 +165,22 @@
                                 {label: '6 posts', value: 6},
                                 {label: '8 posts', value: 8},
                                 {label: '9 posts', value: 9},
+                                {label: '12 posts', value: 12},
+                                {label: '15 posts', value: 15},
+                                {label: '16 posts', value: 16},
                             ],
                             onChange: onChangeAmount
+                        }),
+                        el(SelectControl,{
+                            label: 'Quantidade de colunas',
+                            value: attributes.columns,
+                            options: [
+                                {label: '2 colunas', value: 2},
+                                {label: '3 colunas', value: 3},
+                                {label: '4 colunas', value: 4},
+                                {label: '5 colunas', value: 5},
+                            ],
+                            onChange: onChangeColumns
                         }),
                         el(SelectControl, {
                             label: 'Cor de Fundo',

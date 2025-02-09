@@ -171,7 +171,7 @@
                 }
 
                 if (attributes.customIdsOne.length > 0) {
-                    query.include = attributes.customIdsOne
+                    query.include = attributes.customIds.split(',').map(id => id.trim())One
 
                 }
 

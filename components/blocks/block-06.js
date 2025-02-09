@@ -132,7 +132,7 @@
                 }
 
                 if (attributes.customIds.length > 0) {
-                    query.include = attributes.customIds
+                    query.include = attributes.customIds.split(',').map(id => id.trim())
 
                 }
 

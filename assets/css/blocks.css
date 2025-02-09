@@ -208,12 +208,20 @@
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
+.block-10.two-columns{
+    grid-template-columns: 1fr 1fr;
+}
+
 .block-10.three-columns{
     grid-template-columns: 1fr 1fr 1fr;
 }
 
 .block-10.four-columns{
     grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.block-10.five-columns{
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
 
 .block-10 .unit-03{
