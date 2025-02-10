@@ -1,5 +1,8 @@
 <?php
 
+$videoAmount = $attributes['videoAmount'];
+$columns = $attributes['columns'];
+
 $json = file_get_contents($url);
 $videos = json_decode($json, TRUE);
 $videos = $videos['data'];
@@ -13,7 +16,7 @@ foreach ($videos as $video) {
 }
 
 $videos = [];
-for ($i = 0; $i < 3; $i++) {
+for ($i = 0; $i < $videoAmount; $i++) {
     foreach ($groupedChannels as $c) {
         $videos[] = $c[$i];
     }
@@ -34,9 +37,9 @@ if(isset($channelData))
         </div>
     </div>
     <div class="container" style="margin-top:var(--gap)">
-        <div class="video-grid">
+        <div class="video-grid" style='grid-template-columns: repeat(<?=$columns?>, 1fr)'>
             <?php
-            for ($i = 0; $i < 10; $i++) {
+            for ($i = 0; $i < $videoAmount; $i++) {
                 if (isset($videos[$i])) { ?>
                     <div class="video-item" data-video="<?= $videos[$i]['video_id'] ?>">
                         <a href="<?= $videos[$i]['url'] ?>" class="video-thumb" style="background-image:url('https://i.ytimg.com/vi/<?= $videos[$i]['video_id'] ?>/hqdefault.jpg')">
