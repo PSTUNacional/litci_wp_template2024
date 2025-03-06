@@ -34,7 +34,7 @@ if(isset($channelData))
         <div class="block-header">
             <h3>Vídeos</h3>
             <a class="see-more" href="/videos"><?= _e('See more', 'litci')?></a>
-        </div>
+        </div>˜
     </div>
     <div class="container" style="margin-top:var(--gap)">
         <div class="video-grid" style='grid-template-columns: repeat(<?=$columns?>, 1fr)'>

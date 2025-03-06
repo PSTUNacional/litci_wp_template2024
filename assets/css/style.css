@@ -1076,7 +1076,7 @@ section.video-section .video-item.main:hover .video-info {
     border-radius: var(--radius);
     text-align: center;
     overflow: hidden;
-    aspect-ratio: 21/4;
+    /* aspect-ratio: 21/4; */
 }
 
 .ads img {

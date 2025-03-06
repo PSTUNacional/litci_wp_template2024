@@ -7,8 +7,10 @@
     var URLInput = editor.URLInput;
     var Button = components.Button;
 
+    const icon = el('img', {src:'../wp-content/themes/litci/components/blocks/icons/block01.svg'})
+
     blocks.registerBlockType('litci/ad-01', {
-        title: 'LIT-BannerAds 1',
+        title: 'LIT-Banner Ads 1',
         icon: icon,
         category: 'litci-category', 
         attributes: {
@@ -29,6 +31,7 @@
                 default: '',
             }
         },
+        
         edit: function (props) {
             var attributes = props.attributes;
 

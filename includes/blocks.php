@@ -15,6 +15,7 @@ function register_litci_blocks()
 {
 
     $blockList = [
+        "ad-01",
         "block-01",
         "block-02",
         "block-03",
@@ -32,7 +33,7 @@ function register_litci_blocks()
         "video-02",
         "video-03",
         "stories",
-        "ad-01"
+
     ];
 
     foreach ($blockList as $block) {
