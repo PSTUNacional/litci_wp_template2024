@@ -64,6 +64,10 @@
             {
                 type: 'int',
                 default: 3
+            },
+            excerpt: {
+                type: 'boolean',
+                default: false,
             }
         },
         edit: withSelect(function (select) {
@@ -118,6 +122,10 @@
                 props.setAttributes({columns: parseInt(amount)})
             }
 
+            var onChangeExcerpt = function (excerpt) {
+                props.setAttributes({excerpt: excerpt})
+            }
+
             // Obtém os posts baseados na opção de ordenação
             var posts = useSelect((select) => {
 
@@ -140,7 +148,7 @@
                 // Retorna os posts filtrados
                 return select('core').getEntityRecords('postType', 'post', query);
 
-            }, [attributes.sortOption, attributes.blockCategories, attributes.customIds, attributes.postAmount, attributes.columns]);
+            }, [attributes.sortOption, attributes.blockCategories, attributes.customIds, attributes.postAmount, attributes.columns, attributes.excerpt]);
 
             return el('div', { className: "block-card", style: { backgroundColor: attributes.backgroundColor } },
                 el('h3', {}, attributes.blockTitle),
@@ -181,6 +189,15 @@
                                 {label: '5 colunas', value: 5},
                             ],
                             onChange: onChangeColumns
+                        }),
+                        el(SelectControl,{
+                            label: 'Exibir resumo',
+                            value: attributes.excerpt,
+                            options: [
+                                {label: 'Sim', value: true},
+                                {label: 'Não', value: false}
+                            ],
+                            onChange: onChangeExcerpt
                         }),
                         el(SelectControl, {
                             label: 'Cor de Fundo',
