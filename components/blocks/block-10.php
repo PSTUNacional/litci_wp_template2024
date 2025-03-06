@@ -28,12 +28,14 @@
                 
                 for($i = 0; $i < $postAmount; $i++)
                 {
-                    $post = $posts[$i];
-                    include __DIR__ . '/../units/unit-03.php';
-
-                    isset($attributes['sortOption']) && $attributes['sortOption'] == 'menu_order'
-                        ? $GLOBALS['featured_ids'][] = $post->ID
-                        : '';
+                    if($posts[$i]){
+                        $post = $posts[$i];
+                        include __DIR__ . '/../units/unit-03.php';
+    
+                        isset($attributes['sortOption']) && $attributes['sortOption'] == 'menu_order'
+                            ? $GLOBALS['featured_ids'][] = $post->ID
+                            : '';
+                    }
                 }
                
                 ?>
