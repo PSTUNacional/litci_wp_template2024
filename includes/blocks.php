@@ -320,6 +320,11 @@ function prepare_args_to_render($attributes, $postType = array('noticias', 'arti
         $args['category__in'] = $cats;
     }
 
+    // Configura tags
+    if (isset($attributes['blockTags'])) {
+        $args['tag__in'] = $attributes['blockTags'];
+    }
+
     // Configurações de ordenação
     if (isset($attributes['sortOption'])) {
         $args['orderby'] = [

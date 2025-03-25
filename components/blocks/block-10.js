@@ -7,6 +7,8 @@
     var withSelect = wp.data.withSelect;
     var SelectControl = components.SelectControl;
     var useSelect = data.useSelect;
+    var useState = element.useState;
+    var ComboboxControl = components.ComboboxControl;
 
     const blockStructure = (posts, columns) => (
         el('div', { className: "block-10", style: { display: "grid", gridTemplateColumns: `repeat(${columns}, 1fr)`, width:"100%" } },
@@ -39,6 +41,10 @@
                 type: 'array',
                 default: [],
             },
+            blockTags: {
+                type: 'array',
+                default: [],
+            },            
             sortOption: {
                 type: 'string',
                 default: 'recent',
@@ -58,12 +64,12 @@
             postAmount:
             {
                 type: 'int',
-                default: 3
+                default: 4
             },
             columns:
             {
                 type: 'int',
-                default: 3
+                default: 4
             },
             excerpt: {
                 type: 'boolean',
@@ -74,6 +80,9 @@
             // Busca todas as catgorias
             var categories = select('core').getEntityRecords('taxonomy', 'category', { per_page: -1 });
             var categoryOptions = [];
+
+            var tags = select('core').getEntityRecords('taxonomy', 'post_tag', { per_page: -1 });
+            var tagOptions = tags ? tags.map(tag => ({ label: tag.name, value: tag.id })) : [];
 
             if (categories) {
                 categoryOptions = categories.map(function (category) {
@@ -87,10 +96,18 @@
             return {
                 categories: categories,
                 categoryOptions: categoryOptions,
+                tags: tags,
+                tagOptions: tagOptions
             };
         })(function (props) {
             var attributes = props.attributes;
             var categoryOptions = props.categoryOptions;
+            var [categorySearch, setCategorySearch] = useState('');
+            var tagOptions = props.tagOptions
+
+            var filteredCategories = categoryOptions.filter(category =>
+                category.label.toLowerCase().includes(categorySearch.toLowerCase())
+            );
 
             var onChangeTitle = function (newTitle) {
                 props.setAttributes({ blockTitle: newTitle });
@@ -113,7 +130,7 @@
             var onCustomIdsChange = function (newIds) {
                 props.setAttributes({ customIds: newIds })
             }
-
+            
             var onChangeAmount = function (amount) {
                 props.setAttributes({ postAmount: amount })
             }
@@ -141,6 +158,11 @@
                     query.categories = attributes.blockCategories; // Une os IDs em uma string separada por vírgula
                 }
 
+                // Adiciona filtro de tags se blockTags não estiver vazio
+                if (attributes.blockTags.length > 0 && attributes.customIds.length == 0) {
+                    query.tags = attributes.blockTags; 
+                }
+
                 if (attributes.customIds.length > 0) {
                     query.include = attributes.customIds.split(',').map(id => id.trim())
                 }
@@ -148,7 +170,7 @@
                 // Retorna os posts filtrados
                 return select('core').getEntityRecords('postType', 'post', query);
 
-            }, [attributes.sortOption, attributes.blockCategories, attributes.customIds, attributes.postAmount, attributes.columns, attributes.excerpt]);
+            }, [attributes.sortOption, attributes.blockCategories, attributes.customIds, attributes.postAmount, attributes.columns, attributes.excerpt, attributes.blockTags]);
 
             return el('div', { className: "block-card", style: { backgroundColor: attributes.backgroundColor } },
                 el('h3', {}, attributes.blockTitle),
@@ -230,9 +252,49 @@
                             ],
                             onChange: onChangeSortOption
                         }),
+                        el(ComboboxControl, {
+                                label: 'Buscar tags',
+                                value: '',
+                                options: tagOptions.map(tag => ({
+                                    label: tag.label,
+                                    value: tag.value
+                                })),
+                                onChange: (newTagId) => {
+                                    if (!attributes.blockTags.includes(newTagId)) {
+                                        props.setAttributes({ blockTags: [...attributes.blockTags, newTagId] });
+                                    }
+                                }
+                            }),
+                            el('div', { className: 'selected-tags' },
+                                attributes.blockTags.map(tagId => {
+                                    const tag = tagOptions.find(tag => tag.value === tagId);
+                                    return tag ? el('span', {
+                                        key: tagId,
+                                        className: 'category-pill',
+                                        style: { padding: '5px 10px', background: '#007cba', color: '#fff', borderRadius: '15px', margin: '3px', display: 'inline-flex', alignItems: 'center' }
+                                    },
+                                        tag.label,
+                                        el('span', {
+                                            style: { marginLeft: '8px', cursor: 'pointer' },
+                                            onClick: () => {
+                                                props.setAttributes({
+                                                    blockTags: attributes.blockTags.filter(id => id !== tagId)
+                                                });
+                                            }
+                                        }, ' × ')
+                                    ) : null;
+                                })
+                            ),                       
+                        el(TextControl, {
+                            label: 'Buscar categoria',
+                            value: categorySearch,
+                            onChange: setCategorySearch,
+                            placeholder: 'Digite para filtrar...',
+                        }),
+                        
                         el('fieldset', { className: "category-multi-select-container" },
                             el('legend', {}, 'Categorias do Bloco'),
-                            categoryOptions.map(function (option) {
+                            filteredCategories.map(function (option) {
                                 return el(CheckboxControl, {
                                     key: option.value,
                                     label: option.label,

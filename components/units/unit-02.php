@@ -8,7 +8,9 @@
         </a>
         <div class="excerpt"><?= get_the_excerpt($post); ?></div>
         <div class="meta">
-            <a class="sup-category" href="<?= get_category_link(wp_get_post_categories($post->ID)[0]) ?>"><?= escape_categories(wp_get_post_categories($post->ID)); ?>
+            <?php $cat = escape_categories(wp_get_post_categories($post->ID)); ?>
+            <a class="sup-category" href="<?= get_category_link($cat['id']) ?>">
+                <?= $cat['name']; ?>
             </a>
             <p class="post-date"><?= formatDate($post->post_date) ?></p>
         </div>

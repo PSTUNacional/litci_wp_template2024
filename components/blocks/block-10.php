@@ -13,7 +13,7 @@
             </div>
             <?php
                 $postAmount = isset($attributes['postAmount']) ? $attributes['postAmount'] : 4;
-                $columnsAmount = isset($attributes['columns']) ? $attributes['columns'] : 3;
+                $columnsAmount = isset($attributes['columns']) ? $attributes['columns'] : 4;
                 $validColumns = [
                     2 => 'two-columns',
                     3 => 'three-columns',

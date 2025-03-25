@@ -221,17 +221,19 @@ function formatDate($str)
 
 function escape_categories($cats)
 {
-    if (sizeof($cats) == 0) {
-        $cat = 'Sem categoria';
-    } else {
-        $cat = get_cat_name($cats[0]);
-        if ($cat == 'Opinião Socialista' && sizeof($cats) > 1) {
-            $cat = get_cat_name($cats[1]);
-        } elseif ($cat == 'Opinião Socialista' && sizeof($cats) <= 1) {
-            $cat = 'Especial';
-        }
+    if (empty($cats)) {
+        return ['id' => null, 'name' => 'Sem categoria'];
     }
-    return $cat;
+
+    $id = $cats[0];
+    $name = get_cat_name($id);
+
+    if ($name === 'Destacado' && isset($cats[1])) {
+        $id = $cats[1];
+        $name = get_cat_name($id);
+    }
+
+    return ['id' => $id, 'name' => $name];
 }
 
 function lit_render_thumbnail($post, $size = "medium")

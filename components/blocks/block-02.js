@@ -1,3 +1,5 @@
+//import TagsFilter from "./components/TagsFilter";
+
 (function (blocks, editor, element, components, data) {
     var el = element.createElement;
     var TextControl = components.TextControl;
@@ -7,18 +9,79 @@
     var withSelect = wp.data.withSelect;
     var SelectControl = components.SelectControl;
     var useSelect = data.useSelect;
+    var ComboboxControl = components.ComboboxControl;
 
-    const blockStructure = (posts) => (
-        posts.map(post =>
-            el('article', { className: "unit-02", style: { fontSize: "0.7rem", gap: "0px" } },
-                el('div', { className: "featured-image-container" },
-                    el('img', { src: post.fimg_url })
-                ),
-                el('h3', {}, post.title.rendered),
-                el('p', {}, post.excerpt.rendered)
-            )
+/*=============================
+*
+*  Block Structure
+*
+=============================*/
+
+const blockStructure = (posts) => (
+    posts.map(post =>
+        el('article', { className: "unit-02", style: { fontSize: "0.7rem", gap: "0px" } },
+            el('div', { className: "featured-image-container" },
+                el('img', { src: post.fimg_url })
+            ),
+            el('h3', {}, post.title.rendered),
+            el('p', {}, post.excerpt.rendered)
         )
     )
+)
+
+/*=============================
+*
+*   Elements
+*
+=============================*/
+
+/***
+ *  Tags Filter
+ */
+
+const TagsFilter = ({ blockTags, setAttributes, tagOptions }) => {
+    const onRemoveTag = (tagIdToRemove) => {
+        const updatedTags = blockTags.filter(id => id !== tagIdToRemove);
+        setAttributes({ blockTags: updatedTags });
+    };
+
+    return el('div', { className: 'tags-filter' },
+        el(ComboboxControl, {
+            label: 'Buscar tags',
+            value: '',
+            options: tagOptions.map(tag => ({
+                label: tag.label,
+                value: tag.value
+            })),
+            onChange: (newTagId) => {
+                if (!blockTags.includes(newTagId)) {
+                    setAttributes({ blockTags: [...blockTags, newTagId] });
+                }
+            }
+        }),
+        el('div', { className: 'selected-tags' },
+            blockTags.map(tagId => {
+                const tag = tagOptions.find(tag => tag.value === tagId);
+                return tag ? el('span', {
+                    key: tagId,
+                    className: 'category-pill',
+                    style: { padding: '5px 10px', background: '#007cba', color: '#fff', borderRadius: '15px', margin: '3px', display: 'inline-flex', alignItems: 'center' }
+                },
+                    tag.label,
+                    el('span', {
+                        style: { marginLeft: '8px', cursor: 'pointer' },
+                        onClick: () => {
+                            setAttributes({
+                                blockTags: blockTags.filter(id => id !== tagId)
+                            });
+                        }
+                    }, ' × ')
+                ) : null;
+            })
+        ),  
+    );
+};
+
 
     const icon = el('img', {src:'../wp-content/themes/litci/components/blocks/icons/block02.svg'})
 
@@ -27,35 +90,20 @@
         icon: icon,
         category: 'litci-category',
         attributes: {
-            blockTitle: {
-                type: 'string',
-                default: 'Bloco 02',
-            },
-            blockCategories: {
-                type: 'array',
-                default: [],
-            },
-            sortOption: { // Novo atributo para a opção de ordenação
-                type: 'string',
-                default: 'recent',
-            },
-            backgroundColor: {
-                type: 'string',
-                default: 'white',
-            },
-            isDark: {
-                type: 'boolean',
-                default: false,
-            },
-            customIds: {
-                type: 'string',
-                default: ''
-            }
+            blockTitle: { type: 'string', default: 'Bloco 02' },
+            blockCategories: { type: 'array', default: [] },
+            blockTags: { type: 'array', default: [] },
+            sortOption: { type: 'string', default: 'recent' },
+            backgroundColor: { type: 'string', default: 'white' },
+            isDark: { type: 'boolean', default: false },
+            customIds: { type: 'string', default: '' }
         },
         edit: withSelect(function (select) {
-            // Busca todas as catgorias
+
+            // Busca categorias
             var categories = select('core').getEntityRecords('taxonomy', 'category', { per_page: -1 });
-            var categoryOptions = [];
+            var categoryOptions = categories ? categories.map(category => ({ label: category.name, value: category.id })) : [];
+
 
             if (categories) {
                 categoryOptions = categories.map(function (category) {
@@ -66,13 +114,20 @@
                 });
             }
 
+            // Busca tags
+            var tags = select('core').getEntityRecords('taxonomy', 'post_tag', { per_page: -1 });
+            var tagOptions = tags ? tags.map(tag => ({ label: tag.name, value: tag.id })) : [];
+
             return {
                 categories: categories,
                 categoryOptions: categoryOptions,
+                tags: tags,
+                tagOptions: tagOptions,
             };
         })(function (props) {
             var attributes = props.attributes;
             var categoryOptions = props.categoryOptions;
+            var tagOptions = props.tagOptions
 
             var onChangeTitle = function (newTitle) {
                 props.setAttributes({ blockTitle: newTitle });
@@ -111,6 +166,10 @@
                     query.categories = attributes.blockCategories.join(','); // Une os IDs em uma string separada por vírgula
                 }
 
+                if (attributes.blockTags.length > 0) {
+                    query.tags = attributes.blockTags.join(','); // Incluindo tags na consulta
+                }
+
                 if (attributes.customIds.length > 0) {
                     query.include = attributes.customIds.split(',').map(id => id.trim())
 
@@ -119,7 +178,7 @@
                 // Retorna os posts filtrados
                 return select('core').getEntityRecords('postType', 'post', query);
 
-            }, [attributes.sortOption, attributes.blockCategories, attributes.customIds]);
+            }, [attributes.sortOption, attributes.blockCategories, attributes.customIds, attributes.blockTags]);
 
             return el('div', { className: "block-card", style: { backgroundColor: attributes.backgroundColor } },
                 el('h3', {}, attributes.blockTitle),
@@ -167,6 +226,11 @@
                                 { label: 'Prioritários primeiro', value: 'menu_order' }
                             ],
                             onChange: onChangeSortOption
+                        }),
+                        el(TagsFilter, {
+                            blockTags: attributes.blockTags,
+                            setAttributes: props.setAttributes,
+                            tagOptions: tagOptions,
                         }),
                         el('fieldset', { className: "category-multi-select-container" },
                             el('legend', {}, 'Categorias do Bloco'),
