@@ -1,8 +1,8 @@
-/***
-*
-*   Unit 01
-*
-*/
+/*==================================================
+
+    Unit 01 
+
+==================================================*/
 
 .unit-01 {
     display: flex;
@@ -38,11 +38,11 @@
     }
 }
 
-/***
-*
-*   Unit 02
-*
-*/
+/*==================================================
+
+    Unit 02 
+
+==================================================*/
 
 .unit-02 {
     display: flex;
@@ -116,11 +116,11 @@
     aspect-ratio: 16/9;
 }
 
-/***
-*
-*   Unit 03
-*
-*/
+/*==================================================
+
+    Unit 03
+
+==================================================*/
 
 .unit-03 {
     position: relative;
@@ -182,6 +182,11 @@
 .block-10 .unit-03 .info h3{
     font-size:1.2em;
 }
+
+.block-12 .unit-03{
+    aspect-ratio: 16/9;
+}
+
 @media only screen and (max-width: 960px) {
 
     .unit-03,
@@ -193,11 +198,11 @@
     }
 }
 
-/***
-*
-*   Unit 04
-*
-*/
+/*==================================================
+
+    Unit 04 
+
+==================================================*/
 
 .unit-04 .featured-image-container {
     aspect-ratio: 16/9;
@@ -227,6 +232,17 @@
     height: 100%;
 }
 
+.block-06.small .unit-04{
+	flex-direction: row;
+}
+
+.block-06.small .unit-04 .meta{
+	display: none
+}
+.block-06.small .unit-04 h4{
+	font-size: 1rem;
+}
+
 @media only screen and (max-width: 960px) {
     .block-04 .unit-04 .featured-image-container {
         aspect-ratio: 16/9;
@@ -242,11 +258,11 @@
     
 }
 
-/***
-*
-*   Unit 05
-*
-*/
+/*==================================================
+
+    Unit 05 
+
+==================================================*/
 
 .unit-05 h4{
     font-size: 1em;
@@ -256,21 +272,27 @@
     aspect-ratio: 16/9;
 }
 
-/***
-*
-*   Unit 06
-*
-*/
+@media only screen and (max-width: 960px) {
+    .block-13 .unit-05{
+        flex-direction: row;
+    }
+}
+
+/*==================================================
+
+    Unit 06 
+
+==================================================*/
 
 .unit-06 h4{
     font-size: 1em;
 }
 
-/***
-*
-*   Unit 07
-*
-*/
+/*==================================================
+
+    Unit 07 
+
+==================================================*/
 
 .unit-07 .grid{
     display: flex;
@@ -288,4 +310,35 @@
     .unit-07 .grid{
         flex-direction: column;
     }
+}
+
+.block-13 .unit-07 .grid{
+    flex-direction: column;
+}
+
+.block-13 .unit-07 .grid .excerpt,
+.block-13 .unit-07 .grid .featured-image-container{
+    height: fit-content;
+    flex-basis: auto;
+}
+
+/*==================================================
+
+    Unit 08 
+
+==================================================*/
+
+.unit-08 .featured-image-container {
+    aspect-ratio: 16/9;
+}
+
+.block-12 .unit-04 .featured-image-container {
+    aspect-ratio: 4/3;
+}
+
+.block-12 .unit-04 h4,
+.block-12 .video-item h4 {
+    font-size:2rem;
+    font-weight: 600;
+    color: inherit;
 }

@@ -1,7 +1,7 @@
 <?php
 setup_postdata($post);
 ?>
-<a href="<?= get_the_permalink($post); ?>" title="<?= get_the_title($post); ?>" arial-label="<?= get_the_title($post); ?>">
+<a href="<?= get_the_permalink($post); ?>" title="<?= get_the_title($post); ?>" arial-label="<?= get_the_title($post); ?>" style="width:100%">
     <article class="unit-03">
         <img class="featured-image-container" src="<?=get_the_post_thumbnail_url($post->ID, 'large');?>"/>
         <div class="info">

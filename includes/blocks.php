@@ -27,6 +27,8 @@ function register_litci_blocks()
         "block-09",
         "block-10",
         "block-11",
+        "block-12",
+        "block-13",
         "block-partners",
         "block-socialmedia",
         "video-01",
@@ -211,6 +213,41 @@ function render_litci_block_11($attributes)
             return ob_get_clean();
     }
 }
+
+function render_litci_block_12($attributes)
+{
+
+    $posts = get_posts_by_query($attributes);
+    $block_title = $attributes['blockTitle'] ?? '';
+
+    ob_start();
+    include get_template_directory() . '/components/blocks/block-12.php';
+    wp_reset_postdata();
+    return ob_get_clean();
+}
+
+
+function render_litci_block_13($attributes)
+{
+
+
+    $postsLeft = get_posts_by_query($attributes['columnLeft']);
+    $postsRight = get_posts_by_query($attributes['columnRight']);
+    $block_title = $attributes['blockTitle'] ?? '';
+
+    if(isset($attributes['columnRight']['videosList'])) {
+        $videos = $attributes['columnRight']['videosList'];
+        $videos = rtrim($videos, ',');
+        $videos = explode(',', $videos);
+        $videos = array_map('trim', $videos);
+    } 
+
+    ob_start();
+    include get_template_directory() . '/components/blocks/block-13.php';
+    wp_reset_postdata();
+    return ob_get_clean();
+}
+
 
 function render_litci_block_partners($attributes)
 {

@@ -13,8 +13,8 @@
 	<meta property="og:title" content="<?php is_front_page() ? bloginfo('name') : wp_title('|', 1, 'right').' | '.bloginfo('name'); ?>"/>
 	<meta property="og:type" content="article"/>
 	<meta property="og:description" content="<?=__('Liga Internacional dos Trabalhadores - Quarta Internacional')?>"/>
-	<meta property="og:site_name" content="Opinião Socialista"/>
-	<meta property="or:url" content=""/>
+	<meta property="og:site_name" content="<?=__('Liga Internacional dos Trabalhadores - Quarta Internacional')?>"/>
+	<meta property="or:url" content="https://www.litci.org"/>
 	<!-- End of Meta tags -->
 
 	<!-- CSS -->

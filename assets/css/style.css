@@ -123,7 +123,7 @@ ul.breadcrumbs {
 
 /* Estilo para blocos com alinhamento contido */
 .wp-block {
-    max-width: 800px;
+    max-width: var(--max-witdh);
     margin: 0 auto;
 }
 
@@ -376,7 +376,8 @@ article a:hover {
     color: var(--primary);
 }
 
-article .sup-category {
+article .sup-category,
+.video-item .sup-category {
     font-size: 0.7em;
     font-weight: 700;
     color: var(--primary);

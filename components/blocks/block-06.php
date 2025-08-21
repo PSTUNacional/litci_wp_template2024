@@ -39,6 +39,22 @@
                 }
                 ?>
             </div>
+			<?php if(sizeof($posts) > 6){?>
+			<div class="block-06 small">
+                <?php
+                for ($i = 6; $i < 10; $i++) {
+                    if (isset($posts[$i])) {
+                        $post = $posts[$i];
+                        include __DIR__ . '/../units/unit-04.php';
+
+                        isset($attributes['sortOption']) && $attributes['sortOption'] == 'menu_order'
+                            ? $GLOBALS['featured_ids'][] = $post->ID
+                            : '';
+                    }
+                }
+                ?>
+            </div>
+		<?php } ?>
         </div>
     </div>
 </section>

@@ -23,6 +23,17 @@
     font-size: 1.5rem;
 }
 
+.separator{
+    border-right: 1px solid var(--gray-200);
+    height: 100%;
+}
+
+/*==================================================
+
+    Block 02
+
+==================================================*/
+
 .block-02 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(128px, 1fr));
@@ -34,6 +45,12 @@
         grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     }
 }
+
+/*==================================================
+
+    Block 03
+
+==================================================*/
 
 .block-03 {
     display: flex;
@@ -51,6 +68,12 @@
     }
 }
 
+/*==================================================
+
+    Block 04
+
+==================================================*/
+
 .block-04 {
     display: flex;
     flex-direction: column;
@@ -67,6 +90,11 @@
     aspect-ratio: 21/9;
 }
 
+/*==================================================
+
+    Block 05
+
+==================================================*/
 
 .block-05 {
     flex-direction: row;
@@ -90,6 +118,12 @@
     }
 }
 
+/*==================================================
+
+    Block 06
+
+==================================================*/
+
 .block-06.main{
     display: flex;
     gap:var(--gap);
@@ -105,14 +139,32 @@
     margin-top: var(--gap);
     display: grid;
     gap:var(--gap);
-    grid-template-columns: repeat(auto-fit, minmax(224px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(228px, 1fr));
 }
+
+.block-06.small{
+	display: grid;
+    gap:var(--gap);
+    grid-template-columns: repeat(auto-fit, minmax(228px, 1fr));
+}
+
+/*==================================================
+
+    Block 07
+
+==================================================*/
 
 .block-07{
     display: grid;
     grid-template-columns: repeat(auto-fit,minmax(180px, 1fr));
     gap:var(--gap);
 }
+
+/*==================================================
+
+    Block 08
+
+==================================================*/
 
 .block-08{
     display: flex;
@@ -150,11 +202,11 @@
 
 }
 
-/***
-*
-*   Block 09
-*
-*/
+/*==================================================
+
+    Block 09
+
+==================================================*/
 
 .block-09 .news-line{
     display: grid;
@@ -196,11 +248,11 @@
     100% {outline: 6px solid #E6211700;}
   }
 
-/***
-*
-*   Block 10
-*
-*/
+/*==================================================
+
+    Block 10
+
+==================================================*/
 
 .block-10{
     display: grid;
@@ -240,6 +292,105 @@
     }
 }
 
+/*=================================================
+
+    Block 12
+
+==================================================*/
+
+.block-12{
+    display: flex;
+    gap:var(--gap);
+}
+
+/*==================================================
+
+    Block 13
+
+==================================================*/
+
+.block-13{
+    display: flex;
+    gap:var(--gap);
+}
+
+.block-13 .column{
+    flex-basis: 50%;
+}
+
+.block-13 .column .post-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(128px, 1fr));
+    gap: var(--gap);
+}
+
+
+.video-story-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    height: 100%;
+  }
+
+  .video-story {
+    aspect-ratio: 9 / 16;
+    width: 48%;
+    max-width: 300px;
+    position: relative;
+    overflow: hidden;
+    background: var(--gray-300);
+    border-radius: 8px;
+  }
+
+  .video-story iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    object-fit: cover; /* ajuda a preencher o box */
+  }
+
+  .video-story .lyte-wrapper,
+  .video-story .lyte-wrapper > div {
+    aspect-ratio: 9 / 16;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Responsivo - até 768px (tablets e celulares grandes) */
+  @media screen and (max-width: 768px) {
+    .video-story {
+      width: 46%;
+    }
+  }
+
+  /* Responsivo - até 480px (celulares pequenos) */
+  @media screen and (max-width: 480px) {
+    .video-story {
+      width: 46%;
+    }
+  }
+
+@media only screen and (max-width: 960px) {
+    .block-13 {
+        flex-direction: column;
+    }
+
+    .block-13 .column .post-grid{
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+
+}
+
+/*==================================================
+
+    Partners
+
+==================================================*/
+
 .block-partners{
     display: grid;
     gap:var(--gap);
@@ -271,11 +422,11 @@
     grid-template-columns: repeat(auto-fit, minmax(128px, 1fr));
 }
 
-/***
-*
-*   Social Media
-*
-*/
+/*==================================================
+
+    Social Media
+
+==================================================*/
 
 .block-socialmedia{
     display: grid;
@@ -361,9 +512,3 @@
 .block-socialmedia .card.twitter:hover span{
     background-color: #1DA1F2;
 } 
-
-
-
-
-
-
