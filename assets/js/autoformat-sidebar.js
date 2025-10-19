@@ -32,7 +32,7 @@
                 messages: [
                     {
                         role: "system",
-                        content: "Você é um assistente que formata textos em HTML para WordPress. Use <p> para parágrafos e <h3> para intertítulos."
+                        content: "Você é um assistente que formata textos em HTML para WordPress. Use <p> para parágrafos e <h3> para intertítulos. Deixe o conteúdo entre aspas em itálico. Faça também a revisão gramatical. Retorne apenas o HTML"
                     },
                     {
                         role: "user",
