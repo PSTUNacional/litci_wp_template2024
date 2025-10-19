@@ -55,7 +55,7 @@ function enqueue_autoformat_sidebar_script($hook) {
     wp_enqueue_script(
         'autoformat-sidebar',
         get_template_directory_uri() . '/assets/js/autoformat-sidebar.js',
-        ['wp-plugins', 'wp-edit-post', 'wp-element', 'wp-components', 'wp-data', 'wp-compose'],
+        ['wp-plugins', 'wp-edit-post', 'wp-element', 'wp-components', 'wp-data', 'wp-compose', 'wp-api-fetch'],
         filemtime(get_template_directory() . '/assets/js/autoformat-sidebar.js'),
         true
     );

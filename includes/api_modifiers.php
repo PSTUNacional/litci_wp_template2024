@@ -158,6 +158,15 @@ add_action('rest_api_init', function () {
     ]);
 });
 
+add_action('rest_api_init', function () {
+    register_rest_route('teste/v1', '/ping', array(
+        'methods' => 'GET',
+        'callback' => function() {
+            return ['pong' => true];
+        },
+        'permission_callback' => '__return_true',
+    ));
+});
 function litci_handle_openai_request($request)
 {
     $body = $request->get_json_params();
@@ -182,13 +191,3 @@ function litci_handle_openai_request($request)
 
     return json_decode(wp_remote_retrieve_body($response), true);
 }
-
-add_action('rest_api_init', function () {
-    register_rest_route('teste/v1', '/ping', array(
-        'methods' => 'GET',
-        'callback' => function() {
-            return ['pong' => true];
-        },
-        'permission_callback' => '__return_true',
-    ));
-});

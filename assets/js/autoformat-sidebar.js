@@ -5,6 +5,7 @@
     const { withSelect, withDispatch } = wp.data;
     const { compose } = wp.compose;
     const { createElement } = wp.element;
+    const { apiFetch } = wp;
 
 
     const AutoformatSidebar = ({ content, editPost }) => {
@@ -41,13 +42,19 @@
             };
 
             try {
-                const response = await fetch("/?rest_route=/autoformater/v1/openai", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload)
-                });
+                // const response = await apiFetch("/?rest_route=/autoformater/v1/openai", {
+                //     method: "POST",
+                //     headers: { "Content-Type": "application/json" },
+                //     body: JSON.stringify(payload)
+                // });
 
-                const data = await response.json();
+                // const data = await response.json();
+
+                const data = await apiFetch({
+                    path: '/autoformater/v1/openai', // Caminho limpo da API
+                    method: 'POST',
+                    data: payload // apiFetch usa 'data' para body
+                });
 
                 // O texto HTML formatado vem em:
                 const formattedHtml = data.choices[0].message.content;
