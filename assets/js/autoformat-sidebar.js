@@ -41,7 +41,7 @@
             };
 
             try {
-                const response = await fetch("/wp-json/autoformater/v1/openai", {
+                const response = await fetch("/?rest_route=/autoformater/v1/openai", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(payload)
