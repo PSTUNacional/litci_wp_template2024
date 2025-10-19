@@ -44,103 +44,68 @@ function tagline_metabox_saver($postId)
 
 add_action('save_post', 'tagline_metabox_saver');
 
+/*============================================================
+    Auto Formater
+============================================================*/
+
+function enqueue_autoformat_sidebar_script($hook) {
+    if ('post.php' !== $hook && 'post-new.php' !== $hook) {
+        return;
+    }
+    wp_enqueue_script(
+        'autoformat-sidebar',
+        get_template_directory_uri() . '/assets/js/autoformat-sidebar.js',
+        ['wp-plugins', 'wp-edit-post', 'wp-element', 'wp-components', 'wp-data', 'wp-compose'],
+        filemtime(get_template_directory() . '/assets/js/autoformat-sidebar.js'),
+        true
+    );
+}
+add_action('admin_enqueue_scripts', 'enqueue_autoformat_sidebar_script');
+
 #
 # Political Author
 #
 
-function political_author_metabox()
-{
-    add_meta_box(
-        'litci_post_political_author',
-        'Autor Político',
-        'political_author_metabox_callback',
-        'post',
-        'side',
-        'high'
+function enqueue_political_author_script($hook) {
+    if ('post.php' !== $hook && 'post-new.php' !== $hook) {
+        return;
+    }
+    wp_enqueue_script(
+        'political_author_script',
+        get_template_directory_uri() . '/assets/js/political-author.js',
+        ['wp-plugins', 'wp-edit-post', 'wp-element', 'wp-components', 'wp-data', 'wp-compose'],
+        filemtime(get_template_directory() . '/assets/js/political-author.js'),
+        true
     );
 }
+add_action('admin_enqueue_scripts', 'enqueue_political_author_script');
 
-add_action('add_meta_boxes', 'political_author_metabox');
-
-function political_author_metabox_callback($post)
-{
-    $value = get_post_meta($post->ID, 'litci_post_political_author', true);
-    ?>
-    <p>Insira o(s) autor(es) político do artigo:</p>
-    <input type="text" 
-           class="panel" 
-           name="litci_post_political_author" 
-           id="political_author" 
-           value="<?= esc_attr($value); ?>"/>
- <?php
-}
-
-function political_author_metabox_saver($postId)
-{
-
-    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-        return $postId;
-    }
+function save_political_author_meta($post_id) {
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return $post_id;
 
     if (isset($_POST['litci_post_political_author'])) {
-        $sanitized_value = sanitize_text_field($_POST['litci_post_political_author']);
-        update_post_meta($postId, 'litci_post_political_author', $sanitized_value);
+        $value = sanitize_text_field($_POST['litci_post_political_author']);
+        update_post_meta($post_id, 'litci_post_political_author', $value);
     }
 }
-
-add_action('save_post', 'political_author_metabox_saver');
+add_action('save_post', 'save_political_author_meta');
 
 #
 # Menu Order
 #
 
-function add_custom_post_type_support()
-{
-    add_post_type_support('post', 'page-attributes');
-}
-add_action('init', 'add_custom_post_type_support');
+function enqueue_menu_order_sidebar_script($hook) {
+    if ($hook !== 'post.php' && $hook !== 'post-new.php') return;
 
-function add_menu_order_meta_box()
-{
-    add_meta_box(
-        'litci_menu_order_meta_box',   // ID da meta box  
-        'Prioridade do post',         // Título da meta box
-        'display_menu_order_meta_box', // Callback para exibir o conteúdo
-        'post',                  // Tipo de post onde a meta box será adicionada
-        'side',                  // Contexto onde a meta box aparecerá ('side', 'normal', 'advanced')
-        'default'                // Prioridade da meta box ('high', 'low')
+    wp_enqueue_script(
+        'menu-order-sidebar-script',
+        get_template_directory_uri() . '/assets/js/menu-order-sidebar.js',
+        ['wp-plugins', 'wp-edit-post', 'wp-element', 'wp-components', 'wp-data', 'wp-compose'],
+        filemtime(get_template_directory() . '/assets/js/menu-order-sidebar.js'),
+        true
     );
 }
-
-add_action('add_meta_boxes', 'add_menu_order_meta_box');
-
-function display_menu_order_meta_box($post)
-{
-    $menu_order = $post->menu_order;
-?>
-    <label for="litci_menu_order_meta_box">Ordem do Menu</label>
-    <input type="text" name="litci_menu_order_meta_box" value="<?php echo $menu_order; ?>" />
-<?php
-}
-
-function save_menu_order_meta_box_data($postId)
-{
-    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-        return $postId;
-    }
-
-    if (isset($_POST['litci_menu_order_meta_box'], $_POST)) {
-        $menu_order = intval($_POST['litci_menu_order_meta_box']);
-        remove_action('save_post', 'save_menu_order_meta_box_data');
-        wp_update_post(array(
-            'ID' => $postId,
-            'menu_order' => $menu_order,
-        ));
-        add_action('save_post', 'save_menu_order_meta_box_data');
-    }
-}
-
-add_action('save_post', 'save_menu_order_meta_box_data');
+add_action('admin_enqueue_scripts', 'enqueue_menu_order_sidebar_script');
 
 // Adicionar nova coluna na tabela de posts
 function add_menu_order_column($columns)

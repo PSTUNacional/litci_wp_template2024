@@ -126,7 +126,8 @@ add_action('rest_api_init', 'register_menu_order');
  * Adds the political author field to the REST API response
  */
 
-function register_political_author(){
+function register_political_author()
+{
     register_rest_field(
         array('post', 'search-result'),
         'political_author',
@@ -138,9 +139,45 @@ function register_political_author(){
     );
 }
 
-function get_political_author($object, $field_name, $request) {
+function get_political_author($object, $field_name, $request)
+{
     $political_author = get_post_meta($object['id'], 'post_political_author', true);
     return $political_author ? $political_author : null;
 }
 
 add_action('rest_api_init', 'register_political_author');
+
+/*==================================================
+    OpenAI
+==================================================*/
+add_action('rest_api_init', function () {
+    register_rest_route('autoformater/v1', '/openai', [
+        'methods' => 'POST',
+        'callback' => 'litci_handle_openai_request',
+        'permission_callback' => '__return_true',
+    ]);
+});
+
+function litci_handle_openai_request($request)
+{
+    $body = $request->get_json_params();
+
+    $token = get_option('openai_api_token'); // pega o token do admin
+    if (!$token) {
+        return new WP_Error('no_token', 'Token da OpenAI não configurado', array('status' => 400));
+    }
+
+    $response = wp_remote_post('https://api.openai.com/v1/chat/completions', array(
+        'headers' => array(
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Bearer ' . $token
+        ),
+        'body' => json_encode($body)
+    ));
+
+    if (is_wp_error($response)) {
+        return new WP_Error('openai_error', $response->get_error_message(), array('status' => 500));
+    }
+
+    return json_decode(wp_remote_retrieve_body($response), true);
+}
