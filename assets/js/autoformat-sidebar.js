@@ -6,6 +6,7 @@
     const { compose } = wp.compose;
     const { createElement } = wp.element;
     const { apiFetch } = wp;
+    const { rawHandler, parse } = wp.blocks;
 
 
     const AutoformatSidebar = ({ content, editPost }) => {
@@ -42,13 +43,6 @@
             };
 
             try {
-                // const response = await apiFetch("/?rest_route=/autoformater/v1/openai", {
-                //     method: "POST",
-                //     headers: { "Content-Type": "application/json" },
-                //     body: JSON.stringify(payload)
-                // });
-
-                // const data = await response.json();
 
                 const data = await apiFetch({
                     path: '/autoformater/v1/openai', // Caminho limpo da API
@@ -61,8 +55,10 @@
 
                 // Insere no Gutenberg
                 const cleanHtml = formattedHtml.replace(/```html|```/g, "").trim();
+                const newBlocks = rawHandler({ HTML: cleanHtml });
+                const serializedBlocks = wp.blocks.serialize(newBlocks);
                 wp.data.dispatch('core/editor').editPost({
-                    content: cleanHtml
+                    content: serializedBlocks
                 });
 
                 // Fecha o loading e mostra sucesso
