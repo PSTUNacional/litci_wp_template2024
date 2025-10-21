@@ -80,15 +80,27 @@ function enqueue_political_author_script($hook) {
 }
 add_action('admin_enqueue_scripts', 'enqueue_political_author_script');
 
-function save_political_author_meta($post_id) {
-    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return $post_id;
-
-    if (isset($_POST['litci_post_political_author'])) {
-        $value = sanitize_text_field($_POST['litci_post_political_author']);
-        update_post_meta($post_id, 'litci_post_political_author', $value);
-    }
+function litci_register_political_author_meta() {
+    register_post_meta( 'post', 'litci_post_political_author', array(
+        'show_in_rest' => true, // ESSENCIAL: Permite que o Gutenberg/REST API acesse/salve
+        'single'       => true,
+        'type'         => 'string',
+        'auth_callback' => function() {
+            return current_user_can( 'edit_posts' ); // Permite que usuários com permissão editem posts salvem
+        }
+    ) );
 }
-add_action('save_post', 'save_political_author_meta');
+add_action( 'init', 'litci_register_political_author_meta' );
+
+// function save_political_author_meta($post_id) {
+//     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return $post_id;
+
+//     if (isset($_POST['litci_post_political_author'])) {
+//         $value = sanitize_text_field($_POST['litci_post_political_author']);
+//         update_post_meta($post_id, 'litci_post_political_author', $value);
+//     }
+// }
+// add_action('save_post', 'save_political_author_meta');
 
 #
 # Menu Order

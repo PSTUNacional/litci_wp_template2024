@@ -129,8 +129,10 @@ function validateTags(){
 
 function validate_political_author() {
     const politicalAuthorField = document.querySelector('#political_author');
+    const politicalAuthor = wp.data.select('core/editor').getEditedPostAttribute('meta')['litci_post_political_author'];
+
         
-    if (!politicalAuthorField || politicalAuthorField.value.trim() === '') {
+    if (!politicalAuthor || politicalAuthor.trim() === '') {
         Swal.fire({
             icon: "error",
             title: postValidationMessages.politicalAuthor.title,

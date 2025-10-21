@@ -2758,6 +2758,7 @@ article.post .tagline {
     font-weight: 200;
     font-size: 1.5em;
     line-height: 1.5;
+    margin-top: var(--gap);
 }
 
 article.post .author-line {
