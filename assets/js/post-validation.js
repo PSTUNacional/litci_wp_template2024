@@ -137,13 +137,12 @@ function validate_political_author() {
             icon: "error",
             title: postValidationMessages.politicalAuthor.title,
             text: postValidationMessages.politicalAuthor.text,
-         }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
                 wp.data.dispatch('core/edit-post').openGeneralSidebar('edit-post/document');
-                politicalAuthorField.classList.add('highlight-error'); // Adiciona classe de erro
-                politicalAuthorField.scrollIntoView({ behavior: 'smooth', block: 'center' }); // Garante que o campo esteja visível
-             }
-         });
+
+            }
+        });
         return false
     } else {
         submitPost()
