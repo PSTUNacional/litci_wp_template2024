@@ -140,7 +140,6 @@ function validate_political_author() {
         }).then((result) => {
             if (result.isConfirmed) {
                 wp.data.dispatch('core/edit-post').openGeneralSidebar('edit-post/document');
-
             }
         });
         return false
@@ -159,8 +158,10 @@ function submitPost() {
     if (isSubmitting) return;
     isSubmitting = true;
 
-    const publishButton = document.getElementById('originalSubmitButton');
-    if (publishButton) {
-        publishButton.click();
-    }
+    wp.data.dispatch('core/editor').savePost();
+    
+    // const publishButton = document.getElementById('originalSubmitButton');
+    // if (publishButton) {
+    //     publishButton.click();
+    // }
 }
