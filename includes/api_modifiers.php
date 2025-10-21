@@ -182,7 +182,7 @@ function litci_handle_openai_request($request)
             'Authorization' => 'Bearer ' . $token
         ),
         'body' => json_encode($body),
-        'timeout' => 30 
+        'timeout' => 45 
     ));
 
     if (is_wp_error($response)) {
