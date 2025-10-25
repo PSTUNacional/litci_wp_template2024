@@ -121,10 +121,10 @@ function get_menu_order($object, $field_name, $request)
 add_action('rest_api_init', 'register_menu_order');
 
 
-/**
- * Political Author
- * Adds the political author field to the REST API response
- */
+/*==================================================
+    Political Author
+    Adds the political author field to the REST API response
+==================================================*/
 
 function register_political_author()
 {
@@ -148,6 +148,31 @@ function get_political_author($object, $field_name, $request)
 add_action('rest_api_init', 'register_political_author');
 
 /*==================================================
+    TAG Line
+==================================================*/
+
+function register_litci_tagline()
+{
+    register_rest_field(
+        array('post', 'search-result'),
+        'tagline',
+        array(
+            'get_callback'    => 'get_tagline',
+            'update_callback' => null,
+            'schema'          => null,
+        )
+    );
+}
+
+function get_tagline($object, $field_name, $request)
+{
+    $tagline= get_post_meta($object['id'], 'litci_post_tagline', true);
+    return $tagline ?? null;
+}
+
+add_action('rest_api_init', 'register_political_author');
+
+/*==================================================
     OpenAI
 ==================================================*/
 add_action('rest_api_init', function () {
@@ -158,15 +183,6 @@ add_action('rest_api_init', function () {
     ]);
 });
 
-add_action('rest_api_init', function () {
-    register_rest_route('teste/v1', '/ping', array(
-        'methods' => 'GET',
-        'callback' => function() {
-            return ['pong' => true];
-        },
-        'permission_callback' => '__return_true',
-    ));
-});
 function litci_handle_openai_request($request)
 {
     $body = $request->get_json_params();

@@ -92,16 +92,6 @@ function litci_register_political_author_meta() {
 }
 add_action( 'init', 'litci_register_political_author_meta' );
 
-// function save_political_author_meta($post_id) {
-//     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return $post_id;
-
-//     if (isset($_POST['litci_post_political_author'])) {
-//         $value = sanitize_text_field($_POST['litci_post_political_author']);
-//         update_post_meta($post_id, 'litci_post_political_author', $value);
-//     }
-// }
-// add_action('save_post', 'save_political_author_meta');
-
 #
 # Menu Order
 #
