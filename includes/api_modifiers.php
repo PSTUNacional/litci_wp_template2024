@@ -141,7 +141,7 @@ function register_political_author()
 
 function get_political_author($object, $field_name, $request)
 {
-    $political_author = get_post_meta($object['id'], 'post_political_author', true);
+    $political_author = get_post_meta($object['id'], 'litci_post_political_author', true);
     return $political_author ? $political_author : null;
 }
 
