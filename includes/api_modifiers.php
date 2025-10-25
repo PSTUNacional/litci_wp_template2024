@@ -170,7 +170,7 @@ function get_tagline($object, $field_name, $request)
     return $tagline ?? null;
 }
 
-add_action('rest_api_init', 'register_political_author');
+add_action('rest_api_init', 'register_litci_tagline');
 
 /*==================================================
     OpenAI
