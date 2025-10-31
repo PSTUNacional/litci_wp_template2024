@@ -9,29 +9,34 @@ get_header();
 
 // Obtém o caminho da requisição atual (ex: /pt/categoria/meu-post, /es/contato, /blog/meu-post)
 $current_path = $_SERVER['REQUEST_URI'];
+$current_language = str_contains($current_path, '/pt/') ? 'pt' : (str_contains($current_path, '/es/') ? 'es' : 'en');
 
 // Define as URLs das imagens para cada idioma
 $image_url_pt = 'http://litci.org/pt/wp-content/uploads/2025/10/header-cop30-1920x180-pt.jpg';
 $image_url_es = 'http://litci.org/pt/wp-content/uploads/2025/10/header-cop30-1920x180-es.jpg';
 $image_url_en = 'http://litci.org/pt/wp-content/uploads/2025/10/header-cop30-1920x180-en.jpg'; // Imagem padrão
 
+$image_mobile_url_pt = 'http://litci.org/pt/wp-content/uploads/2025/10/header-cop30-640x240-pt-mobile.jpg';
+$image_mobile_url_es = 'http://litci.org/pt/wp-content/uploads/2025/10/header-cop30-640x240-es-mobile.jpg';
+$image_mobile_url_en = 'http://litci.org/pt/wp-content/uploads/2025/10/header-cop30-640x240-en-mobile.jpg';
+
 $selected_image_url = '';
 $current_language = 'en'; // Padrão é inglês
 
-// 1. Checa por "/pt"
-if (str_contains($current_path, '/pt/')) { // Usamos "/pt/" para evitar falsos positivos como "aptidão"
-    $selected_image_url = $image_url_pt;
-    $current_language = 'pt';
-}
-// 2. Checa por "/es"
-elseif (str_contains($current_path, '/es/')) { // Usamos "/es/" para evitar falsos positivos
-    $selected_image_url = $image_url_es;
-    $current_language = 'es';
-}
-// 3. Se nenhum dos anteriores, usa o padrão (inglês)
-else {
-    $selected_image_url = $image_url_en;
-    $current_language = 'en';
+switch ($current_language) {
+    case 'pt':
+        $base_image = $base_url_pt;
+        $mobile_image = $mobile_url_pt;
+        break;
+    case 'es':
+        $base_image = $base_url_es;
+        $mobile_image = $mobile_url_es;
+        break;
+    case 'en':
+    default:
+        $base_image = $base_url_en;
+        $mobile_image = $mobile_url_en;
+        break;
 }
 
 // 1. Define os slugs das tags a serem procuradas
@@ -54,7 +59,17 @@ $posts_query = new WP_Query($args);
 ?>
 <div class="content-area">
     <main>
-        <img src="<?=$selected_image_url?>" style="width:100%"/>
+        <figure class="language-banner-figure" style="width:100%">
+            <picture>
+                <source media="(max-width: 640px)" srcset="<?php echo esc_url($mobile_image); ?>">
+
+                <source srcset="<?php echo esc_url($base_image); ?>" type="image/jpeg">
+
+                <img src="<?php echo esc_url($base_image); ?>"
+                    alt="Banner de Idioma <?php echo esc_attr(strtoupper($current_language)); ?>"
+                    style="width:100%; height:auto;">
+            </picture>
+        </figure>
         <?php
 
 
