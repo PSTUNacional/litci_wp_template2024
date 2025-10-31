@@ -9,23 +9,14 @@ get_header();
 
 // Obtém o caminho da requisição atual (ex: /pt/categoria/meu-post, /es/contato, /blog/meu-post)
 $current_path = $_SERVER['REQUEST_URI'];
-var_dump($current_path);
-echo '<br/>';
-
 $current_language = 'en'; // Define 'en' como padrão
 
-// Checa a substring '/pt/' usando strpos().
-// strpos() retorna a posição da string (0 ou mais) ou FALSE se não encontrar.
 if (strpos($current_path, '/pt/') !== FALSE) {
     $current_language = 'pt';
-}
-// Se não encontrou 'pt', checa 'es'.
-elseif (strpos($current_path, '/es/') !== FALSE) {
+} elseif (strpos($current_path, '/es/') !== FALSE) {
     $current_language = 'es';
 }
 
-var_dump($current_language);
-die();
 // Define as URLs das imagens para cada idioma
 $image_url_pt = 'http://litci.org/pt/wp-content/uploads/2025/10/header-cop30-1920x180-pt.jpg';
 $image_url_es = 'http://litci.org/pt/wp-content/uploads/2025/10/header-cop30-1920x180-es.jpg';
@@ -36,7 +27,6 @@ $image_mobile_url_es = 'http://litci.org/pt/wp-content/uploads/2025/10/header-co
 $image_mobile_url_en = 'http://litci.org/pt/wp-content/uploads/2025/10/header-cop30-640x240-en.jpg';
 
 $selected_image_url = '';
-$current_language = 'en'; // Padrão é inglês
 
 switch ($current_language) {
     case 'pt':
