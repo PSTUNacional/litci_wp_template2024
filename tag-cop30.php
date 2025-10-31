@@ -26,16 +26,16 @@ $current_language = 'en'; // Padrão é inglês
 switch ($current_language) {
     case 'pt':
         $base_image = $image_url_pt;
-        $mobile_image = $mobile_url_pt;
+        $mobile_image = $image_mobile_url_pt;
         break;
     case 'es':
         $base_image = $image_url_es;
-        $mobile_image = $mobile_url_es;
+        $mobile_image = $image_mobile_url_es;
         break;
     case 'en':
     default:
         $base_image = $image_url_en;
-        $mobile_image = $mobile_url_en;
+        $mobile_image = $image_mobile_url_en;
         break;
 }
 
