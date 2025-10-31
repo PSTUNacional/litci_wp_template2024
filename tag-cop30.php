@@ -6,6 +6,34 @@ Template Name: Tag COP 30
 
 get_header();
 
+
+// Obtém o caminho da requisição atual (ex: /pt/categoria/meu-post, /es/contato, /blog/meu-post)
+$current_path = $_SERVER['REQUEST_URI'];
+
+// Define as URLs das imagens para cada idioma
+$image_url_pt = 'http://litci.org/pt/wp-content/uploads/2025/10/header-cop30-1920x180-pt.jpg';
+$image_url_es = 'http://litci.org/pt/wp-content/uploads/2025/10/header-cop30-1920x180-es.jpg';
+$image_url_en = 'http://litci.org/pt/wp-content/uploads/2025/10/header-cop30-1920x180-en.jpg'; // Imagem padrão
+
+$selected_image_url = '';
+$current_language = 'en'; // Padrão é inglês
+
+// 1. Checa por "/pt"
+if (str_contains($current_path, '/pt/')) { // Usamos "/pt/" para evitar falsos positivos como "aptidão"
+    $selected_image_url = $image_url_pt;
+    $current_language = 'pt';
+}
+// 2. Checa por "/es"
+elseif (str_contains($current_path, '/es/')) { // Usamos "/es/" para evitar falsos positivos
+    $selected_image_url = $image_url_es;
+    $current_language = 'es';
+}
+// 3. Se nenhum dos anteriores, usa o padrão (inglês)
+else {
+    $selected_image_url = $image_url_en;
+    $current_language = 'en';
+}
+
 // 1. Define os slugs das tags a serem procuradas
 $tag_slugs = array('cop30', 'cop-30', 'cop 30');
 $display_tag_name = 'COP 30'; // Nome para exibição no cabeçalho
@@ -27,10 +55,7 @@ $posts_query = new WP_Query($args);
 <div class="content-area">
     <main>
         <div class="container">
-            <div class="category-title">
-            <?php custom_breadcrumbs() ?>
-                <h1><?php single_cat_title(); ?></h1>
-            </div>
+            <img src="<?=$selected_image_url?>"/>
         </div>
         <?php
 
