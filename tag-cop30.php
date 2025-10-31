@@ -53,10 +53,8 @@ $posts_query = new WP_Query($args);
 
 ?>
 <div class="content-area">
+    <img src="<?=$selected_image_url?>" style="width:100%"/>
     <main>
-        <div class="container">
-            <img src="<?=$selected_image_url?>"/>
-        </div>
         <?php
 
 
