@@ -16,9 +16,9 @@ $image_url_pt = 'http://litci.org/pt/wp-content/uploads/2025/10/header-cop30-192
 $image_url_es = 'http://litci.org/pt/wp-content/uploads/2025/10/header-cop30-1920x180-es.jpg';
 $image_url_en = 'http://litci.org/pt/wp-content/uploads/2025/10/header-cop30-1920x180-en.jpg'; // Imagem padrão
 
-$image_mobile_url_pt = 'http://litci.org/pt/wp-content/uploads/2025/10/header-cop30-640x240-pt-mobile.jpg';
-$image_mobile_url_es = 'http://litci.org/pt/wp-content/uploads/2025/10/header-cop30-640x240-es-mobile.jpg';
-$image_mobile_url_en = 'http://litci.org/pt/wp-content/uploads/2025/10/header-cop30-640x240-en-mobile.jpg';
+$image_mobile_url_pt = 'http://litci.org/pt/wp-content/uploads/2025/10/header-cop30-640x240-pt.jpg';
+$image_mobile_url_es = 'http://litci.org/pt/wp-content/uploads/2025/10/header-cop30-640x240-es.jpg';
+$image_mobile_url_en = 'http://litci.org/pt/wp-content/uploads/2025/10/header-cop30-640x240-en.jpg';
 
 $selected_image_url = '';
 $current_language = 'en'; // Padrão é inglês
