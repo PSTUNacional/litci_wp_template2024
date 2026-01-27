@@ -35,10 +35,9 @@ function load_admin_scripts($hook)
 
     if ($hook === 'post.php' || $hook === 'post-new.php') {
         $screen = get_current_screen();
-        if($screen && $screen->post_type === 'post')
-        {
+        if ($screen && $screen->post_type === 'post') {
             wp_enqueue_script('post-validation', get_template_directory_uri() . '/assets/js/post-validation.js', array('jquery'), '1.0', true);
-    
+
             // Translations
             wp_localize_script('post-validation', 'postValidationMessages', array(
                 'politicalAuthor' => [
@@ -46,7 +45,7 @@ function load_admin_scripts($hook)
                     'text' => __('You must include at least one political author to publish it.', 'litci')
                 ],
                 'links' => [
-                    'success'=> [
+                    'success' => [
                         'title' => __('The text has links.', 'litci'),
                         'text' => __('Links help connect different contents and politically deepen the discussions.', 'litci')
                     ],
@@ -56,7 +55,7 @@ function load_admin_scripts($hook)
                     ]
                 ],
                 'headings' => [
-                    'success'=> [
+                    'success' => [
                         'title' => __('The headings are ok.', 'litci'),
                         'text' => __('The text has explicitly defined subtitles.', 'litci')
                     ],
@@ -66,7 +65,7 @@ function load_admin_scripts($hook)
                     ]
                 ],
                 'tags' => [
-                    'success'=> [
+                    'success' => [
                         'title' => __('The tags are ok.', 'litci'),
                         'text' => __('The text has tags added.', 'litci')
                     ],
@@ -174,15 +173,16 @@ add_action('admin_menu', function () {
 });
 
 // Renderiza a página
-function openai_settings_page() {
-    ?>
+function openai_settings_page()
+{
+?>
     <div class="wrap">
         <h1>Configurações OpenAI</h1>
         <form method="post" action="options.php">
             <?php
-                settings_fields('openai_settings_group');
-                do_settings_sections('openai-settings');
-                $token = esc_attr(get_option('openai_api_token'));
+            settings_fields('openai_settings_group');
+            do_settings_sections('openai-settings');
+            $token = esc_attr(get_option('openai_api_token'));
             ?>
             <table class="form-table">
                 <tr valign="top">
@@ -193,7 +193,7 @@ function openai_settings_page() {
             <?php submit_button(); ?>
         </form>
     </div>
-    <?php
+<?php
 }
 
 // Registra a opção
@@ -520,3 +520,36 @@ function add_custom_utms()
 add_action('wp_footer', 'add_custom_utms');
 
 include get_template_directory() . '/includes/admin/functions.php';
+
+/*====================================================
+
+    Custom Rewrite Rules
+
+====================================================*/
+
+function custom_rewrite_rules()
+{
+    // Captura o número e redireciona internamente para a tag ci + número
+    add_rewrite_rule(
+        '^correio/([0-9]+)/?$',
+        'index.php?tag=ci$matches[1]',
+        'top'
+    );
+}
+add_action('init', 'custom_rewrite_rules');
+
+function custom_tag_template($template)
+{
+    if (is_tag()) {
+        $term = get_queried_object();
+        // Verifica se o slug da tag começa com 'ci' seguido de números
+        if (preg_match('/^ci[0-9]+$/', $term->slug)) {
+            $new_template = locate_template(array('tag-correio.php'));
+            if (!empty($new_template)) {
+                return $new_template;
+            }
+        }
+    }
+    return $template;
+}
+add_filter('tag_template', 'custom_tag_template');
