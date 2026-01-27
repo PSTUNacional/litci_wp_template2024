@@ -53,9 +53,9 @@ $posts_query = new WP_Query($args);
 <div class="content-area">
     <main>
         <div style="background-color: #e5e5e5; color: white; padding: 48px">
-        <div class="container">
-            <h1><?= $title_base ?></h1>
-        </div>
+            <div class="container">
+                <h1><?= $title_base ?></h1>
+            </div>
         </div>
         <?php
 
@@ -103,6 +103,77 @@ $posts_query = new WP_Query($args);
             }
             ?>
         </div>
+
+        <?php
+        // ========== Bloco de FAQ Dinâmico ========== //
+        $faq_url = "https://litci.org/assets/faqs/ci" . $current_edition . ".json";
+        $response = wp_remote_get($faq_url);
+
+        if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) == 200) :
+            $json_data = json_decode(wp_remote_retrieve_body($response), true);
+
+            // Verifica se existe a chave do idioma atual (ex: 'pt') no JSON
+            if (isset($json_data[$current_language])) :
+                $faq = $json_data[$current_language];
+
+        ?>
+
+                <section class="faq-correio" style="padding: 48px;">
+                    <div class="container">
+                        <div style="margin: 0 auto;">
+                            <h2 style="font-size: 2rem; margin-bottom: 10px;"><?php echo esc_html($faq['title']); ?></h2>
+                            <p style="margin-bottom: 24px; color: #666;"><?php echo esc_html($faq['description']); ?></p>
+
+                            <div class="accordion">
+                                <?php foreach ($faq['questions'] as $item) : ?>
+                                    <div class="faq-item" style="background: #fff; border: 1px solid #ddd; margin-bottom: 10px; border-radius: 4px;">
+                                        <button class="faq-trigger" style="width: 100%; padding: 24px; text-align: left; background: none; border: none; font-weight: bold; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; color: #333;">
+                                            <span><?php echo esc_html($item['question']); ?></span>
+                                            <span class="faq-icon" style="transition: transform 0.3s;">+</span>
+                                        </button>
+                                        <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.3s ease-in-out; background: #fff;">
+                                            <div style="padding: 0 20px 20px; color: #555; line-height: 1.6;">
+                                                <?php echo nl2br(esc_html($item['answer'])); ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <script>
+                    document.querySelectorAll('.faq-trigger').forEach(button => {
+                        button.addEventListener('click', () => {
+                            const content = button.nextElementSibling;
+                            const icon = button.querySelector('.faq-icon');
+
+                            const isOpen = content.classList.contains('open');
+
+                            // Fecha todos primeiro
+                            document.querySelectorAll('.faq-content').forEach(el => {
+                                el.style.maxHeight = 0;
+                                el.classList.remove('open');
+                                const ic = el.previousElementSibling.querySelector('.faq-icon');
+                                ic.textContent = '+';
+                                ic.style.transform = 'rotate(0deg)';
+                            });
+
+                            // Se não estava aberto, abre o clicado
+                            if (!isOpen) {
+                                content.style.maxHeight = content.scrollHeight + "px";
+                                content.classList.add('open');
+                                icon.textContent = '-';
+                                icon.style.transform = 'rotate(180deg)';
+                            }
+                        });
+                    });
+                </script>
+        <?php
+            endif;
+        endif;
+        ?>
     </main>
 </div>
 <?php get_footer(); ?>
