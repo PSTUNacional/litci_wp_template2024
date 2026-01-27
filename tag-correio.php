@@ -3,7 +3,6 @@
 /*
 Template Name: Tag Correio Internacional
 */
-
 get_header();
 
 
@@ -20,30 +19,16 @@ if (strpos($current_path, '/pt/') !== FALSE) {
 $term = get_queried_object();
 $current_edition = str_replace('ci', '', $term->slug);
 
-// Define as URLs das imagens para cada idioma
-$image_url_pt = 'http://litci.org/pt/wp-content/uploads/2025/10/header-cop30-1920x180-pt.jpg';
-$image_url_es = 'http://litci.org/pt/wp-content/uploads/2025/10/header-cop30-1920x180-es.jpg';
-$image_url_en = 'http://litci.org/pt/wp-content/uploads/2025/10/header-cop30-1920x180-en.jpg'; // Imagem padrão
-
-$image_mobile_url_pt = 'http://litci.org/pt/wp-content/uploads/2025/10/header-cop30-640x240-pt.jpg';
-$image_mobile_url_es = 'http://litci.org/pt/wp-content/uploads/2025/10/header-cop30-640x240-es.jpg';
-$image_mobile_url_en = 'http://litci.org/pt/wp-content/uploads/2025/10/header-cop30-640x240-en.jpg';
-
-$selected_image_url = '';
-
 switch ($current_language) {
     case 'pt':
-        $base_image = $image_url_pt;
-        $mobile_image = $image_mobile_url_pt;
+        $title_base = "Correio Internacional Nº" . $current_edition;
         break;
     case 'es':
-        $base_image = $image_url_es;
-        $mobile_image = $image_mobile_url_es;
+        $title_base = "Correo Internacional Nº" . $current_edition;
         break;
     case 'en':
     default:
-        $base_image = $image_url_en;
-        $mobile_image = $image_mobile_url_en;
+        $title_base = "International Courrier Nº" . $current_edition;
         break;
 }
 
@@ -67,18 +52,11 @@ $posts_query = new WP_Query($args);
 ?>
 <div class="content-area">
     <main>
-        <h1>Edição número: <?php echo $current_edition; ?></h1>
-        <figure class="language-banner-figure" style="width:100%">
-            <picture>
-                <source media="(max-width: 640px)" srcset="<?php echo esc_url($mobile_image); ?>">
-
-                <source srcset="<?php echo esc_url($base_image); ?>" type="image/jpeg">
-
-                <img src="<?php echo esc_url($base_image); ?>"
-                    alt="Banner de Idioma <?php echo esc_attr(strtoupper($current_language)); ?>"
-                    style="width:100%; height:auto;">
-            </picture>
-        </figure>
+        <div style="background-color: #e5e5e5; color: white; padding: 48px">
+        <div class="container">
+            <h1><?= $title_base ?></h1>
+        </div>
+        </div>
         <?php
 
 
