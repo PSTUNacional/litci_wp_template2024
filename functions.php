@@ -127,6 +127,8 @@ function litci_config()
 
     add_theme_support('align-wide');
 
+    add_theme_support( 'title-tag' );
+
     load_theme_textdomain('litci', get_template_directory() . '/languages');
 }
 
@@ -537,6 +539,49 @@ function custom_rewrite_rules()
     );
 }
 add_action('init', 'custom_rewrite_rules');
+
+function correio_force_tag_title( $title ) {
+
+    if ( is_tag() ) {
+
+        $term = get_queried_object();
+
+        if ( empty($term->slug) ) {
+            return $title;
+        }
+
+        if ( preg_match('/^ci([0-9]+)$/i', $term->slug, $m) ) {
+
+            $edition = $m[1];
+
+            if ( strpos($_SERVER['REQUEST_URI'], '/pt/') !== false ) {
+                return "Correio Internacional Nº $edition";
+            }
+
+            if ( strpos($_SERVER['REQUEST_URI'], '/es/') !== false ) {
+                return "Correo Internacional Nº $edition";
+            }
+
+            return "International Courier Nº $edition";
+        }
+    }
+
+    return $title;
+}
+
+/* WordPress core */
+add_filter('document_title_parts', function($parts){
+    $custom = correio_force_tag_title($parts['title']);
+    $parts['title'] = $custom;
+    return $parts;
+}, 999);
+
+/* Yoast */
+add_filter('wpseo_title', 'correio_force_tag_title', 999);
+
+/* RankMath */
+add_filter('rank_math/frontend/title', 'correio_force_tag_title', 999);
+
 
 function custom_tag_template($template)
 {
