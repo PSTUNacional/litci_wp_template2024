@@ -33,8 +33,10 @@ switch ($current_language) {
 }
 
 // 1. Define os slugs das tags a serem procuradas
-$tag_slugs = array('cop30', 'cop-30', 'cop 30', 'COP30', 'COP-30', 'COP 30', 'Cop-30');
-$display_tag_name = 'COP 30'; // Nome para exibição no cabeçalho
+$tag_slugs = array(
+    'ci' . $current_edition, 
+    'CI' . $current_edition
+);
 
 // 2. Define os argumentos para a consulta
 $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
@@ -47,7 +49,7 @@ $args = array(
 );
 
 // 3. Executa a consulta customizada
-$posts_query = new WP_Query($args);
+$posts = new WP_Query($args);
 
 ?>
 <div class="content-area">
