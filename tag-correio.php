@@ -49,7 +49,8 @@ $args = array(
 );
 
 // 3. Executa a consulta customizada
-$posts = new WP_Query($args);
+$post_query = new WP_Query($args);
+$posts = $post_query->posts;
 
 ?>
 <div class="content-area">
