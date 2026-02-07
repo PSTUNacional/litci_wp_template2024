@@ -42,7 +42,7 @@ $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 $args = array(
     'tag_slug__in'   => $tag_slugs,   // Puxa posts que contenham QUALQUER um desses slugs
     'post_type'      => 'post',
-    'posts_per_page' => 20,
+    'posts_per_page' => 60,
     'paged'          => $paged,      // Suporte à paginação
 );
 
@@ -95,7 +95,7 @@ $posts_query = new WP_Query($args);
         } ?>
         <div class="container result-list">
             <?php
-            for ($i = 4; $i < 20; $i++) {
+            for ($i = 4; $i < 60; $i++) {
                 if (isset($posts[$i])) {
                     $post = $posts[$i];
                     include(__DIR__ . '/components/units/unit-02.php');
