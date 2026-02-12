@@ -338,11 +338,13 @@ function render_litci_columns_two($attributes)
 }
 
 
-function prepare_args_to_render($attributes, $postType = array('noticias', 'artigos', 'propaganda', 'post'), $ignoreFeaturedIds = true)
-{
+function prepare_args_to_render($attributes, $postType = array('news', 'analysis', 'propaganda', 'post', 'courier'), $ignoreFeaturedIds = true)
+{   
+
+    $totalPosts = isset($attributes['postAmount']) ? intval($attributes['postAmount']) : 12;
     $args = array(
         'post_type'           => $postType,
-        'posts_per_page'      => 12,
+        'posts_per_page'      => $totalPosts,
         'order'               => 'desc',
         'ignore_sticky_posts' => true,
     );
