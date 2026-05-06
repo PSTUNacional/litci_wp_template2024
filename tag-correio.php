@@ -43,7 +43,7 @@ $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
 $args = array(
     'tag_slug__in'   => $tag_slugs,   // Puxa posts que contenham QUALQUER um desses slugs
-    'post_type'      => 'post',
+    'post_type'      => ['post', 'news', 'analysis', 'propaganda', 'courier'],
     'posts_per_page' => 60,
     'paged'          => $paged,      // Suporte à paginação
 );

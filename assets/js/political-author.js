@@ -1,4 +1,4 @@
-(function(wp){
+(function (wp) {
     const { registerPlugin } = wp.plugins;
     const { PluginDocumentSettingPanel } = wp.editPost;
     const { TextControl } = wp.components;
@@ -19,9 +19,12 @@
     };
 
     const PoliticalAuthorPanelWithData = compose(
-        withSelect(select => ({
-            meta: select('core/editor').getEditedPostAttribute('meta')['litci_post_political_author']
-        })),
+        withSelect(select => {
+            const meta = select('core/editor').getEditedPostAttribute('meta') || {};
+            return {
+                meta: meta['litci_post_political_author'] || ''
+            };
+        }),
         withDispatch(dispatch => ({
             setMeta: (value) => dispatch('core/editor').editPost({ meta: { 'litci_post_political_author': value } })
         }))

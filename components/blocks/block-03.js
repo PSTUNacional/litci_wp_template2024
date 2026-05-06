@@ -52,7 +52,7 @@
         )
     )
 
-    const icon = el('img', {src:'../wp-content/themes/litci/components/blocks/icons/block03.svg'})
+    const icon = el('img', { src: '../wp-content/themes/litci/components/blocks/icons/block03.svg' })
 
     blocks.registerBlockType('litci/block-03', {
         title: 'LIT-Bloco 3',
@@ -62,6 +62,10 @@
             blockTitle: {
                 type: 'string',
                 default: '',
+            },
+            postTypes: {
+                type: 'array',
+                default: ['post', 'news', 'analysis', 'propaganda', 'courier'],
             },
             blockCategories: {
                 type: 'array',
@@ -105,6 +109,13 @@
         })(function (props) {
             var attributes = props.attributes;
             var categoryOptions = props.categoryOptions;
+            const availablePostTypes = [
+                { label: 'Post', value: 'post' },
+                { label: 'News', value: 'news' },
+                { label: 'Analysis', value: 'analysis' },
+                { label: 'Propaganda', value: 'propaganda' },
+                { label: 'CI', value: 'courier' },
+            ];
 
             var onChangeTitle = function (newTitle) {
                 props.setAttributes({ blockTitle: newTitle });
@@ -127,6 +138,20 @@
             var onCustomIdsChange = function (newIds) {
                 props.setAttributes({ customIds: newIds })
             }
+
+            var onChangePostTypes = function (value, checked) {
+                let newTypes = [...attributes.postTypes];
+
+                if (checked) {
+                    if (!newTypes.includes(value)) {
+                        newTypes.push(value);
+                    }
+                } else {
+                    newTypes = newTypes.filter(type => type !== value);
+                }
+
+                props.setAttributes({ postTypes: newTypes });
+            };
 
             // Obtém os posts baseados na opção de ordenação
             var posts = useSelect((select) => {
@@ -186,6 +211,18 @@
                                 { label: 'Black', value: '#000000' },
                             ],
                             onChange: onChangeBackgroundColor
+                        })
+                    ),
+                    el(PanelBody, { title: 'Tipo de conteúdo', initialOpen: false },
+                        availablePostTypes.map(function (option) {
+                            return el(CheckboxControl, {
+                                key: option.value,
+                                label: option.label,
+                                checked: attributes.postTypes.includes(option.value),
+                                onChange: function (checked) {
+                                    onChangePostTypes(option.value, checked);
+                                }
+                            });
                         })
                     ),
                     el(PanelBody, { title: 'Filtro automático', initialOpen: false },

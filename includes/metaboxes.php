@@ -48,7 +48,8 @@ add_action('save_post', 'tagline_metabox_saver');
     Auto Formater
 ============================================================*/
 
-function enqueue_autoformat_sidebar_script($hook) {
+function enqueue_autoformat_sidebar_script($hook)
+{
     if ('post.php' !== $hook && 'post-new.php' !== $hook) {
         return;
     }
@@ -66,7 +67,8 @@ add_action('admin_enqueue_scripts', 'enqueue_autoformat_sidebar_script');
 # Political Author
 #
 
-function enqueue_political_author_script($hook) {
+function enqueue_political_author_script($hook)
+{
     if ('post.php' !== $hook && 'post-new.php' !== $hook) {
         return;
     }
@@ -78,25 +80,34 @@ function enqueue_political_author_script($hook) {
         true
     );
 }
+
 add_action('admin_enqueue_scripts', 'enqueue_political_author_script');
 
-function litci_register_political_author_meta() {
-    register_post_meta( 'post', 'litci_post_political_author', array(
-        'show_in_rest' => true, // ESSENCIAL: Permite que o Gutenberg/REST API acesse/salve
-        'single'       => true,
-        'type'         => 'string',
-        'auth_callback' => function() {
-            return current_user_can( 'edit_posts' ); // Permite que usuários com permissão editem posts salvem
-        }
-    ) );
+function litci_register_political_author_meta()
+{
+
+    $post_types = ['post', 'news', 'analysis', 'propaganda', 'courier'];
+
+    foreach ($post_types as $type) {
+        register_post_meta($type, 'litci_post_political_author', array(
+            'show_in_rest' => true, // ESSENCIAL: Permite que o Gutenberg/REST API acesse/salve
+            'single'       => true,
+            'type'         => 'string',
+            'auth_callback' => function () {
+                return current_user_can('edit_posts'); // Permite que usuários com permissão editem posts salvem
+            }
+        ));
+    }
 }
-add_action( 'init', 'litci_register_political_author_meta' );
+
+add_action('init', 'litci_register_political_author_meta');
 
 #
 # Menu Order
 #
 
-function enqueue_menu_order_sidebar_script($hook) {
+function enqueue_menu_order_sidebar_script($hook)
+{
     if ($hook !== 'post.php' && $hook !== 'post-new.php') return;
 
     wp_enqueue_script(
